@@ -1,0 +1,4 @@
+page.replace_html("favorites" , :partial => "favorites" )
+page.replace_html("favorites_count" , @favorites.length.to_s )
+page.replace_html("favorites_tab_count" , @favorites.length.to_s )
+logger.error("attempted to add favorite" )

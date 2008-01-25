@@ -1,0 +1,207 @@
+<div class="bubbleoutside"><!--Submission Form Bubble-->
+  <b class="bubble_i">
+  <b class="bubble_i1"><b></b></b>
+  <b class="bubble_i2"><b></b></b>
+  <b class="bubble_i3"></b>
+  <b class="bubble_i4"></b>
+  <b class="bubble_i5"></b></b>
+  <div class="bubble_ifg">
+    My Appartment
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  <b>
+  <%= link_to "x",  "#", :onclick => visual_effect(:slide_left, 'submission_form_pane', :duration => 1.5, :complete => "Effect.Appear('results_pane')" ) -%>
+  </b>
+  
+  
+<% form_remote_tag( 
+        :url => { :id=>@listing, :action => :update},
+        :complete => "$('submission_spinner').hide();" ,
+        :before => "$('submission_spinner').show();") do %>
+      
+<!-- Essentials Bubble -->
+<div class="bubbleoutside">
+  <b class="bubble_white">
+  <b class="bubble_white1"><b></b></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white5"></b></b>
+  <div class="bubble_whitefg">
+    
+  The Basics
+
+  <%= link_to "+",  "#", :onclick => visual_effect(:slide_down, 'essentials_i', :duration => 1.0 )-%>
+  <%= link_to "-",  "#", :onclick => visual_effect(:slide_up, 'essentials_i', :duration => 1.0 ) -%> 
+  <%=image_tag "spinner.gif", :id=>"submission_spinner", :style=>"display:none", :width => 20, :length => 20%>
+
+
+      <div id="essentials_i">
+          
+        <div>
+          
+          <label for="listing_apt_type">Type</label><br/>
+          <%= collection_select :listing, :apt_type_id, AptType.find(:all), :id, :name, {:include_blank=> true}, {:onchange=>"this.form.onsubmit()"} -%>
+          
+          
+          <br>
+          <label for="listing_nhood">Neighborhood</label><br/>
+          <%= collection_select :listing, :nhood_id, Nhood.find(:all), :id, :name, {:include_blank=> true}, {:onchange=>"this.form.onsubmit()"}  -%>
+          
+          <br>
+          <label for="listing_address1">Address</label><br/>
+          <%= text_field 'listing', 'address1', {:onchange=>"this.form.onsubmit()"}  %>
+          
+          <br>
+          <label for="listing_apt_type">Rent</label><br/>
+          <%= collection_select :listing, :rent_range_id, RentRange.find(:all), :id, :name, {:include_blank=> true}, {:onchange=>"this.form.onsubmit()"} -%>
+          
+        </div>
+
+
+        
+    </div>
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+
+<!-- End of Essentials bubble -->
+
+<!-- Infestation bubble-->
+<div class="bubbleoutside">
+  <b class="bubble_white">
+  <b class="bubble_white1"><b></b></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white5"></b></b>
+  <div class="bubble_whitefg">
+    
+
+  Infestation
+
+  <%= link_to "+",  "#", :onclick => visual_effect(:slide_down, 'infestation_i', :duration => 0.5 )-%>
+  <%= link_to "-",  "#", :onclick => visual_effect(:slide_up, 'infestation_i', :duration => 0.5 ) -%> 
+  
+
+   <div id="infestation_i" style="display:none">
+        <div>
+          <label for="listing_apt_type">Roaches</label></br>
+          <%=check_box "listing", "roach_problem" -%></br>
+        </div>
+    </div>
+<!-- /Infestation bubble-->
+    
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+
+
+
+<!-- Comment bubble-->
+<div class="bubbleoutside">
+  <b class="bubble_white">
+  <b class="bubble_white1"><b></b></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white5"></b></b>
+  <div class="bubble_whitefg">
+    
+
+  Comments
+
+  <%= link_to "+",  "#", :onclick => visual_effect(:slide_down, 'comment_i', :duration => 0.5 )-%>
+  <%= link_to "-",  "#", :onclick => visual_effect(:slide_up, 'comment_i', :duration => 0.5 ) -%> 
+  
+
+   <div id="comment_i" style="display:none">
+        <div>
+          <%=text_area "listing", "comment", "cols" => 20, "rows" => 10 -%>
+        </div>
+    </div>
+    
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+<!-- Comment bubble-->
+<!-- Form tag end--><% end -%>
+<!-- Pictures bubble-->
+<div class="bubbleoutside">
+  <b class="bubble_white">
+  <b class="bubble_white1"><b></b></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white5"></b></b>
+  <div class="bubble_whitefg">
+    
+
+  Visuals
+
+  <%= link_to "+",  "#", :onclick => visual_effect(:slide_down, 'visuals_i', :duration => 0.5 )-%>
+  <%= link_to "-",  "#", :onclick => visual_effect(:slide_up, 'visuals_i', :duration => 0.5 ) -%> 
+  
+
+   <div id="visuals_i" style="display:none">
+        <div>
+        
+          <div id="visuals_list">
+            <%=render :partial => "visuals_list"%>
+          </div>
+            
+             
+            <% form_for :visual, :html => { :target => 'upload_frame', :multipart => true, :name => 'visual_form' }, :url => { :id=>@listing, :action => :add_visual} do%>
+            
+              <label for="uploaded_data">Choose a file</label><br/>
+              <%=file_field :visual, :uploaded_data%>
+              
+              <label for="comment">Comment</label> 
+              <%= text_field :visual, :comment%>
+              
+              <label for="visual_type_id">Visual type</label><br/>
+              <%= collection_select :visual, :visual_type_id, VisualType.find(:all), :id, :name, {:include_blank=> true}, {:onchange=>"this.form.submit()"}  -%>
+            
+            <% end%>
+          
+          
+          <iframe id="upload_frame" name="upload_frame" style="display: none"></iframe>
+  
+        </div>
+    </div>
+
+    
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+<!-- /Pictures bubble-->
+
+  </div>
+  <b class="bubble_i">
+  <b class="bubble_i5"></b>
+  <b class="bubble_i4"></b>
+  <b class="bubble_i3"></b>
+  <b class="bubble_i2"><b></b></b>
+  <b class="bubble_i1"><b></b></b></b>
+</div>
+
+

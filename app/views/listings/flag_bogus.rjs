@@ -1,0 +1,1 @@
+page.replace_html("bogus_flags_#{@listing.id}" , @listing.bogus_flags.length.to_s)

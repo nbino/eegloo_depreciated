@@ -1,0 +1,28 @@
+
+<% @listings.each do |listing| -%>
+<div id="listing_<%=listing.id%>" class="listing">
+<div class="bubbleoutside">
+  <b class="bubble">
+  <b class="bubble1"><b></b></b>
+  <b class="bubble2"><b></b></b>
+  <b class="bubble3"></b>
+  <b class="bubble4"></b>
+  <b class="bubble5"></b></b>
+
+  <div class="bubblefg">
+    <%= listing.id %>
+  </div>
+  
+  <b class="bubble">
+  <b class="bubble5"></b>
+  <b class="bubble4"></b>
+  <b class="bubble3"></b>
+  <b class="bubble2"><b></b></b>
+  <b class="bubble1"><b></b></b></b>
+</div>
+</div>
+<%= draggable_element("listing_#{listing.id}", :ghosting=>true, :revert=>true) %>
+<% end -%>
+
+
+

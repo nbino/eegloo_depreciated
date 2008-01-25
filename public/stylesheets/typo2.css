@@ -1,0 +1,360 @@
+/*
+ * =GENERAL/MASTER CONTAINERS
+ */
+
+ body {
+  margin: 0;
+  background: #fff url(../images/admin/hdr-tile.gif) repeat-x;
+  font: 1em/1.6em "Trebuchet MS", sans-serif, Helvetica, Arial;
+  }
+  
+input{
+   color: #777777;
+   font-size: 60%;
+   border: solid 1px}
+  
+
+ #header {
+  height: 92px;
+  color: #fff;
+ }
+
+  img { border: none; }
+
+  a {
+    color: #c00;
+    text-decoration: none;
+    }
+
+  a:hover {
+    color: #333;
+    }
+
+#flash {
+    background: #CBE4C3;
+    color: #0C2504;
+    padding: 5px;
+    border-top: 1px solid #2E9410;
+    border-bottom: 1px solid #2E9410;
+    margin-top: 10px;
+}
+
+.bubble{display:block}
+.bubbleinside
+{
+  background:#C2C7D3;
+  padding:5px}
+
+/* input form */
+.bubble_i *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#D5FAC5}
+  
+.bubble_i1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #ecfce6;
+  border-right:1px solid #ecfce6;
+  background:#dffbd3}
+.bubble_i2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #fafef9;
+  border-right:1px solid #fafef9;
+  background:#dcfad0}
+.bubble_i3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #dcfad0;
+  border-right:1px solid #dcfad0;}
+.bubble_i4{
+  border-left:1px solid #ecfce6;
+  border-right:1px solid #ecfce6}
+.bubble_i5{
+  border-left:1px solid #dffbd3;
+  border-right:1px solid #dffbd3}
+.bubble_ifg{
+  background:#D5FAC5;
+  padding:5px;
+  color: #68a14f}
+
+/* input form text */
+
+.bubble_it *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#ffffff}
+.bubble_it1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #e7fcdd;
+  border-right:1px solid #e7fcdd;
+  background:#f4fdf0}
+.bubble_it2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #d9faca;
+  border-right:1px solid #d9faca;
+  background:#f7fef3}
+.bubble_it3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #f7fef3;
+  border-right:1px solid #f7fef3;}
+.bubble_it4{
+  border-left:1px solid #e7fcdd;
+  border-right:1px solid #e7fcdd}
+.bubble_it5{
+  border-left:1px solid #f4fdf0;
+  border-right:1px solid #f4fdf0}
+.bubble_itfg{
+  background:#ffffff;
+  padding:5px;
+  color: #000000}
+
+
+/* search results form */
+.bubble_s *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#EAF0F5}
+.bubble_s1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #f5f8fa;
+  border-right:1px solid #f5f8fa;
+  background:#eff3f7}
+.bubble_s2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #fcfdfe;
+  border-right:1px solid #fcfdfe;
+  background:#edf2f6}
+.bubble_s3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #edf2f6;
+  border-right:1px solid #edf2f6;}
+.bubble_s4{
+  border-left:1px solid #f5f8fa;
+  border-right:1px solid #f5f8fa}
+.bubble_s5{
+  border-left:1px solid #eff3f7;
+  border-right:1px solid #eff3f7}
+.bubble_sfg{
+  background:#EAF0F5;
+  padding:5px;
+  color: #577fa5}
+
+.bubble_search_results_tab{
+	width: 150px;
+	float: right;
+	color: #577fa5;
+	background:#EAF0F5
+	}
+  
+  /* search results text */
+
+.bubble_st *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#ffffff}
+.bubble_st1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #f3f6f9;
+  border-right:1px solid #f3f6f9;
+  background:#f9fbfc}
+.bubble_st2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #ecf1f6;
+  border-right:1px solid #ecf1f6;
+  background:#fbfcfd}
+.bubble_st3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #fbfcfd;
+  border-right:1px solid #fbfcfd;}
+.bubble_st4{
+  border-left:1px solid #f3f6f9;
+  border-right:1px solid #f3f6f9}
+.bubble_st5{
+  border-left:1px solid #f9fbfc;
+  border-right:1px solid #f9fbfc}
+.bubble_stfg{
+  background:#ffffff;
+  padding:5px;
+  color: #000000;}
+
+
+  
+/*favorites form*/
+.bubble_f *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#FFE8D1}
+.bubble_f1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #fff5eb;
+  border-right:1px solid #fff5eb;
+  background:#ffeddc}
+.bubble_f2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #fffcfa;
+  border-right:1px solid #fffcfa;
+  background:#ffecd9}
+.bubble_f3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #ffecd9;
+  border-right:1px solid #ffecd9;}
+.bubble_f4{
+  border-left:1px solid #fff5eb;
+  border-right:1px solid #fff5eb}
+.bubble_f5{
+  border-left:1px solid #ffeddc;
+  border-right:1px solid #ffeddc}
+.bubble_ffg{
+  background:#FFE8D1;
+  padding: 5px;
+  color: #d47b2b}
+
+.bubble_favorites_tab{
+	width: 150px;
+	float: right;
+	color: #d47b2b;
+	background:#FFE8D1
+	}
+
+/*favorites text bubble*/
+.bubble_ft *{
+  display:block;
+  height:1px;
+  overflow:hidden;
+  font-size:.01em;
+  background:#ffffff}
+.bubble_ft1{
+  margin-left:3px;
+  margin-right:3px;
+  padding-left:1px;
+  padding-right:1px;
+  border-left:1px solid #fff1e4;
+  border-right:1px solid #fff1e4;
+  background:#fff9f3}
+.bubble_ft2{
+  margin-left:1px;
+  margin-right:1px;
+  padding-right:1px;
+  padding-left:1px;
+  border-left:1px solid #ffead5;
+  border-right:1px solid #ffead5;
+  background:#fffaf6}
+.bubble_ft3{
+  margin-left:1px;
+  margin-right:1px;
+  border-left:1px solid #fffaf6;
+  border-right:1px solid #fffaf6;}
+.bubble_ft4{
+  border-left:1px solid #fff1e4;
+  border-right:1px solid #fff1e4}
+.bubble_ft5{
+  border-left:1px solid #fff9f3;
+  border-right:1px solid #fff9f3}
+.bubble_ftfg{
+  background:#ffffff;
+  padding:5px}
+
+.bubbleoutside
+{
+  margin:10px}
+
+.listing{}
+	
+.date_picker {
+  /* comment out this line to show by default: */
+  display: none;
+  /* comment out this line to prevent calendar 'floating' over page: */
+  position: absolute;
+  background-color:white;
+  padding: 3px;
+  border: 1px solid silver;
+}
+
+.date_picker table {
+  border:        1px solid silver;
+  border-top:    2px solid silver;
+  border-bottom: 3px solid silver;
+  font-family: verdana, sans-serif;
+}
+.date_picker th {
+  font-size: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.date_picker .day_labels th {
+  color: darkgreen;
+  font-size: 9px;
+  font-weight: normal;
+}
+
+.date_picker td {
+  width: 18px;
+  background-color: #ddd;
+  font-size: 9px;
+  text-align: right;
+}
+
+.date_picker a {
+  text-decoration: none;
+  border-bottom: 1px dotted silver;
+  color: #333;
+}
+
+.date_picker a:hover   { color:white ; background-color: black}
+
+.date_picker .cancel_butt { text-align: right; padding-right: 5px }
+.date_picker .cancel_butt a {
+  font-size: 9px;
+  color: gray;
+  font-family: verdana, sans-serif;
+  text-decoration: none
+}
+.date_picker .cancel_butt a:hover {
+  background-color: gray;
+  color: white;
+}

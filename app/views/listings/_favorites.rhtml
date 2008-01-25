@@ -1,0 +1,47 @@
+  <% @favorites.each do |favorite|%>
+  
+  <div id="favorite_<%=favorite.id%>" class="listing">
+  <div class="bubbleoutside">
+    <b class="bubble_white">
+    <b class="bubble_white1"><b></b></b>
+    <b class="bubble_white2"><b></b></b>
+    <b class="bubble_white3"></b>
+    <b class="bubble_white4"></b>
+    <b class="bubble_white5"></b></b>
+      <div class="bubble_whitefg">
+    
+  
+  <b><%=link_to_remote(
+              "x", 
+              :complete => "$('favorites_spinner').hide();" ,
+              :before => "$('favorites_spinner').show();" ,
+              :url => { :action => "destroy_favorite", :id => favorite}) -%></b>
+  
+  
+  <table cellpadding="5">
+    <tr>
+      <td align="left"> Type: <%=favorite.listing.apt_type.nil? ? "n/a" : favorite.listing.apt_type.name%> </td>
+      <td align="left"> Rent: <%= favorite.listing.rent_range.nil? ? "n/a" : favorite.listing.rent_range.name%> </td>
+    </tr>
+    <tr>
+      <td align="left">Hood: <%= favorite.listing.nhood.nil? ? "n/a" : favorite.listing.nhood.name%></td>
+      <td align="left">Addr: <%=favorite.listing.address1.nil? ? "n/a" : favorite.listing.address1 %></td>
+    </tr>
+    <tr>
+      <td align="left">Avail: <%= favorite.listing.lease_experation_date.nil? ? "n/a" : favorite.listing.lease_experation_date.strftime('%m/%d/%y')-%></td>
+      <td align="left">Infestation: <%= favorite.listing.roach_problem = 1 ? "roaches" : "none"-%></td>
+    </tr>
+  </table>
+  
+   
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+  </div>
+  
+  <%end%>

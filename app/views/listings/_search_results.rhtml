@@ -1,0 +1,89 @@
+<!--Search Results Bubble-->
+<% @listings.each do |listing| -%>
+<div id="listing_<%=listing.id%>" class="listing">
+<div class="bubbleoutside">
+  <b class="bubble_white">
+  <b class="bubble_white1"><b></b></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white5"></b></b>
+  <div class="bubble_whitefg">
+  
+  <%=image_tag "spinner.gif", :style=>"display:none; float:right", :id=>"listing#{listing.id}_spinner", :width => 20, :length => 20%>
+  <table cellpadding="5">
+    <tr>
+        <td align="left"> Contender Rank: <%=listing.favorites.length%> </td>
+        <td align="left" title="Click on a flag to flag the listing"> 
+        
+          Flags: 
+          
+          <%=link_to_remote(
+              "Bogus", 
+              :complete => "$('listing#{listing.id}_spinner').hide();" ,
+              :before => "$('listing#{listing.id}_spinner').show();" ,
+              :url => { :action => "flag_bogus", :id => listing, :type => "BogusFlag"})%>
+                 
+                 (<span id="bogus_flags_<%=listing.id%>"><%= listing.bogus_flags.length%></span>)&nbsp;|
+                 
+                 <%=link_to_remote(
+              "Broker", 
+              :complete => "$('listing#{listing.id}_spinner').hide();" ,
+              :before => "$('listing#{listing.id}_spinner').show();" ,
+              :url => { :action => "flag_broker", :id => listing})%>
+                 
+                 (<span id="broker_flags_<%=listing.id%>"><%= listing.broker_flags.length%></span>)&nbsp;|
+                 
+                 <%=link_to_remote(
+              "N/A", 
+              :complete => "$('listing#{listing.id}_spinner').hide();" ,
+              :before => "$('listing#{listing.id}_spinner').show();" ,
+              :url => { :action => "flag_n_a", :id => listing, :type => "NAFlag"})%>
+                 
+                 (<span id="n_a_flags_<%=listing.id%>"><%= listing.n_a_flags.length%></span>)
+          
+        </td>
+    </tr>
+    <tr>
+      <td align="left"> Type: <%=listing.apt_type.nil? ? "n/a": listing.apt_type.name-%> </td>
+      <td align="left"> Rent: <%= listing.rent_range.nil? ? "n/a": listing.rent_range.name-%> </td>
+    </tr>
+    <tr>
+      <td align="left">Hood: <%= listing.nhood.nil? ? "n/a": listing.nhood.name-%></td>
+      <td align="left">Addr: <%= listing.address1.nil? ? "n/a": listing.address1 %></td>
+    </tr>
+    <tr>
+      <td align="left">Avail: <%= listing.lease_experation_date.nil? ? "n/a": listing.lease_experation_date.strftime('%m/%d/%y')-%></td>
+      <td align="left">Infestation: <%= listing.roach_problem = 1 ? "roaches" : "none"-%></td>
+    </tr>
+    <tr>
+      <td align="left">Visuals(<%=listing.visuals.length%>): <br>
+      
+      <%listing.visuals.each do |visual|%>
+        <%=image_tag visual.public_filename(), :size=>'100x100', :onMouseOver=>"this.style.width='320px';this.style.height='320px'", :onMouseOut=>"this.style.width='100px';this.style.height='100px'"%>
+      <%end%>
+      
+      
+      
+      </td>
+      
+    </tr>
+  </table>
+    
+    
+    
+    
+  </div>
+  <b class="bubble_white">
+  <b class="bubble_white5"></b>
+  <b class="bubble_white4"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white3"></b>
+  <b class="bubble_white2"><b></b></b>
+  <b class="bubble_white1"><b></b></b></b>
+</div>
+</div>
+<%= draggable_element("listing_#{listing.id}", :ghosting=>true, :revert=>true) %>
+<% end -%>
+
+  

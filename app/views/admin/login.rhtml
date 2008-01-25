@@ -1,0 +1,40 @@
+
+
+<div class="bubbleoutside"  style="width:150px;position:absolute;top:150px;">
+  <b class="bubble_i">
+  <b class="bubble_i1"><b></b></b>
+  <b class="bubble_i2"><b></b></b>
+  <b class="bubble_i3"></b>
+  <b class="bubble_i4"></b>
+  <b class="bubble_i5"></b></b>
+  <div class="bubble_ifg">
+    
+        <% if flash[:notice] %>
+          <h4><%= flash[:notice] %></h4>
+        <% end %>    
+      
+      
+      <% form_for :user, :url => { :action => :login} do |f|%>
+    
+      <label for="user_login">Login:</label><br/>
+      <%= f.text_field :login, :size=>15 %>
+      
+      <br/>
+      
+      <label for="user_password">Password:</label><br/>
+      <%= f.password_field :password, :size=>15 %>
+
+      <br/>
+      <br/>
+      <input type="submit" name="login" value="Login &#187;" class="primary" />
+      <% end %>
+    
+    </div>
+  <b class="bubble_i">
+  <b class="bubble_i5"></b>
+  <b class="bubble_i4"></b>
+  <b class="bubble_i3"></b>
+  <b class="bubble_i2"><b></b></b>
+  <b class="bubble_i1"><b></b></b></b>
+</div>
+

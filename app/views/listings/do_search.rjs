@@ -1,0 +1,6 @@
+page.replace_html("search_results" , :partial => "search_results", :object=>@listings)
+page.replace_html("search_results_count" , @listings.length.to_s )
+page.replace_html("search_results_tab_count" , @listings.length.to_s )
+logger.error("attempted to refresh search results" )
+
+
