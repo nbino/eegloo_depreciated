@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  #verify :session => :user, :redirect_to => { :controller => :admin, :action => :login }, :except => :login
+  verify :session => :user, :redirect_to => { :controller => :admin, :action => :login }, :except => :login
 
   def index
     list
