@@ -1,7 +1,5 @@
 class AddListingsFix < ActiveRecord::Migration
   def self.up
-    task :add_data => :environment do
-    puts "yeah dude"
     
       Listing.create(
       :address1 => "512 E12th St",
@@ -87,4 +85,5 @@ class AddListingsFix < ActiveRecord::Migration
   def self.down
     Nhood.delete_all
   end
+
 end
