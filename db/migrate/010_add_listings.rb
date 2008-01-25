@@ -1,6 +1,6 @@
 class AddListings < ActiveRecord::Migration
   def self.up
-    #moved to a rake task. consequent schema updates break this
+    #moved to the end as consequent schema changes cause this to fail
     
 
   end
