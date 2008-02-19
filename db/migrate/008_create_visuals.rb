@@ -3,7 +3,7 @@ class CreateVisuals < ActiveRecord::Migration
     create_table :visuals do |t|
       t.integer :listing_id
       t.integer :parent_id, :size, :width, :height
-      t.string :type, :content_type, :filename, :thumbnail, :comment,
+      t.string :type, :content_type, :filename, :thumbnail, :comment
       
       t.timestamps
     end
