@@ -1,0 +1,2 @@
+class Pets < AttrValue
+end

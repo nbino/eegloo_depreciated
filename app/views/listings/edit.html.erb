@@ -1,0 +1,12 @@
+<h1>Editing listing</h1>
+
+<%= error_messages_for :listing %>
+
+<% form_for(@listing) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @listing %> |
+<%= link_to 'Back', listings_path %>

@@ -1,0 +1,126 @@
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your database schema. If you need
+# to create the application database on another system, you should be using db:schema:load, not running
+# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended to check this file into your version control system.
+
+ActiveRecord::Schema.define(:version => 9) do
+
+  create_table "apt_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "bedrooms"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attr_values", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.integer  "acc",        :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "listing_infos", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "sq_footage"
+    t.integer  "ceiling_height"
+    t.integer  "no_of_balconies"
+    t.integer  "no_of_bathrooms"
+    t.integer  "no_of_patios"
+    t.integer  "floor_type_id"
+    t.integer  "heat_q_id"
+    t.integer  "ac_type_id"
+    t.integer  "roof_access_type_id"
+    t.integer  "back_yard_type_id"
+    t.integer  "street_noise_level_id"
+    t.integer  "nbors_noise_level_id"
+    t.integer  "maintenance_q_id"
+    t.integer  "appliances_q_id"
+    t.integer  "bathroom_q_id"
+    t.integer  "cellphone_q_id"
+    t.integer  "pets_id"
+    t.string   "landlord_phone_number"
+    t.string   "broker_phone_number"
+    t.string   "comment"
+    t.boolean  "broker_only"
+    t.boolean  "elevator"
+    t.boolean  "multi_level"
+    t.boolean  "penthouse"
+    t.boolean  "private_entrance"
+    t.boolean  "gym"
+    t.boolean  "laundry"
+    t.boolean  "roaches"
+    t.boolean  "rodents"
+    t.boolean  "ants"
+    t.boolean  "broadband"
+    t.boolean  "doorman"
+    t.boolean  "rent_stabilized"
+    t.boolean  "rent_controlled"
+    t.boolean  "convertable"
+    t.boolean  "separate_kitchen"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "listings", :force => true do |t|
+    t.integer  "user_id",       :null => false
+    t.string   "address"
+    t.string   "cross_street"
+    t.integer  "apt_type_id"
+    t.integer  "nhood_id"
+    t.integer  "rent_range_id"
+    t.datetime "avail_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rent_ranges", :force => true do |t|
+    t.string   "name"
+    t.integer  "lbound"
+    t.integer  "ubound"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rooms", :force => true do |t|
+    t.string   "type"
+    t.integer  "listing_info_id"
+    t.integer  "light_level_id"
+    t.integer  "window_direction_id"
+    t.integer  "length"
+    t.integer  "width"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username",   :default => "", :null => false
+    t.string   "password",   :default => "", :null => false
+    t.string   "email",      :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "visuals", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "parent_id"
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+    t.string   "content_type"
+    t.string   "filename"
+    t.string   "thumbnail"
+    t.string   "comment"
+    t.string   "#<ActiveRecord::ConnectionAdapters::TableDefinition:0x3e833a4>"
+  end
+
+end

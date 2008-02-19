@@ -1,0 +1,43 @@
+<h1>Create an Account</h1>
+
+<%= error_messages_for :user %>
+
+<% form_for @user do |f| %>
+  <h2>My Info</h2>
+  <p>
+    <label for="user_address">Username:</label> <br/>  <%= f.text_field :username, :value=>'bob'%> <br/>
+    <label for="user_password">Password:</label> <br/>  <%= f.password_field :password, :value=>'bob'%> <br/>
+    <label for="user_email">E-mail:</label> <br/>  <%= f.text_field :email, :value=>'bob@bob.com'%> <br/>
+    
+  </p>
+  
+  <p>
+  <h2>My Apartment</h2>
+  <p>
+  Looking for a place? Chances are you are also moving out of one. DBA is a community listing service. Just like others that joined, please describe the place you're moving of. In return you get to browse similar descriptions of others. If you're not planning to move just yet and are just browsing, to contribute to our community please describe your place of residence.
+  </p>
+  <p>
+  
+  </p>
+  <p>
+  If you are not moving out of a place that you can describe, click here to see other account options.
+  </p>
+  
+  <%fields_for 'user[listing_attr]' do |f_listing| %>
+      <label for="user_listing_attr_address">Street Address:</label> <br/>  <%=f_listing.text_field :address, :value=>'317 Ave B'%> <br/>
+      
+      <label for="user_listing_attr_cross_street">Cross Street:</label> <br/>  <%=f_listing.text_field :cross_street, :value=>'East 11th St'%> <br/>
+      
+      <label for="user_listing_attr_apt_type">Apartment Type:</label> <br/>  <%= f_listing.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+      
+      <label for="user_listing_attr_avail_date">Available Date:</label> <br/> <%=f_listing.text_field :avail_date, :value=>'01/01/09'%> <br/>
+      
+      <label for="user_listing_attr_rent_range">Rent:</label> <br/>  <%= f_listing.collection_select :rent_range_id, @rent_ranges, :id, :name, {:include_blank=>'Select'}, {:value => 11} %> <br/>
+  <% end %>  
+  </p>
+  
+  
+  <%= f.submit "Next >>" %>
+<% end %>
+
+

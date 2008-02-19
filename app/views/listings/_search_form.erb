@@ -1,0 +1,46 @@
+
+<!--:url => { :action => "show" },-->
+
+<% form_for( :listing_info, :html => { :method => 'get' } ) do |f| %>
+  <p>
+  
+  <label for="listing_attr_apt_type">Apartment Type</label><br/>  <%= f.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+      
+  <label for="listing_attr_avail_date">Available Date</label><br/> <%=f.text_field :avail_date, :size=>9%> <br/>
+      
+  <label for="user_listing_attr_rent_range">Max rent</label><br/> <%= f.text_field :ubound, :size=>9%> <br/>
+  
+  <label for="listing_info_sq_footage">Neighborhood</label><br/> <%= f.collection_select :nhood, @nhoods, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <label for="listing_info_sq_footage">Min sq footage</label><br/> <%=f.text_field :sq_footage, :size=>9%> <br/>
+  <label for="listing_info_ceiling_height">Min ceiling Height</label><br/>  <%=f.text_field :ceiling_height, :size=>9%> <br/>
+  <%= f.check_box :convertable%>  <label for="listing_info_convertable">Convertable</label><br/>
+  <%= f.check_box :separate_kitchen%>  <label for="listing_info_separate_kitchen">Separate Kitchen</label><br/>
+  <%= f.check_box :rent_controlled%>  <label for="listing_info_rent_controlled">Rent Controlled</label><br/>
+  <%= f.check_box :rent_stabilized%>  <label for="listing_info_rent_stabilized">Rent Stabilized</label><br/>
+  <%= f.check_box :multi_level%>  <label for="listing_info_multi_level">Multi Level</label><br/>
+  <%= f.check_box :penthouse%>  <label for="listing_info_penthouse">Penthouse</label><br/>
+  <%= f.check_box :private_entrance%>  <label for="listing_info_private_entrance">Private Entrance</label><br/>
+  <%= f.check_box :no_of_balconies%>  <label for="listing_info_balcony">Balcony</label><br/>
+  <%= f.check_box :no_of_patios%>  <label for="listing_info_patio">Patio</label><br/>
+  <%= f.check_box :broadband%>  <label for="listing_info_broadband">Broadband</label><br>
+  <%= f.check_box :gym%>  <label for="listing_info_gym">Gym</label><br/>
+  <%= f.check_box :laundry%>  <label for="listing_info_laundry">Laundry</label><br>
+  <%= f.check_box :pests%>  <label for="listing_info_roaches">No pests</label><br>
+  <label for="listing_info_back_yard">Back Yard</label><br/>  <%= f.collection_select :back_yard_type, @back_yard_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
+  <label for="listing_info_back_yard">Roof Access</label><br/>  <%= f.collection_select :roof_access_type, @roof_access_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
+  <label for="listing_info_floor_type">Floor Type</label><br/> <%=f.collection_select :floor_type_id, @floor_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_heat_q">A/C Type</label><br/>   <%= f.collection_select  :ac_type_id, @ac_types, :id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_appliance_q">Min Appliances Condition</label><br/>   <%= f.collection_select  :appliance_q_id, @appliances_quality_choices, :id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_bathroom_q">Min Bathroom Condition</label><br/>   <%= f.collection_select  :bathroom_q_id, @bathroom_quality_choices, :id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_cellphone_q">Min Cellphone Signal</label><br/>  <%= f.collection_select  :cellphone_q_id, @cellphone_quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <label for="listing_info_street_noise_level">Max Street Noise</label><br/> <%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_nbors_noise_level">Max Neighbor Noise</label><br/> <%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels,:id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_comment">Comment keywords</label><br/>  <%=f.text_field :comment, :size=>20%> <br/>
+  
+  </p>
+  <%= f.submit "Search" %>
+<% end %>
+  
+

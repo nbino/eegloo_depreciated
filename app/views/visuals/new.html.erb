@@ -1,0 +1,38 @@
+<h1>Upload visuals or videos</h1>
+
+<%= error_messages_for :visual %>
+
+<% form_for([@listing, @visual], :html => { :multipart => true }) do |f| %>
+A picture is worth a thousand words. Please post 3 pictures or a video and get to view pictures and videos posted by others.
+
+<%= link_to 'Skip >>', new_listing_listing_info_url(@listing) %>
+  <p>
+    <label for="visual_uploaded_data">Upload A Photo or Video:</label> <br/> <%= f.file_field :uploaded_data %> <br/>
+    <label for="visual_comment">Description:</label> <br/> <%= f.text_field :comment, :value=>'bedroom 1' %> <br/>
+    
+    <%= f.submit "Add" %>
+  </p>
+  <p>
+  <h2>Uploaded visuals</h2>
+  <p>
+  <%if @listing.visuals? %>
+  No visuals uploaded.
+  <%end%>
+  
+  <table>
+  <tr>
+  
+  <% @listing.visuals.each do |visual|  %>
+  
+    <td><%= image_tag(visual.public_filename(:thumb), :height=>100, :width=>120) %> <br/> <%=visual.comment %></td>
+  
+  <%end%>
+  </tr>
+  </table>
+  
+  <%= link_to 'Next >>', new_listing_listing_info_url(@listing) %>
+  
+  </p>
+<% end %>
+
+

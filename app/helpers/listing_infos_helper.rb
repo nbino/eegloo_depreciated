@@ -1,0 +1,2 @@
+module ListingInfosHelper
+end

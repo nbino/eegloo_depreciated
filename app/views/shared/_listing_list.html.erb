@@ -1,0 +1,14 @@
+
+<table width=100% cellspacing="5">
+<tr>
+<td>Sort by: <a href="#">price</a>, <a href="#">popularity</a>, <a href="#">rating</a></td>
+</tr>
+<tr>
+<td bgcolor="#ADD8E6">
+<%= render(:partial => '/shared/listing' ,
+      :collection => @listings,
+      :spacer_template => '/shared/listing_list_spacer' )
+%>
+</td>
+</tr>
+</table>

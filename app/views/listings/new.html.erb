@@ -1,0 +1,168 @@
+<script language="javascript"
+function room_change(value)
+{
+
+
+}
+</script>
+
+<h1>Please describe the appartment you are moving out of</h1>
+
+<%= error_messages_for :listing %>
+
+<% form_for(@listing) do |f| %>
+  <p>
+      <label for="listing_address">Address:</label> <br/>  <%=f.text_field :address%> <br/>
+      
+      <label for="listing_cross_street">Cross Street:</label> <br/>  <%=f.text_field :cross_street%> <br/>
+      
+      <label for="listing_apt_type">Apartment Type:</label> <br/>  <%= f.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Select'}, {:onchange=>'room_change(this.value)'}%> <br/>
+      
+      <label for="listing_avail_date">Available Date:</label> <br/> <%=f.text_field :avail_date%> <br/>
+      
+      <label for="listing_rent_range">Rent:</label> <br/>  <%= f.collection_select :rent_range_id, @rent_ranges, :id, :name, {:include_blank=>'Select'} %> <br/>
+
+  </p>
+  <p>
+  <h2>Photos and Videos. Remember the more you give the more you get. Upload 3 photos of your place and you'll see photos uploaded by others. Even better, upload a video and see videos in other's listings. <br/></h2>
+  <%= f.submit "Skip >>" %><br/>
+  
+  <% fields_for(:visual1) do |f_visual| %> 
+  <label for="visual_file_name">Choose Image Files</label><br/>
+  <%= f.file_field :file %> <br/>
+  <%end%>
+  
+  <% fields_for('visual1') do |f_visual| %> 
+  <label for="visual_file_name">Choose Image Files</label><br/>
+  <%= f_visual.file_field :file %> <br/>
+  <%= f_visual.file_field :file %> <br/>
+  <%= f_visual.file_field :file %> <br/>
+  <%end%>
+  
+
+
+  <% fields_for(:visual2) do |f_visual| %> 
+  <%= f.file_field :file %> <br/>
+  <%end%>
+    
+  <% fields_for(:visual3) do |f_visual| %> 
+  <%= f.file_field :file %> <br/>
+  <%end%>
+  
+  <a href="#">Upload another image</a><br/>
+    
+  <label for="visual_file_name">Choose Video Files</label><br/>
+  <% fields_for(:video4) do |f_visual| %> 
+  <%= f.file_field :file %> <br/>
+  <%end%>
+  <a href="#">Upload another video</a><br/>
+      
+  
+  <label for="visual_comment">Image/Video Comment<br/>
+  <%= f.text_field :address %><br/>
+  
+  </p>
+  <p>
+  <h2>Extra info. Remember the more you give the more you get. By filling out a short form below you can view similar submissions by others. It only takes a minute.<br/></h2>
+  <%= f.submit "Skip >>" %><br/>
+  
+  <label for="listing_rent_controlled">Rent Controlled:</label><br/>  <%= yes_no_select f, :rent_controlled%>  <br/>
+  <label for="listing_rent_stabilized">Rent Stabilized:</label><br/>  <%= yes_no_select f, :rent_stabilized%>  <br/>
+  
+  <label for="listing_landlord_phone_number">Landlord Phone Number:</label> <br/>  <%=f.text_field :landlord_phone_number%> <br/>
+  <label for="listing_broker_phone_number">Broker Phone Number:</label> <br/>  <%=f.text_field :broker_phone_number%> <br/>
+  <label for="listing_sq_footage">Sq Footage:</label> <br/>  <%=f.text_field :sq_footage%> <br/>
+  <label for="listing_ceiling_height">Ceiling Height:</label> <br/>  <%=f.text_field :ceiling_height%> <br/>
+  <label for="listing_convertable">Convertable:</label><br/>  <%= yes_no_select f, :convertable%>  <br/>
+  <label for="listing_separate_kitchen">Separate Kitchen:</label><br/>  <%= yes_no_select f, :separate_kitchen%>  <br/>
+  
+  <p>
+  <div id="room1_info">
+  <h3>Bedroom #1</h3>
+   <% fields_for("room[1]") do |f_room| %> 
+  
+  <label for="listing_cross_street">Length:</label>  <%=f_room.text_field :length%> &nbsp;&nbsp;
+  <label for="listing_cross_street">Width:</label>  <%=f_room.text_field :width%> &nbsp;&nbsp; <br/>
+  <label for="hm">Light:</label>   <%= f_room.collection_select :light_level, @light_levels, :id, :name, {:include_blank=>'Select'} %>&nbsp;&nbsp;
+  <label for="hm">Window Direction:</label>  <%= f_room.collection_select :direction, @directions, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <%end %>
+  </div>
+  <div id="room2_info">
+  <h3>Bedroom #2</h3>
+   <% fields_for(:room2) do |f_room| %> 
+  
+  <label for="listing_cross_street">Length:</label>  <%=f_room.text_field :length%> &nbsp;&nbsp;
+  <label for="listing_cross_street">Width:</label>  <%=f_room.text_field :width%> &nbsp;&nbsp; <br/>
+  <label for="hm">Light:</label>   <%= f_room.collection_select :light_level, @light_levels, :id, :name, {:include_blank=>'Select'} %>&nbsp;&nbsp;
+  <label for="hm">Window Direction:</label>  <%= f_room.collection_select :direction, @directions, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <%end %>
+  </div>
+  <div id="room3_info">
+  <h3>Bedroom #3</h3>
+   <% fields_for(:room3) do |f_room| %> 
+  
+  <label for="listing_cross_street">Length:</label>  <%=f_room.text_field :length%> &nbsp;&nbsp;
+  <label for="listing_cross_street">Width:</label>  <%=f_room.text_field :width%> &nbsp;&nbsp; <br/>
+  <label for="hm">Light:</label>   <%= f_room.collection_select :light_level, @light_levels, :id, :name, {:include_blank=>'Select'} %>&nbsp;&nbsp;
+  <label for="hm">Window Direction:</label>  <%= f_room.collection_select :direction, @directions, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <%end %>
+  </div>
+  <div id="room4_info">
+  <h3>Bedroom #4</h3>
+   <% fields_for(:room4) do |f_room| %> 
+  
+  <label for="listing_cross_street">Length:</label>  <%=f_room.text_field :length%> &nbsp;&nbsp;
+  <label for="listing_cross_street">Width:</label>  <%=f_room.text_field :width%> &nbsp;&nbsp; <br/>
+  <label for="hm">Light:</label>   <%= f_room.collection_select :light_level, @light_levels, :id, :name, {:include_blank=>'Select'} %>&nbsp;&nbsp;
+  <label for="hm">Window Direction:</label>  <%= f_room.collection_select :direction, @directions, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <%end %>
+  </div>
+  <div id="livingroom_info">
+  <h3>Living Room</h3>
+   <% fields_for(:living_room) do |f_room| %> 
+  
+  <label for="listing_cross_street">Length:</label>  <%=f_room.text_field :length%> &nbsp;&nbsp;
+  <label for="listing_cross_street">Width:</label>  <%=f_room.text_field :width%> &nbsp;&nbsp; <br/>
+  <label for="hm">Light:</label>   <%= f_room.collection_select :light_level, @light_levels, :id, :name, {:include_blank=>'Select'} %>&nbsp;&nbsp;
+  <label for="hm">Window Direction:</label>  <%= f_room.collection_select :direction, @directions, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <%end %>
+  </div>
+  </p>
+  
+  <label for="listing_multi_level">Multi Level:</label><br/>  <%= yes_no_select f, :multi_level%>  <br/>
+  <label for="listing_penthouse">Penthouse:</label><br/>  <%= yes_no_select f, :penthouse%>  <br/>
+  <label for="listing_private_entrance">Private Entrance:</label><br/>  <%= yes_no_select f, :private_entrance%>  <br/>
+  <label for="listing_balcony">Balcony:</label><br/>  <%= yes_no_select f, :balcony%>  <br/>
+  <label for="listing_patio">Patio:</label><br/>  <%= yes_no_select f, :patio%>  <br/>
+  <label for="listing_back_yard">Back Yard:</label><br/>  <%= yes_no_select f, :back_yard%>  <br/>
+  <label for="listing_gym">Gym:</label><br/>  <%= yes_no_select f, :gym%>  <br/>
+  <label for="listing_laundry">Laundry:</label><br/>  <%= yes_no_select f, :laundry%>  <br/>
+  <label for="listing_roaches">Roaches:</label><br/>  <%= yes_no_select f, :roaches%>  <br/>
+  <label for="listing_rodents">Rodents:</label><br/>  <%= yes_no_select f, :rodents%>  <br/>
+  <label for="listing_broadband">Broadband:</label><br/>  <%= yes_no_select f, :broadband%>  <br/>
+  
+  <label for="listing_floor_type">Floor_Type</label> <br/>  <%= f.collection_select :floor_type, @floor_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_heat_q">Heat:</label> <br/>  <%= f.collection_select :heat_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_heat_q">A/C Type:</label> <br/>  <%= f.collection_select :ac_type, @ac_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_maintenance_q">Maintenance:</label> <br/>  <%= f.collection_select :maintenance_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_appliance_q">Appliances:</label> <br/>  <%= f.collection_select :appliance_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_bathroom_q">Bathroom Fixtures:</label> <br/>  <%= f.collection_select :bathroom_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_cellphone_q">Cellphone Signal:</label> <br/>  <%= f.collection_select :cellphone_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <label for="listing_street_noise_level">Street Noise:</label> <br/>  <%= f.collection_select :street_noise_level, @noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_nbors_noise_level">Neighbor Noise:</label> <br/>  <%= f.collection_select :nbors_noise_level, @noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <label for="listing_cellphone_q">Cellphone Signal:</label> <br/>  <%= f.collection_select :cellphone_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  
+  <label for="listing_comment">Other Comments:</label> <br/>  <%=f.text_area :comment%> <br/>
+  
+  </p>
+  <%= f.submit "Next >>" %>
+<% end %>
+
+<%= link_to 'Back', listings_path %>

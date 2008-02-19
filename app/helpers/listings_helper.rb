@@ -1,0 +1,4 @@
+module ListingsHelper
+
+
+end

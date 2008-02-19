@@ -1,0 +1,12 @@
+<h1>Editing visual</h1>
+
+<%= error_messages_for :visual %>
+
+<% form_for(@visual) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @visual %> |
+<%= link_to 'Back', visuals_path %>
