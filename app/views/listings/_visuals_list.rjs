@@ -1,7 +1,0 @@
-<iframe id="upload_frame" name="upload_frame">
-
-<% @listing.visuals.each do |visual|-%>
-  <%=image_tag visual.public_filename(:thumb)%></br></br>
-<%end-%>
-
-</iframe>

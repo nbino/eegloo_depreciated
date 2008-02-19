@@ -1,1 +1,0 @@
-page.replace_html("broker_flags_#{@listing.id}" , @listing.broker_flags.length.to_s)
