@@ -41,18 +41,19 @@ class ListingInfosController < ApplicationController
     @street_noise_levels = StreetNoiseLevel.find :all
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
-    
+    @pets_choices = Pets.find :all
     @floor_types = FloorType.find(:all)
     @ac_types = AcType.find(:all)
     @light_levels = LightLevel.find(:all)
     @window_directions = WindowDirection.find(:all)
     
     apt_type = @listing.apt_type
-    apt_type.bedrooms.times {|i| @listing_info.bedrooms[i] = Bedroom.new}
-    @is_livingroom = apt_type.livingroom?
+    
+    #apt_type.bedrooms.times {|i| @listing_info.bedrooms[i] = Bedroom.new}
+    #@is_livingroom = apt_type.livingroom?
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => "main" }# new.html.erb
       format.xml  { render :xml => @listing_info }
     end
   end
@@ -74,7 +75,7 @@ class ListingInfosController < ApplicationController
         format.html { redirect_to :controller=>:listings}
         format.xml  { render :xml => @listing_info, :status => :created, :location => @listing_info }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "new", :layout => "main" }
         format.xml  { render :xml => @listing_info.errors, :status => :unprocessable_entity }
       end
     end

@@ -10,7 +10,7 @@ class CreateAttrValues < ActiveRecord::Migration
   
 # searh assumes that qualitative values should range from bad to good  
 
-    %w{Loud Some noise Quiet}.each do |name| 
+    %w{Quiet Ok Noisy}.each do |name| 
       NborsNoiseLevel.create :name => name
       StreetNoiseLevel.create :name => name
     end
@@ -26,10 +26,9 @@ class CreateAttrValues < ActiveRecord::Migration
       AppliancesQ.create :name => name
       CellphoneQ.create :name => name
       MaintenanceQ.create :name => name
-      HeatQ.create :name => name
     end
     
-    ['No', 'Cats', 'Dogs', 'Cats and Dogs'].each {|name| Pets.create :name => name}
+    ['No', 'Cats', 'Dogs', 'Cats & Dogs'].each {|name| Pets.create :name => name}
     
     %w{Carpet Hardwood Linoleum}.each {|name| FloorType.create :name => name}
     

@@ -1,4 +1,12 @@
 class UsersController < ApplicationController
+  
+  # def login
+  #   respond_to do |format| 
+  #     format.html { render :layout => "main"}
+  #   end
+  # end
+  
+  
   # GET /users
   # GET /users.xml
   def index
@@ -29,7 +37,7 @@ class UsersController < ApplicationController
     @apt_types = AptType.find :all
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout =>"main" }# new.html.erb
       format.xml  { render :xml => @user }
     end
   end
@@ -49,11 +57,15 @@ class UsersController < ApplicationController
         session[:user_id] = @user.id
         
         flash[:notice] = 'User was successfully created.'
-        format.html { redirect_to new_listing_visual_url(@user.listing)  }
+        
+        # EP: skip over the pictures initially
+        # format.html { redirect_to new_listing_visual_url(@user.listing)  }
+        
+        format.html { redirect_to new_listing_listing_info_url(@user.listing)  }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
         
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "new", :layout => "main" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
@@ -70,7 +82,7 @@ class UsersController < ApplicationController
         format.html { redirect_to(@user) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "edit", :layout => "main" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end

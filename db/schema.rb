@@ -113,14 +113,13 @@ ActiveRecord::Schema.define(:version => 9) do
     t.integer  "size"
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "type"
     t.string   "content_type"
     t.string   "filename"
     t.string   "thumbnail"
     t.string   "comment"
-    t.string   "#<ActiveRecord::ConnectionAdapters::TableDefinition:0x3e833a4>"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

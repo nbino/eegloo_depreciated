@@ -1,14 +1,17 @@
+<div class="post">
+	<span style="float:left;">Search
+	results for "[searchterm]"</span>
+	<span style="float:right;">
+		<select>
+			<option>Sort...</option>
+			<option value="rent">Rent</option>
+			<option value="popularity">Popularity</option>
+			<option value="rating">Rating</option>
+		</select>
+	</span>
+	<div class="line"></div>
+</div>
 
-<table width=100% cellspacing="5">
-<tr>
-<td>Sort by: <a href="#">price</a>, <a href="#">popularity</a>, <a href="#">rating</a></td>
-</tr>
-<tr>
-<td bgcolor="#ADD8E6">
 <%= render(:partial => '/shared/listing' ,
-      :collection => @listings,
-      :spacer_template => '/shared/listing_list_spacer' )
+      	   :collection => @listings )
 %>
-</td>
-</tr>
-</table>

@@ -80,11 +80,9 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.xml
   def show
-    #@listing = Listing.find(params[:id])
-   
-    
+    @listing = Listing.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout => "main" }
       format.xml  { render :xml => @listing }
     end
   end

@@ -1,12 +1,62 @@
+<!-- start leftbar render :partial=>'search_form' -->
+
+	<div id="leftbar">
+	<ul>
+	      <li id="search">
+    <h2><b>Search</b></h2>
+    <form method="get" action="">
+       <input class="text" type="text" size="15"/>
+    </form>
+	    <div style="text-align: center;" class="single"><br />e.g. "2br Chelsea $1000-2000"</div>
+	  </li>
+	  <li>
+	    <h2 style="font-weight: bold;">refine <span style="font-weight: normal;">search</span></h2>
+	    <ul>
+	      <li><a href="#">Fusce dui neque fringilla</a></li>
+	      <li><a href="#">Eget tempor eget nonummy</a></li>
+	      <li><a href="#">Magna lacus bibendum mauris</a></li>
+	      <li><a href="#">Nec metus sed donec</a></li>
+	      <li><a href="#">Magna lacus bibendum mauris</a></li>
+	      <li><a href="#">Velit semper nisi molestie</a></li>
+	      <li><a href="#">Eget tempor eget nonummy</a></li>
+	    </ul>
+	  </li>
+	  <li>
+	    <h2><b>sponsored&nbsp;</b>results</h2>
+	    <div class="single">Testing</div>
+	  </li>
+	</ul>
+	</div>
+<!-- end leftbar -->
+
+<!-- start content -->
+	<div id="content">
+	
+	
+		<%=render :partial=>'/shared/listing_list'%>
 
 
-<table width="100%" CELLSPACING=5>
-  <tr>
-  <td width="175" bgcolor="#6699CC" valign="top">
-  <%= render :partial=>'search_form'%>
-  </td>
-  <td valign="top">
-  <%=render :partial=>'/shared/listing_list'%>
-  </td>
-  </tr>
-</table>
+	</div>
+
+<!-- end content -->
+
+<!-- start rightbar -->
+	<div id="rightbar">
+		<ul>
+		  <li id="search">
+		    <h2><b>Map</b></h2>
+		    <div id="map" style="position:absolute;"><img class="bordered_img" style="width: 300px; height: 300px;" alt="" src="/images/map.gif" /> </li></ul></div>
+		    <script type="text/javascript">
+
+    	var slideEffect = new Fx.Style('map', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
+		window.addEvent('load', function() {
+		var top = $('map').getPosition().y - 10;
+		window.addEvent('scroll', function(){
+      		slideEffect.start.delay(600, slideEffect, Math.max(0, document.documentElement.scrollTop - top));
+   		 });
+		new SmoothScroll({duration:700, transition:Fx.Transitions.circOut});
+  		});
+
+    </script>
+	</div>
+<!-- end rightbar -->
