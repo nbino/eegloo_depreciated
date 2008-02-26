@@ -1,0 +1,416 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>[unnamed real estate site 2]</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <link href="default.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="mootools.js"></script>
+
+<link rel="stylesheet" type="text/css" href="ext-all.css" />
+<script type="text/javascript" src="ext-base.js"></script>
+<script type="text/javascript" src="ext-all.js"></script>
+
+</head>
+
+
+<body>
+<!-- start header -->
+<div id="header">
+	<div id="logo">
+		<h1><a href="#"><span style="font-weight: bold;">jones</span>rent<sup>alpha</sup></a></h1>
+		<h2>&nbsp; &nbsp; &nbsp;empowering renters since 2008.</h2>
+	</div>
+	<div id="menu">
+		<ul id="menuul">
+		  <li class="active">home</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>login / signup</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+	var list = $$('#menuul li');
+	list.each(function(element) {
+
+		var fx = new Fx.Styles(element, {duration:200, wait:false});
+
+		element.addEvent('mouseenter', function(){
+			fx.start({
+				'padding-top': 30,
+				'background-color': '#666',
+				color: '#FFFFFF'
+			});
+		});
+
+		element.addEvent('mouseleave', function(){
+			fx.start({
+				'padding-top': 7,
+				'background-color': '#b31b1b',
+				'color': '#FFF'
+			});
+		});
+
+		});
+		</script>
+</div>
+
+<!-- end header -->
+
+<!-- start page -->
+<div id="page">
+
+<!-- start leftbar -->
+	<div id="leftbar">
+		<ul>
+	    <li id="search">
+	    <h2><b>Search</b></h2>
+	    <form method="get" action="">
+	       <input class="text" type="text" />
+	    </form>
+		    <div style="text-align: center;" class="single"><br />e.g. "2br Chelsea $1000-2000"</div>
+		  </li>
+		  <li>
+		    <h2 style="font-weight: bold;">refine <span style="font-weight: normal;">search</span></h2>
+		    <ul>
+		      <li><a href="#">Fusce dui neque fringilla</a></li>
+		      <li><a href="#">Eget tempor eget nonummy</a></li>
+		      <li><a href="#">Magna lacus bibendum mauris</a></li>
+		      <li><a href="#">Nec metus sed donec</a></li>
+		      <li><a href="#">Magna lacus bibendum mauris</a></li>
+		      <li><a href="#">Velit semper nisi molestie</a></li>
+		      <li><a href="#">Eget tempor eget nonummy</a></li>
+		    </ul>
+		  </li>
+		  <li>
+		    <h2><b>sponsored&nbsp;</b>results</h2>
+		    <div class="single">Testing</div>
+		  </li>
+		</ul>
+	</div>
+<!-- end leftbar -->
+<!-- start content -->
+
+	<div id="fullcontent">
+
+        <div id="listview">
+        <fieldset class="colored"><legend class="colored bigtext"><strong>The Atlas</strong> - 66 W. 38th St, New York</legend>
+
+		<ul>
+          <!-- <img class="right" src="images/mapview.gif" width="400" height="500"/> -->
+		  <div id="viewmapouter">
+			<div id="yelp-inputdiv">
+			    <input type="text" id="yelp-input" size="20"/>
+			</div>
+			<div id="viewmap"></div>
+		  </div>
+		
+		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAoTxjcscTPeNniIcHVHOnLRQB8YSA1xJSjpLwFJKRsAnUFEZj6xRq47GZaHePBFWEJb3_UcaQ5438FA"
+        type="text/javascript"></script>
+		  	<script type="text/javascript">
+
+   var YWSID = "-yb90ZjSY4KwDecRo73C3A"; // common required parameter (api key)
+    var map = null;
+    var icon = null;
+	var homelatlng = new GLatLng(40.752068, -73.985005);
+    /*
+     * Creates the map object and calls setCenterAndBounds
+     * to instantiate it.
+     */
+    function load() {
+        map = new GMap2(document.getElementById("viewmap"));
+        GEvent.addListener(map, "load", function() {updateMap("restaurants");});
+        map.setCenter(homelatlng,15);
+        map.addControl(new GSmallMapControl());
+
+        // map.setMapType(G_HYBRID_MAP);
+
+        // if (window.attachEvent) window.attachEvent("onresize", function() { map.checkResize()} );
+        // else if (window.addEventListener) window.addEventListener("resize", function() { map.checkResize()}, false);
+
+        // setup our marker icon
+        icon = new GIcon();
+        icon.image = "images/icons/marker_star.png";
+        icon.shadow = "images/icons/marker_shadow.png";
+        icon.iconSize = new GSize(20, 29);
+        icon.shadowSize = new GSize(38, 29);
+        icon.iconAnchor = new GPoint(15, 29);
+        icon.infoWindowAnchor = new GPoint(15, 3);
+    }
+
+    /*
+     * Construct the URL to call for the API request
+     */
+    function constructYelpURL(term) {
+        var mapBounds = map.getBounds();
+        var URL = "http://api.yelp.com/" +
+            "business_review_search?"+
+            "callback=" + "handleResults" +
+            "&term=" + term +
+            "&num_biz_requested=20" +
+            "&tl_lat=" + mapBounds.getSouthWest().lat() +
+            "&tl_long=" + mapBounds.getSouthWest().lng() +
+            "&br_lat=" + mapBounds.getNorthEast().lat() +
+            "&br_long=" + mapBounds.getNorthEast().lng() +
+            "&ywsid=" + YWSID;
+        return encodeURI(URL);
+    }
+
+    /*
+     * Called on the form submission: updates the map by
+     * placing markers on it at the appropriate places
+     */
+    function updateMap(term) {
+        // turn on spinner animation
+        //document.getElementById("spinner").style.visibility = 'visible';
+
+        var yelpRequestURL = constructYelpURL(term);
+
+        /* clear existing markers */
+        map.clearOverlays();
+
+
+        /* add the center marker */
+
+        var marker = new GMarker(homelatlng);
+         map.addOverlay(marker);
+
+        /* do the api request */
+        var script = document.createElement('script');
+        script.src = yelpRequestURL;
+        script.type = 'text/javascript';
+        var head = document.getElementsByTagName('head').item(0);
+        head.appendChild(script);
+        return false;
+    }
+
+    /*
+     * If a sucessful API response is received, place
+     * markers on the map.  If not, display an error.
+     */
+    function handleResults(data) {
+        // turn off spinner animation
+        //document.getElementById("spinner").style.visibility = 'hidden';
+
+        if(data.message.text == "OK") {
+            if (data.businesses.length == 0) {
+                alert("Error: No businesses were found near that location");
+                return;
+            }
+            for(var i=0; i<data.businesses.length; i++) {
+                biz = data.businesses[i];
+                createMarker(biz, new GLatLng(biz.latitude, biz.longitude), i);
+            }
+        }
+        else {
+            alert("Error: " + data.message.text);
+        }
+    }
+
+    /*
+     * Formats and returns the Info Window HTML
+     * (displayed in a balloon when a marker is clicked)
+     */
+    function generateInfoWindowHtml(biz) {
+        var text = '<div id="marker" class="marker">';
+
+        // image and rating
+        //text += '<img class="businessimage" src="'+biz.photo_url+'"/>';
+
+        // div start
+        text += '<div class="businessinfo">';
+
+        // name/url
+        text += '<a href="'+biz.url+'" target="_blank">'+biz.name+'</a> - '+formatCategories(biz.categories);
+       
+        // categories
+        //text += formatCategories(biz.categories);
+        // neighborhoods
+        //if(biz.neighborhoods.length)
+        //    text += formatNeighborhoods(biz.neighborhoods);
+        // address
+        text += biz.address1 + '<br/>';
+        // address2
+        if(biz.address2.length)
+            text += biz.address2; // + '<br/>';
+        // city, state and zip
+        //text += biz.city + ',&nbsp;' + biz.state + '&nbsp;' + biz.zip + '<br/>';
+        // phone number
+        //if(biz.phone.length)
+        //    text += formatPhoneNumber(biz.phone);
+        // Read the reviews
+        //text += '<br/><a href="'+biz.url+'" target="_blank">Read the reviews »</a><br/>';
+        // div end
+
+		// stars
+        text += '<br/><img class="ratingsimage" src="'+biz.rating_img_url_small+'"/>';
+
+		 // reviews
+	    text += ' ' + biz.review_count + '&nbsp;reviews';
+
+        text += '</div></div>'
+        return text;
+    }
+
+    /*
+     * Formats the categories HTML
+     */
+    function formatCategories(cats) {
+        var s = '';
+        for(var i=0; i<cats.length; i++) {
+            s+= cats[i].name;
+            if(i != cats.length-1) s += ', ';
+        }
+        s += '<br/>';
+        return s;
+    }
+
+    /*
+     * Formats the neighborhoods HTML
+     */
+    function formatNeighborhoods(neighborhoods) {
+        s = 'Neighborhoods: ';
+        for(var i=0; i<neighborhoods.length; i++) {
+            s += '<a href="' + neighborhoods[i].url + '" target="_blank">' + neighborhoods[i].name + '</a>';
+            if (i != neighborhoods.length-1) s += ', ';
+        }
+        s += '<br/>';
+        return s;
+    }
+
+    /*
+     * Formats the phone number HTML
+     */
+    function formatPhoneNumber(num) {
+        if(num.length != 10) return '';
+        return '(' + num.slice(0,3) + ') ' + num.slice(3,6) + '-' + num.slice(6,10) + '<br/>';
+    }
+
+    /*
+     * Creates a marker for the given business and point
+     */
+    function createMarker(biz, point, markerNum) {
+        var infoWindowHtml = generateInfoWindowHtml(biz)
+        var marker = new GMarker(point, icon);
+        map.addOverlay(marker);
+        GEvent.addListener(marker, "click", function() {
+            marker.openInfoWindowHtml(infoWindowHtml, {maxWidth:"100px"});
+        });
+        // automatically open first marker
+        //if (markerNum == 0)    marker.openInfoWindowHtml(infoWindowHtml, {maxWidth:400});
+    }
+
+    load();
+
+		  </script>
+
+
+
+		
+		<script type="text/javascript">
+		// simple array store
+		var store = new Ext.data.SimpleStore({
+		    fields: ['txt'],
+		    data : [['restaurants'], ['gyms'], ['food'], ['bars']]
+		});
+		var combo = new Ext.form.ComboBox({
+		    store: store,
+		    displayField:'txt',
+		    typeAhead: true,
+		    mode: 'local',
+		    triggerAction: 'all',
+		    emptyText:'Show [restaurants]...',
+		    selectOnFocus:true,
+		    applyTo: 'yelp-input'
+		});
+		
+		combo.addListener("select", function(c,r,i) { updateMap(c.getValue()) }); 
+		combo.addListener("specialkey", function(f,e) { updateMap(f.getValue()) }); 
+			
+		
+		</script>
+
+
+          <li><label>rent</label>$3225</li>
+			<li><label>bedrooms / bathrooms</label>1/1</li>
+			<li><label>lease expiry</label>3/08</li>
+		  <li><label>landlord / super phone#</label>(212)123-4567</li>
+           <li><label>date posted / updated</label>2 days ago</li>
+           <li><label>posted by</label>joe</li>
+            <li>&nbsp;</li>
+          <li><div  id="viewtoolbar" align="center"><span class="boxspan">add to favorites | share | contact poster | flag</span></div></li>
+        	 <!-- <li class="img"> -->
+        	 	<a href="images/stock_apt1_full.jpg" rel="lightbox[aptview]">
+        			<img src="images/stock_apt1_small.jpg" alt="" width="80" height="73" />
+        	 	</a>
+        	 	<a href="images/stock_apt1_full.jpg" rel="lightbox[aptview]">
+				        			<img src="images/stock_apt1_small.jpg" alt="" width="80" height="73" />
+        	 	</a>
+        	 	<a href="images/stock_apt1_full.jpg" rel="lightbox[aptview]">
+				        			<img src="images/stock_apt1_small.jpg" alt="" width="80" height="73" />
+        	 	</a>
+
+        	 <!-- </li> -->
+
+
+			<li class="line">basic amenities</li><li class="line">&nbsp;</li>
+			<li><label>elevator</label>yes</li>
+            <li><label>kitchen</label>yes</li>
+            <li><label>bathroom</label>yes</li>
+            <li><label>heat & a/c</label>yes</li>
+            <li><label>laundry</label>yes</li>
+            <li><label>doorman</label>yes</li>
+            <li><label>misc</label>n/a</li>
+            <li>&nbsp;</li>
+			<li class="line">quality of life</li><li class="line">&nbsp;</li>
+			<li class="whole"><label>subway/transport options</label>close to BDFV/NRW</li>
+			<li class="whole"><label>dining options</label>big bowl noodles, other than that, nonexistent</li>
+			<li class="whole"><label>grocery options</label>nonexistent</li>
+			<li><label>cellphone signal</label>great (tmobile)</li>
+            <li class="whole"><label>noise</label>no issues</li>
+            <li class="whole"><label>lighting</label>plenty of sunlight</li>
+			<li class="line">technical</li><li class="line">&nbsp;</li>
+			<li><label>square footage (approx ft)</label>[not provided]</li>
+			<li><label>ceiling height (approx ft)</label>[not provided]</li>
+
+			<li class="line">rental story</li><li>&nbsp;</li>
+			<li class="whole">good times good times good times good times good times good times good times good times good times good times good times
+		</ul>
+        </fieldset>
+
+        <div class="boxdiv" id="comments">
+        	<ul>
+        		<li><b>1 comment.</b></li>
+        		<li class="line">This is a comment.<div><i>username</i></div></li>
+        		<li class="line">This is another comment.<div><i>username</i></div></li>
+        		<li>&nbsp;</li>
+        		<li class="line"><b>post a comment</b></li>
+        		<li><div align="right" style="padding-right:100px""><textarea rows="10" cols="50"></textarea><br/><input type="button" class="button" value="post"/></div></li>
+    		</ul>
+        </div>
+
+        </div>
+		</div>
+  	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end page -->
+<!-- start footer -->
+<div id="footer">
+	<div class="wrap">
+		<div id="fbox1" class="box2"></div>
+		<div id="fbox2" class="box2"></div>
+		<div id="fbox3" class="box2"></div>
+	</div>
+	<p id="legal">(c) 2008. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> & ep.</p>
+</div>
+<!-- end footer -->
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>[unnamed real estate site 2]</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <link href="default.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript" src="mootools.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="ext-all.css" />
+<script type="text/javascript" src="ext-base.js"></script>
+<script type="text/javascript" src="ext-all.js"></script>
+<script type="text/javascript" src="edit-grid.js"></script> -->
+
+<script type="text/javascript" src="formvalidate.js"></script>
+</head>
+
+
+<body>
+<!-- start header -->
+<div id="header">
+	<div id="logo">
+		<h1><a href="#"><span style="font-weight: bold;">jones</span>rent<sup>alpha</sup></a></h1>
+		<h2>&nbsp; &nbsp; &nbsp;empowering renters since 2008.</h2>
+	</div>
+	<div id="menu">
+		<ul id="menuul">
+		  <li class="active">home</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>test</li>
+		  <li>login / signup</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+	var list = $$('#menuul li');
+	list.each(function(element) {
+
+		var fx = new Fx.Styles(element, {duration:200, wait:false});
+
+		element.addEvent('mouseenter', function(){
+			fx.start({
+				'padding-top': 30,
+				'background-color': '#666',
+				color: '#FFFFFF'
+			});
+		});
+
+		element.addEvent('mouseleave', function(){
+			fx.start({
+				'padding-top': 7,
+				'background-color': '#b31b1b',
+				'color': '#FFF'
+			});
+		});
+
+		});
+		</script>
+</div>
+
+<!-- end header -->
+<!-- start page -->
+<div id="page">
+	<!-- start sidebar -->
+<div id="leftbar">
+<ul>
+
+  <li id="search">
+    <h2><b>Search</b></h2>
+    <form method="get" action="">
+       <input class="text" type="text" />
+    </form>
+
+  </li>
+
+  <li>
+    <h2><b>toolbar</b></h2>
+
+    <ul>
+
+      <li><a href="#">Fusce dui neque fringilla</a></li>
+      <li><a href="#">Eget tempor eget nonummy</a></li>
+      <li><a href="#">Magna lacus bibendum mauris</a></li>
+      <li><a href="#">Nec metus sed donec</a></li>
+      <li><a href="#">Magna lacus bibendum mauris</a></li>
+      <li><a href="#">Velit semper nisi molestie</a></li>
+      <li><a href="#">Eget tempor eget nonummy</a></li>
+
+    </ul>
+
+  </li>
+
+  <li>
+    <h2><b>refine&nbsp;</b>search</h2>
+    <ul>
+      <li><a href="#">Nec metus sed donec</a></li>
+      <li><a href="#">Magna lacus bibendum mauris</a></li>
+      <li><a href="#">Velit semper nisi molestie</a></li>
+      <li><a href="#">Eget tempor eget nonummy</a></li>
+      <li><a href="#">Nec metus sed donec</a></li>
+      <li><a href="#">Magna lacus bibendum mauris</a></li>
+      <li><a href="#">Velit semper nisi molestie</a></li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+
+<!-- start content -->
+<div id="fullcontent">
+
+<div align="center"><span class="boxspan selected" id="chooseny">I'm a current NYC renter!</span><span class="boxspan" id="chooseoot">I'm from out of town!</span></div>
+
+
+<div style="clear: both;">&nbsp;</div>
+<div id="nyform">
+<div id="accordion">
+	<form>
+	<h3 id="required_header" class="toggler atStart">
+		<span class="arrow" id="arrow"><img src="images/px.gif" height="1px" width="16px"/></span>
+		<span class="togglerheader">required info</span>
+		<span id="required_togglercheck" class="togglercheck"><img src="images/px.gif" height="1px" width="16px"/></span>
+	</h3>
+	<div class="element atStart">
+
+			<ol>
+				<li><label>username</label><input name="username" class="text required" type="text" size="10" onkeyup="validate(this)"/><span id="username_error"></span></li>
+				<li><label>password</label><input name="password" class="text required" type="password" size="10" onkeyup="validate(this)"/><span id="password_error"></span></li>
+				<li><label>email</label><input name="email" class="text required" type="text" size="20" onkeyup="validate(this)"/><span id="email_error"></span></li>
+				<li class="line"><label>street address</label><input name="streetaddress" class="text required" type="text" size="20" onkeyup="validate(this)"/><span id="streetaddress_error"></span>
+					&nbsp;<b>zip</b>&nbsp;&nbsp;<input name="zip" class="text required" type="text" size="4" onkeyup="validate(this)"/><span id="zip_error"></span></li>
+                   <li><label>name of property</label><input name="nameofproperty" class="text optional" type="text" size="20"/></li>
+				<li class="line"><label>lease expiry</label><input name="leaseexpiry" class="text required" type="text" size="8" onkeyup="validate(this)"/><span id="leaseexpiry_error"></span></li>
+				<li><label>number of bedrooms</label>
+					<select class="required" name="numberofbedrooms" onmousedown="validate(this)">
+						<option value="...">...</option>
+						<option value="studio">studio</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5+">5+</option>
+					</select><span id="numberofbedrooms_error"></span>
+					&nbsp;&nbsp;&nbsp;room in a shared apt? <input type="checkbox" name="roominshare" value="true" class="optional required"/>
+				</li>
+				<li><label>number of bathrooms</label>
+						<select name="numberofbathrooms" onmousedown="validate(this)" class="required">
+							<option value="...">...</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3+">3+</option>
+						</select><span id="numberofbathrooms_error"></span>
+				</li>
+				<li><label>rent/month ($)</label><input name="rent" class="text required" type="text" size="5" onkeyup="validate(this)"/><span id="rent_error"></span></li>
+			</ol>
+			<div style="clear:both"></div>
+	</div>
+	<h3 class="toggler atStart">
+		<span class="arrow" id="arrow"><img src="images/px.gif" height="1px" width="16px"/></span>
+		<span class="togglerheader">pictures & videos</span>
+		<span class="togglercheck"><img src="images/px.gif" height="1px" width="16px"/></span>
+	</h3>
+	<div class="element atStart">
+		<ol>
+			<li><label>picture</label><input name="picture" class="text required" type="text" size="11" onkeyup="validate(this)"/><span id="landlordphone_error"></span></li>
+		</ol>
+		<div style="clear:both"></div>
+	</div>
+		<h3 class="toggler atStart">
+			<span class="arrow" id="arrow"><img src="images/px.gif" height="1px" width="16px"/></span>
+			<span class="togglerheader">landlord info</span>
+			<span class="togglercheck"><img src="images/px.gif" height="1px" width="16px"/></span>
+		</h3>
+		<div class="element atStart">
+			<ol>
+				<li><label>landlord/super phone #</label><input name="landlordphone" class="text required" type="text" size="11" onkeyup="validate(this)"/><span id="landlordphone_error"></span></li>
+			</ol>
+			<div style="clear:both"></div>
+	</div>
+	<h3 class="toggler atStart">
+		<span class="arrow" id="arrow"><img src="images/px.gif" height="1px" width="16px"/></span>
+		<span class="togglerheader">the details</span>
+		<span class="togglercheck"><img src="images/px.gif" height="1px" width="16px"/></span>
+	</h3>
+
+	<div class="element atStart">
+		<br/><li class="line">basic amenities</li>
+
+			<ol>
+				<li><label>elevator</label>
+					<select class="required" name="elevator" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="yes">yes</option>
+					  <option value="no">no</option>
+					</select><span id="elevator_error"></span>
+				</li>
+
+				<li><label>kitchen</label>
+
+					<select class="required" name="kitchenquality" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="likenew">like new</option>
+					  <option value="ok" >ok</option>
+					  <option value="old">old</option>
+					</select><span id="kitchenquality_error"></span>
+
+					&nbsp;&nbsp;comments&nbsp;&nbsp;
+					<input name="kitchenquality_c" class="text optional" type="text" size="20" onkeyup="validate(this)"/>
+
+				</li>
+
+				<li><label>bathroom</label>
+
+					<select class="required" name="bathroomquality" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="likenew">like new</option>
+					  <option value="ok">ok</option>
+					  <option value="old">old</option>
+					</select><span id="bathroomquality_error"></span>
+					&nbsp;&nbsp;comments&nbsp;&nbsp;
+					<input name="bathroomquality_c" class="text optional" type="text" size="20" onkeyup="validate(this)"/>
+
+				</li>
+
+				<li><label>heat & a/c</label>
+					<select class="required" name="heatandac" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="no_ac">no a/c</option>
+					  <option value="central_heat">central heating</option>
+					  <option value="individual_unit">individual unit</option>
+					  <option value="window_unit">window unit</option>
+					</select><span id="heatandac_error"></span>&nbsp;&nbsp;comments&nbsp;&nbsp;
+					<input name="heatandac_c" class="text optional" type="text" size="20" onkeyup="validate(this)"/>
+				</li>
+
+				<li><label>laundry</label>
+					<select class="required" name="laundry" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="none_onsite" >none onsite</option>
+					  <option value="coin_laundry">coin laundry</option>
+					  <option value="card_laundry">card laundry</option>
+					</select><span id="laundry_error"></span>&nbsp;&nbsp;comments&nbsp;&nbsp;
+					<input name="laundry_c" class="text optional" type="text" size="20" onkeyup="validate(this)"/>
+				</li>
+
+				<li><label>doorman</label>
+					<select class="required" name="doorman" onmousedown="validate(this)">
+					  <option value="...">...</option>
+					  <option value="no_doorman">no doorman</option>
+					  <option value="great">great</option>
+					  <option value="ok">ok</option>
+					  <option value="useless">useless</option>
+					</select>&nbsp;&nbsp;comments&nbsp;&nbsp;
+					<input name="doorman_c" class="text optional" type="text" size="20" onkeyup="validate(this)"/><span id="doorman_error"></span>
+				</li>
+
+				<li><label>misc</label>
+					balcony<input type="checkbox" name="misc_balcony" value="true"/>
+					patio<input type="checkbox" name="misc_patio" value="true"/>
+					backyard<input type="checkbox" name="misc_backyard" value="true"/>
+					penthouse<input type="checkbox" name="misc_penthouse" value="true"/>
+					private entrance<input type="checkbox" name="misc_privateentrance" value="true"/>
+				</li>
+
+			</ol>
+
+		<li class="line">quality of life</li>
+			<ol>
+				<li><label>cellphone signal</label>quality&nbsp;<select class="required" name="cellphone" onmousedown="validate(this)">
+				  <option value="...">...</option>
+				  <option value="great">great</option>
+				  <option value="spotty">spotty</option>
+				  <option value="no_coverage">no coverage</option>
+				</select>&nbsp;&nbsp;&nbsp;provider&nbsp;&nbsp;<input name="cellphoneprovider" class="text optional" type="text" size="10"/><span id="cellphone_error"></span></li>
+				<li><label>comment on noise level</label><input name="noise" class="text required" type="text" size="20" onkeyup="validate(this)"/><span id="noise_error"></span></li>
+				<li><label>comment on lighting</label><input name="lighting" class="text required" type="text" size="20" onkeyup="validate(this)"/><span id="lighting_error"></span></li>
+			</ol>
+
+		<li class="line">technical</li>
+			<ol>
+				<li><label>square footage (approx ft)</label><input name="squarefeet" class="text required" type="text" size="10" onkeyup="validate(this)"/><span id="squarefeet_error"></span></li>
+				<li><label>ceiling height (approx ft)</label><input name="ceilingheight" class="text required" type="text" size="10" onkeyup="validate(this)"/><span id="ceilingheight_error"></span></li>
+			</ol>
+			<div style="clear:both"></div>
+
+		<li class="line">story of your rental experience</li>
+
+			<div align="center"><textarea class="required" name="rentalstory" rows="10" cols="50" onkeyup="validate(this)"></textarea><span id="rentalstory_error"></span></div>
+			<div align="center" style="margin-bottom:20px">share a little more about your rental experience</div>
+		</div>
+
+
+		<h3 class="toggler atStart" id="lasttoggle">
+			<span class="arrow" id="arrow"><img src="images/px.gif" height="1px" width="16px"/></span>
+			<span class="togglerheader">invite friends</span>
+			<span class="togglercheck"><img src="images/px.gif" height="1px" width="16px"/></span>
+		</h3>
+		<div class="element atStart" id="lastelement">
+			<div style="width:250px;float:left;text-align:center">
+
+											<br/><br/><br/><br/>import contacts<br/>
+										    	<select name="select">
+										        	<option>gmail</option>
+										            <option>facebook</option>
+										            <option>yahoo</option>
+										            <option>hotmail</option>
+										         </select><br/>username<br/>
+										         <input id="address2" class="text" type="text" size="10"/><br/>
+										         password<br/><input id="address2" class="text" type="text" size="10"/>
+										                	<br/><br/>
+										    <button id="get_import" type="button">
+											<img class="twelveem" src='images/icons/16-em-check.png'/>Get
+											</button>
+
+			</div>
+			<div style="float:left">
+				<ol>
+					<li>friend's email<br/>
+						<input id="inviteemail" class="text" type="text" size="30"/>
+						<button id="add_email" type="button"><img class="twelveem" src='images/icons/16-em-check.png'/>Add</button>
+					</li>
+					<li>
+						<div class="selected-box">
+						            <!-- SCROLLING LIST -->
+						            <div class="selected-list">
+						              <ul id="selected-list-ul">
+						                <li id="toAddRecipient" style="display: none;">
+						                  <p>To add contacts, click on the checkbox next to the person’s name/email.</p>
+						                </li>
+						              <li id="cnxSelected_rcy3@cornell.edu" class="">Richard Yeh</li><li id="cnxSelected_jcw48@cornell.edu" class="">Jeff Woodworth</li><li id="cnxSelected_jcwoodworth@gmail.com" class="">Jeff Woodworth</li><li id="cnxSelected_jwurtzel@metlife.com" class="">Joel Wurtzel</li><li id="cnxSelected_sulrich@professionalpt.com" class="">Spencer Ulrich</li><li id="cnxSelected_mt294@cornell.edu" class="">Michael Tsai</li><li id="cnxSelected_ctimm@wsgr.com" class="">Carol Timm</li><li id="cnxSelected_jthieberger@lowenstein.com" class="">Jane Thieberger</li><li id="cnxSelected_ct245@cornell.edu" class="">Christopher Tang</li><li id="cnxSelected_dcs35@cornell.edu" class="">David Sun</li><li id="cnxSelected_dsumma@stblaw.com" class="">Doug Summa</li></ul>
+						            </div>
+          				</div>
+					</li>
+					<li>subject<br/><input id="address" class="text" type="text" size="30"/></li>
+					<li>message<br/><textarea rows="5" cols="40"></textarea></li>
+					<li>+ standard link text</li>
+				</ol>
+			</div>
+
+		</div>
+
+	</div></form>
+
+	<div align="center" style="margin-top:20px">
+
+	<button id="submit_button" type="submit" class="negative">
+	        <img class="twelveem" src='images/icons/16-em-cross.png'/>Submit
+    </button>
+
+	<span id="submit_error">please complete the required info</span></div>
+
+
+</div>
+<div id="ootform"><b>Don't fret!</b>  We'll still let you have access to our listings, but first you'll have to <b>help us out</b> and invite 5 friends to signup (psst - pass a link along to all your NYC friends!). <br/><br/>Sorry for being a pain, but we're relying on your help to <b>grow our listings database</b> for the benefit of everyone (including you)!</div>
+<script type="text/javascript">
+
+
+
+
+var nySlide = new Fx.Slide('nyform');
+var ootSlide = new Fx.Slide('ootform');
+
+ootSlide.hide();
+
+$('chooseny').addEvent('click', function(e){
+
+	$('chooseny').setAttribute('class','boxspan selected');
+	$('chooseoot').setAttribute('class','boxspan');
+
+	e = new Event(e);
+	ootSlide.slideOut();
+	nySlide.slideIn();
+	e.stop();
+});
+
+$('chooseoot').addEvent('click', function(e){
+
+	$('chooseny').setAttribute('class','boxspan');
+	$('chooseoot').setAttribute('class','boxspan selected');
+
+	e = new Event(e);
+	nySlide.slideOut();
+	ootSlide.slideIn();
+	e.stop();
+});
+
+
+var accordion = new Accordion('h3.atStart', 'div.atStart', {
+	opacity: false,
+	onActive: function(toggler, element){
+		toggler.getElementsByTagName("span")[0].setAttribute('style','background: url(images/icons/arrow-down.gif) no-repeat left');
+		toggler.setStyle('color', '#b31b1b');
+		toggler.setStyle('margin-bottom', '0px');
+
+		if (element.id == 'lastelement') element.setStyle('border-bottom-width','1px');
+
+	},
+	onBackground: function(toggler, element){
+
+		toggler.getElementsByTagName("span")[0].setAttribute('style','background: url(images/icons/arrow-right.gif) no-repeat left');
+		toggler.setStyle('color', '#222');
+		toggler.setStyle('margin-bottom', '3px');
+
+		if (element.id == 'lastelement') element.setStyle('border-bottom-width','0px');
+	}
+}, $('accordion'));
+
+var newTog = new Element('h3', {'class': 'toggler'}).setHTML('Common descent');
+//var newEl = new Element('div', {'class': 'element'}).setHTML('<p>A group of organisms is said to have common descent if they have a common ancestor. In biology, the theory of universal common descent proposes that all organisms on Earth are descended from a common ancestor or ancestral gene pool.</p><p>A theory of universal common descent based on evolutionary principles was proposed by Charles Darwin in his book The Origin of Species (1859), and later in The Descent of Man (1871). This theory is now generally accepted by biologists, and the last universal common ancestor (LUCA or LUA), that is, the most recent common ancestor of all currently living organisms, is believed to have appeared about 3.9 billion years ago. The theory of a common ancestor between all organisms is one of the principles of evolution, although for single cell organisms and viruses, single phylogeny is disputed</p>');
+//accordion.addSection(newTog, newEl, 0);
+</script>
+
+</div>
+
+
+<div style="clear: both;">&nbsp;</div>
+
+</div>
+
+<!-- end page -->
+
+<!-- start footer -->
+<div id="footer">
+	<div class="wrap">
+		<div id="fbox1" class="box2"></div>
+		<div id="fbox2" class="box2"></div>
+		<div id="fbox3" class="box2"></div>
+	</div>
+	<p id="legal">(c) 2008. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> & ep.</p>
+</div>
+<!-- end footer -->
+
+</body>
+</html>
