@@ -1,7 +1,7 @@
 class AddTestData < ActiveRecord::Migration
   def self.up
      (1..100).each  do |i| 
-      u = User.new(:username=>"user#{i}", :password=>"padboo7", :email=>"user#{i}@email.com")
+      u = User.new(:username=>"user#{i}", :password=>"padboo7", :password_confirmation =>'padboo7', :email=>"user#{i}@email.com")
       
       u.listing = Listing.new(
     :user_id=>i+1, 
