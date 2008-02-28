@@ -1,14 +1,9 @@
 class UsersController < ApplicationController
+  layout 'registration'
+  before_filter :not_logged_in_required, :only => [:new, :create] 
+  before_filter :login_required, :only => [:show, :edit, :update]
+  before_filter :check_administrator_role, :only => [:index, :destroy, :enable]
   
-  # def login
-  #   respond_to do |format| 
-  #     format.html { render :layout => "main"}
-  #   end
-  # end
-  
-  
-  # GET /users
-  # GET /users.xml
   def index
     @users = User.find(:all)
 
@@ -17,7 +12,7 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @users }
     end
   end
-
+  
   # GET /users/1
   # GET /users/1.xml
   def show
@@ -35,9 +30,10 @@ class UsersController < ApplicationController
     @user = User.new
     @rent_ranges = RentRange.find :all
     @apt_types = AptType.find :all
+    @nhoods = Nhood.find :all
 
     respond_to do |format|
-      format.html { render :layout =>"main" }# new.html.erb
+      format.html { render :layout =>"registration" }# new.html.erb
       format.xml  { render :xml => @user }
     end
   end
@@ -50,24 +46,22 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user])
-
+    cookies.delete :auth_token
     respond_to do |format|
-      if @user.save
-        session[:user_id] = @user.id
+
+      if @user = User.create!(params[:user])
+          
+        flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
         
-        flash[:notice] = 'User was successfully created.'
-        
-        # EP: skip over the pictures initially
-        # format.html { redirect_to new_listing_visual_url(@user.listing)  }
-        
-        format.html { redirect_to new_listing_listing_info_url(@user.listing)  }
+        # skip other registration steps
+        format.html { redirect_to listings_url  }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
-        
+          
       else
         format.html { render :action => "new", :layout => "main" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
+
     end
   end
 

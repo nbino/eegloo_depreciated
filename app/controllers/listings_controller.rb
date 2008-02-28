@@ -1,7 +1,12 @@
 class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.xml
+  
+  before_filter :login_required
+  
   def index
+    
+    @user = User.find(session[:user_id])
     @nhoods = Nhood.find :all
     @apt_types = AptType.find :all
     @rent_ranges = RentRange.find :all
@@ -18,32 +23,31 @@ class ListingsController < ApplicationController
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
     
-    
     if !params[:listing_info]
       @listings = Listing.find :all, :limit => 20
     else
       
-      
+      #list all values that have operator other than "="
       sql_ops = 
       {
-      'apt_type_id'=>'=',
-      'avail_date'=>'=',
-      'n_hood'=>'=',
-      'elevator'=>'=', 
-      'multi_level'=>'=', 
-      'penthouse'=>'=', 
-      'private_entrance'=>'=', 
-      'back_yard'=>'=', 
-      'gym'=>'=', 
-      'laundry'=>'=', 
-      'dogs_allowed'=>'=', 
-      'cats_allowed'=>'=', 
-      'broadband'=>'=', 
-      'doorman'=>'=', 
-      'rent_stabilized'=>'=',
-      'rent_controlled'=>'=',
-      'convertable'=>'=',
-      'separate_kitchen'=>'=',
+      #~ 'apt_type_id'=>'=',
+      #~ 'avail_date'=>'=',
+      #~ 'n_hood'=>'=',
+      #~ 'elevator'=>'=', 
+      #~ 'multi_level'=>'=', 
+      #~ 'penthouse'=>'=', 
+      #~ 'private_entrance'=>'=', 
+      #~ 'back_yard'=>'=', 
+      #~ 'gym'=>'=', 
+      #~ 'laundry'=>'=', 
+      #~ 'dogs_allowed'=>'=', 
+      #~ 'cats_allowed'=>'=', 
+      #~ 'broadband'=>'=', 
+      #~ 'doorman'=>'=', 
+      #~ 'rent_stabilized'=>'=',
+      #~ 'rent_controlled'=>'=',
+      #~ 'convertable'=>'=',
+      #~ 'separate_kitchen'=>'=',
       'no_of_balconies'=>'>=',
       'no_of_patios'=>'>=',
       'sq_footage'=>'>=',
@@ -53,17 +57,25 @@ class ListingsController < ApplicationController
       'cellphone_q_id'=>'>=',
       'street_noise_level_id'=>'>=',
       'nbors_noise_level_id'=>'>=',
-      'ubound'=>'<='}
+      'ubound'=>'<=',
+      'comment'=>'LIKE'}
       
       conditions_t=[]
       
+      # add wildcard characters to LIKE parameter
+      params[:listing_info].each {|key,val| params[:listing_info][key] = "%#{val}%" if val != '' && sql_ops[key] == 'LIKE'}
+      
+      
+      
       #pests doesn't work
       #comment doesn't work
-      params[:listing_info].delete_if {|key, val| val=="0" || val=="" || key='pests'}
+      debugger  
+      params[:listing_info].delete_if {|key, val| val=="0" || val=="" || key=='pests'}
       
-      params[:listing_info] .each {|key, val| conditions_t << "#{key}#{sql_ops[key]}:#{key}"}
+      params[:listing_info] .each {|key, val| conditions_t << "#{key} #{sql_ops[key]||'='} :#{key}"}
       conditions = conditions_t.join(' AND ')
       
+        
       @listings = Listing.find(
         :all,
         :joins => [:listing_info, :rent_range],
