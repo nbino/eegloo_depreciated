@@ -20,7 +20,8 @@
 		<li><label>username</label><%= f.text_field :username, :class => 'required text', :size => '10' %></li>
 		
 		<li><label>password</label><%= f.password_field :password, :class => 'text required', :size => '10' %></li>
-		<li><label>email</label><%= f.text_field :email, :class => 'text required', :size => '10' %></li>
+     <li><label>confirm password</label> <%= f.password_field :password_confirmation, :class => 'text required', :size => '10'%> </li>
+     <li><label>email</label><%= f.text_field :email, :class => 'text required', :size => '10' %>
 		
 		<%fields_for 'user[listing_attr]' do |f_listing| %>
 		     <li><label for="user_listing_attr_address">Street address</label> </li> <%=f_listing.text_field :address, :class => 'text required', :size => '20' %> <br/>
@@ -38,7 +39,7 @@
 	
 		   <br/> 
 		
-		
+		<%end%>
 		<div align="center" style="margin-top:20px">
 
 		<button id="submit_button" type="submit" class="positive">

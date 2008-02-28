@@ -279,42 +279,42 @@
 <li><div  id="viewtoolbar" align="center"><span class="boxspan">
 <%=link_to_remote( 
   'Add to favorites', 
-  :url=>listing_favorites_url(listing), 
-  :complete=>"$('spinner_#{listing.id}').hide();",
-  :before=>"$('spinner_#{listing.id}').show();",
-  :update=>"favorites_info_#{listing.id}",
+  :url=>listing_favorites_url(@listing), 
+  :complete=>"$('spinner_#{@listing.id}').hide();",
+  :before=>"$('spinner_#{@listing.id}').show();",
+  :update=>"favorites_info_#{@listing.id}",
   :method=>:post)%>
 
 </span>
 |
-<span id="bogus_flag_<%=listing.id%>">
+<span id="bogus_flag_<%=@listing.id%>">
 <%=link_to_remote(
   'Flag as bogus', 
-  :url=>listing_bogus_flags_url(listing), 
-  :complete=>"$('spinner_#{listing.id}').hide();",
-  :before=>"$('spinner_#{listing.id}').show();",
+  :url=>listing_bogus_flags_url(@listing), 
+  :complete=>"$('spinner_#{@listing.id}').hide();",
+  :before=>"$('spinner_#{@listing.id}').show();",
   :method=>:post,
-  :update=>"bogus_flag_#{listing.id}")%>
+  :update=>"bogus_flag_#{@listing.id}")%>
 </span>
 |
-<span id="na_flag_<%=listing.id%>">
+<span id="na_flag_<%=@listing.id%>">
 <%=link_to_remote(
   'Flag as no longer available', 
-  :url=>listing_na_flags_url(listing), 
-  :complete=>"$('spinner_#{listing.id}').hide();",
-  :before=>"$('spinner_#{listing.id}').show();",
+  :url=>listing_na_flags_url(@listing), 
+  :complete=>"$('spinner_#{@listing.id}').hide();",
+  :before=>"$('spinner_#{@listing.id}').show();",
   :method=>:post,
-  :update=>"na_flag_#{listing.id}")%>
+  :update=>"na_flag_#{@listing.id}")%>
 </span>
 |
-<span id="broker_flag_<%=listing.id%>">
+<span id="broker_flag_<%=@listing.id%>">
 <%=link_to_remote(
   'Flag as broker', 
-  :url=>listing_broker_flags_url(listing), 
-  :complete=>"$('spinner_#{listing.id}').hide();",
-  :before=>"$('spinner_#{listing.id}').show();",
+  :url=>listing_broker_flags_url(@listing), 
+  :complete=>"$('spinner_#{@listing.id}').hide();",
+  :before=>"$('spinner_#{@listing.id}').show();",
   :method=>:post,
-  :update=>"broker_flag_#{listing.id}")%>
+  :update=>"broker_flag_#{@listing.id}")%>
 </span>
 
 
