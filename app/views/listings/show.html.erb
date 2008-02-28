@@ -272,12 +272,53 @@
 	        <li><label>Rent</label><%=@listing.rent_range%></li> 
 			<li><label>Apt. Type</label><%=@listing.apt_type%></li>
 			<li><label>Lease Expiry</label><%= @listing.avail_date.strftime("%b %d, '%y") %></li>
-		  	<li><label>Posted</label>on <%= @listing.created_at.strftime("%b %d, '%y")%> by <%=
-		User.find_by_id(@listing.user_id).username %></li>
+		  	<li><label>Posted</label>on <%= @listing.created_at.strftime("%b %d, '%y")%> by <%=@listing.user.username %></li>
 	        <li>&nbsp;</li>
         
 
-<li><div  id="viewtoolbar" align="center"><span class="boxspan">Add to Favorites | Share | Flag</span></div></li>
+<li><div  id="viewtoolbar" align="center"><span class="boxspan">
+<%=link_to_remote( 
+  'Add to favorites', 
+  :url=>listing_favorites_url(listing), 
+  :complete=>"$('spinner_#{listing.id}').hide();",
+  :before=>"$('spinner_#{listing.id}').show();",
+  :update=>"favorites_info_#{listing.id}",
+  :method=>:post)%>
+
+</span>
+|
+<span id="bogus_flag_<%=listing.id%>">
+<%=link_to_remote(
+  'Flag as bogus', 
+  :url=>listing_bogus_flags_url(listing), 
+  :complete=>"$('spinner_#{listing.id}').hide();",
+  :before=>"$('spinner_#{listing.id}').show();",
+  :method=>:post,
+  :update=>"bogus_flag_#{listing.id}")%>
+</span>
+|
+<span id="na_flag_<%=listing.id%>">
+<%=link_to_remote(
+  'Flag as no longer available', 
+  :url=>listing_na_flags_url(listing), 
+  :complete=>"$('spinner_#{listing.id}').hide();",
+  :before=>"$('spinner_#{listing.id}').show();",
+  :method=>:post,
+  :update=>"na_flag_#{listing.id}")%>
+</span>
+|
+<span id="broker_flag_<%=listing.id%>">
+<%=link_to_remote(
+  'Flag as broker', 
+  :url=>listing_broker_flags_url(listing), 
+  :complete=>"$('spinner_#{listing.id}').hide();",
+  :before=>"$('spinner_#{listing.id}').show();",
+  :method=>:post,
+  :update=>"broker_flag_#{listing.id}")%>
+</span>
+
+
+</span></div></li>
 
 
         	 <!-- <li class="img"> -->

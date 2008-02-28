@@ -14,7 +14,7 @@
 			"/>
 			<!-- end image -->
 			
-			<%= link_to listing.address, :action => 'show', :id => listing.id %>
+			<%= link_to listing.address, listing_url(listing)%>
 			
 			, New York, NY<br /> 
 			
@@ -27,17 +27,10 @@
 
 	<div class="meta">
 	<p class="byline">Posted on <%=listing.created_at.strftime("%b %d, '%y")%> by <%=
-User.find_by_id(listing.user_id).username %></p>
+  listing.user.username %></p>
 <p class="links"><a href="#" class="more">Flag
 this Listing</a><a href="#" class="more">Add
 to Favorites</a> <b>|</b> <a href="#" class="comments">Comments ($num)</a></p>
 	</div>
 
 </div>
-
-
-
-
-
-
-

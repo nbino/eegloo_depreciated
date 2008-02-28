@@ -10,7 +10,7 @@
       
   <label for="user_listing_attr_rent_range">Max rent</label><br/> <%= f.text_field :ubound, :size=>9%> <br/>
   
-  <label for="listing_info_sq_footage">Neighborhood</label><br/> <%= f.collection_select :nhood, @nhoods, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_sq_footage">Neighborhood</label><br/> <%= f.collection_select :nhood_id, @nhoods, :id, :name, {:include_blank=>'Select'} %> <br/>
   
   <label for="listing_info_sq_footage">Min sq footage</label><br/> <%=f.text_field :sq_footage, :size=>9%> <br/>
   <label for="listing_info_ceiling_height">Min ceiling Height</label><br/>  <%=f.text_field :ceiling_height, :size=>9%> <br/>
@@ -27,9 +27,9 @@
   <%= f.check_box :gym%>  <label for="listing_info_gym">Gym</label><br/>
   <%= f.check_box :laundry%>  <label for="listing_info_laundry">Laundry</label><br>
   <%= f.check_box :pests%>  <label for="listing_info_roaches">No pests</label><br>
-  <label for="listing_info_back_yard">Back Yard</label><br/>  <%= f.collection_select :back_yard_type, @back_yard_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
-  <label for="listing_info_back_yard">Roof Access</label><br/>  <%= f.collection_select :roof_access_type, @roof_access_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
-  <label for="listing_info_floor_type">Floor Type</label><br/> <%=f.collection_select :floor_type_id, @floor_types, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_back_yard">Back Yard</label><br/>  <%= f.collection_select :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
+  <label for="listing_info_back_yard">Roof Access</label><br/>  <%= f.collection_select :roof_access_type_id, @roof_access_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
+  <label for="listing_info_floor_type">Floor Type</label><br/> <%=f.collection_select :floor_type_id_id, @floor_types, :id, :name, {:include_blank=>'Select'} %> <br/>
   <label for="listing_info_heat_q">A/C Type</label><br/>   <%= f.collection_select  :ac_type_id, @ac_types, :id, :name, {:include_blank=>'Select'}  %> <br/>
   <label for="listing_info_appliance_q">Min Appliances Condition</label><br/>   <%= f.collection_select  :appliance_q_id, @appliances_quality_choices, :id, :name, {:include_blank=>'Select'}  %> <br/>
   <label for="listing_info_bathroom_q">Min Bathroom Condition</label><br/>   <%= f.collection_select  :bathroom_q_id, @bathroom_quality_choices, :id, :name, {:include_blank=>'Select'}  %> <br/>

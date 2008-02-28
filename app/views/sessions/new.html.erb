@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Welcome aboard</title>
+    <link href="/stylesheets/scaffold.css" media="screen" rel="stylesheet" type="text/css" />
+    </head>
+  <body>
+  <div class="login">
+    <h3>Login</h3>
+    <%=render :partial=>'shared/login_form'%>
+    <br><%=link_to('Register', new_user_url)%><br/>
+    </div>
+    
+  </body>
+</html>

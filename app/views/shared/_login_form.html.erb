@@ -1,0 +1,10 @@
+<p>
+<%=flash[:error]%>
+</p>
+<%form_for :user, :url=>session_path do |f|%>
+    email:<br/>
+    <%=f.text_field (:email, :size=>15)%><br/>
+    password:<br/>
+    <%=f.password_field (:password, :size=>15)%><br/>
+    <%= f.submit "Log in" %><br/>
+<%end%>
