@@ -1,7 +1,9 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   has_one :listing
-  has_many :favorites, :favorite_comments, :listing_comments
+  has_many :favorites 
+  has_many :favorite_comments
+  has_many :listing_comments
   has_many :favorite_listings, :through => :favorites, :source=> :listing
  
  # Virtual attribute for the unencrypted password

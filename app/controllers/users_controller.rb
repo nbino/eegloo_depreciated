@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'registration'
+  layout 'main'
   before_filter :not_logged_in_required, :only => [:new, :create] 
   before_filter :login_required, :only => [:show, :edit, :update]
   before_filter :check_administrator_role, :only => [:index, :destroy, :enable]
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     @nhoods = Nhood.find :all
 
     respond_to do |format|
-      format.html { render :layout =>"registration" }# new.html.erb
+      format.html { render :layout => "main" }# new.html.erb
       format.xml  { render :xml => @user }
     end
   end

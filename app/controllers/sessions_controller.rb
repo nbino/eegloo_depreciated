@@ -6,6 +6,10 @@
   # render new.rhtml
   def new
     @user = User.new
+    respond_to do |format|
+      format.html { render :layout => "main" }
+    end
+    
   end
  
   def create
@@ -27,10 +31,13 @@
     user = User.authenticate(email, password)
     if user == nil
       failed_login("Your username or password is incorrect.")
-    elsif user.activated_at.blank?  
-      failed_login("Your account is not active, please check your email for the activation code.")
-    elsif user.enabled == false
-      failed_login("Your account has been disabled.")
+      
+# We're ignoring this for now...
+#    elsif user.activated_at.blank?  
+#      failed_login("Your account is not active, please check your email for the activation code.")
+#    elsif user.enabled == false
+#      failed_login("Your account has been disabled.")
+    
     else
       self.current_user = user
       successful_login

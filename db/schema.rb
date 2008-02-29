@@ -46,9 +46,7 @@ ActiveRecord::Schema.define(:version => 11) do
     t.integer  "listing_id"
     t.integer  "sq_footage"
     t.integer  "ceiling_height"
-    t.integer  "no_of_balconies"
     t.integer  "no_of_bathrooms"
-    t.integer  "no_of_patios"
     t.integer  "floor_type_id"
     t.integer  "heat_q_id"
     t.integer  "ac_type_id"
@@ -80,6 +78,8 @@ ActiveRecord::Schema.define(:version => 11) do
     t.boolean  "rent_controlled"
     t.boolean  "convertable"
     t.boolean  "separate_kitchen"
+    t.boolean  "balcony"
+    t.boolean  "patio"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

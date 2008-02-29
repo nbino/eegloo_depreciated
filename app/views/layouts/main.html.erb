@@ -5,9 +5,10 @@
   <title>freshpaint</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
-  <link href="/stylesheets/default.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="/javascripts/mootools.js"></script>
- 
+
+  <%= stylesheet_link_tag 'default' %>
+  <%= javascript_include_tag 'mootools' %>
+
 </head>
 
 <body>
@@ -24,47 +25,13 @@
 		  <li>someotherlink</li>
 		</ul>
 	</div>
-	<script type="text/javascript">
-	var list = $$('#menuul li');
-	list.each(function(element) {
-
-		var fx = new Fx.Styles(element, {duration:200, wait:false});
-
-		element.addEvent('mouseenter', function(){
-			fx.start({
-				'padding-top': 30,
-				'background-color': '#666',
-				color: '#FFFFFF'
-			});
-		});
-
-		element.addEvent('mouseleave', function(){
-			fx.start({
-				'padding-top': 7,
-				'background-color': '#b31b1b',
-				'color': '#FFF'
-			});
-		});
-
-		});
-		</script>
 </div>
 
 <!-- end header -->
 <!-- start page -->
 <div id="page">
-
-
-
-
-
-	
+		
 	<%= yield  %>
-
-
-
-
-
 
 
 	<div style="clear: both;">&nbsp;</div>
@@ -81,6 +48,7 @@
 	<p id="legal">(c) 2008. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> & ep.</p>
 </div>
 <!-- end footer -->
-
+<%= javascript_include_tag 'nav' %>
+<!-- this javascript include is here because it needs pg elements -->
 </body>
 </html>

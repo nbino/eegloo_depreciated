@@ -16,9 +16,8 @@ class AddTestData < ActiveRecord::Migration
         :listing_id=>i,
         :sq_footage=>(rand(10) + 5)  * 1000,
         :ceiling_height=>rand(10)+8,
-        :no_of_balconies=>rand(2),
+        
         :no_of_bathrooms=>rand(2),
-        :no_of_patios=>rand(2),
         :floor_type_id=>FloorType.find(:all)[rand(2)].id,
         :heat_q_id=>HeatQ.find(:all)[rand(2)].id,
         :ac_type_id=>AcType.find(:all)[rand(2)].id,
@@ -49,7 +48,9 @@ class AddTestData < ActiveRecord::Migration
         :rent_stabilized=>rand(1),
         :rent_controlled=>rand(1),
         :convertable=>rand(1),
-        :separate_kitchen=>rand(1)
+        :separate_kitchen=>rand(1),
+        :balcony=>rand(1),
+        :patio=>rand(1)
    ) 
    
     u.listing.listing_info.livingroom = Livingroom.new(

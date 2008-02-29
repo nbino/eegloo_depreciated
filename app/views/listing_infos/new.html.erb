@@ -12,7 +12,7 @@
 		<li><label for="listing_info_sq_footage">Sq Footage</label>
 		<%=f.text_field :sq_footage, :size => 4 , :class=>'required text' %></li>
 		<li><label for="listing_info_no_of_bathrooms"># Bathrooms</label>
-		<%= f.select :no_of_bathrooms, {'1'=>'1','2'=>'2','3'=>'3','4'=>'4'},{:include_blank=>'...', :class=>'required'} %></li>
+		<%= f.select :no_of_bathrooms, {'1'=>'1','2'=>'2','3'=>'3','4'=>'4'},{:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_ceiling_height">Ceiling Height</label>
 		<%=f.text_field :ceiling_height, :size => 4 , :class=>'required text'%></li>	<li><label for="listing_info_landlord_phone_number">Landlord #</label>
 		<%=f.text_field :landlord_phone_number, :size => 10 , :class=>'required texts' %></li>
@@ -20,13 +20,13 @@
 		
 		<li class="whole line">Essentials</li>
 		<li><label for="listing_info_maintenance_q">Maintenance</label>
-		<%= f.collection_select  :maintenance_q_id, @maintenance_quality_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
+		<%= f.collection_select  :maintenance_q_id, @maintenance_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_appliance_q">Appliance Cond</label>
-		<%= f.collection_select  :appliances_q_id, @appliances_quality_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
+		<%= f.collection_select  :appliances_q_id, @appliances_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_bathroom_q">Bathroom Cond</label>   
-		<%= f.collection_select  :bathroom_q_id, @bathroom_quality_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>	
+		<%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>	
 		<li><label for="listing_info_heat_q">Heat</label>   
-		<%= f.collection_select  :heat_q_id, @heat_quality_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
+		<%= f.collection_select  :heat_q_id, @heat_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		
 	
 		<li class="whole line">Features</li>
@@ -34,18 +34,29 @@
 		<li><label for="listing_info_laundry">Laundry</label><%= f.check_box :laundry %></li>
 		<li><label for="listing_info_gym">Gym</label><%= f.check_box :gym %></li>
 		<li><label for="listing_info_doorman">Doorman</label><%= f.check_box :doorman %></li>
-		
+		<li><label for="listing_info_multi_level">Multi Level</label><%= f.check_box :multi_level %></li>
+		<li><label for="listing_info_penthouse">Penthouse</label><%= f.check_box :penthouse %></li>
+		<li><label for="listing_info_balcony">Balcony</label><%= f.check_box :balcony %></li>
+		<li><label for="listing_info_patio">Patio</label><%= f.check_box :patio %></li>
+		<li><label for="listing_info_back_yard">Backyard</label>   
+		<%= f.collection_select  :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_roaches">Roaches</label><%= f.check_box :roaches %></li>	
+		<li><label for="listing_info_rodents">Rodents</label><%= f.check_box :rodents %></li>		
+		<li><label for="listing_info_broadband">Broadband</label><%= f.check_box :broadband %></li>
 		
 		<li class="whole line">Other</li>
 		
-		
-		<li><label for="listing_info_street_noise_level">Noise</label> 
-		<%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
+		<li><label for="listing_info_floor_type">Floor Type</label><%= f.collection_select  :floor_type, @floor_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_heat_q">Heat</label><%= f.collection_select  :heat_q, @heat_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_heat_q">A/C</label><%= f.collection_select  :ac_type, @ac_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_street_noise_level">Street Noise</label> 
+		<%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_street_noise_level">Neighbor Noise</label> 
+		<%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_cellphone">Cellphone</label> 
-		<%= f.collection_select  :cellphone_q_id, @cellphone_quality_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
+		<%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_pets">Pets</label> 
-		<%= f.collection_select  :pets_id, @pets_choices, :id, :name, {:include_blank=>'...', :class=>'required'} %></li>
-		
+		<%= f.collection_select  :pets_id, @pets_choices, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		
 		
 		<li><label for="listing_info_convertable">Convertible</label><%= f.check_box :convertable%></li> 
@@ -56,9 +67,7 @@
 		<li class="whole">&nbsp;</li>
 		
 		<li class="whole">
-		<div align="center"><button id="submit_button" type="submit" class="positive">
-			<img class="twelveem" src='/images/icons/16-em-check.png'/>Submit
-		</button></div>
+		<%= render :partial => '/shared/submit_button' %>
 		</li>
 		<% end %>
 	</ul>

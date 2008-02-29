@@ -4,9 +4,7 @@ class CreateListingInfos < ActiveRecord::Migration
       t.integer :listing_id,
         :sq_footage,
         :ceiling_height,
-        :no_of_balconies,
         :no_of_bathrooms,
-        :no_of_patios,
         :floor_type_id,
         :heat_q_id,
         :ac_type_id,
@@ -37,7 +35,9 @@ class CreateListingInfos < ActiveRecord::Migration
         :rent_stabilized,
         :rent_controlled,
         :convertable,
-        :separate_kitchen
+        :separate_kitchen,
+        :balcony,
+        :patio
 
       t.timestamps
     end

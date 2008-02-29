@@ -4,7 +4,6 @@
 <!-- start content -->
 <div id="fullcontentcenter">
 
-<div align="center"><span class="boxspan selected" id="chooseny">I'm a current NYC renter!</span><span class="boxspan" id="chooseoot">I'm from out of town!</span></div>
 
 
 <div style="clear: both;">&nbsp;</div>
@@ -17,35 +16,38 @@
 		
 		<% form_for @user do |f| %>
 		
-		<li><label>username</label><%= f.text_field :username, :class => 'required text', :size => '10' %></li>
+		<li><label>Username</label><%= f.text_field :username, :class => 'required text', :size => '15' %></li>
 		
-		<li><label>password</label><%= f.password_field :password, :class => 'text required', :size => '10' %></li>
-     <li><label>confirm password</label> <%= f.password_field :password_confirmation, :class => 'text required', :size => '10'%> </li>
-     <li><label>email</label><%= f.text_field :email, :class => 'text required', :size => '10' %>
+		<li><label>Password</label><%= f.password_field :password, :class => 'text required', :size => '15' %></li>
+		
+     <li><label>Confirm Password</label> <%= f.password_field :password_confirmation, :class => 'text required', :size => '15'%> </li>
+
+     <li><label>Email</label><%= f.text_field :email, :class => 'text required', :size => '15' %></li>
+
+	<li class="whole">&nbsp;</li>
+	<li class="whole"><div align="center"><span class="boxspan selected" id="chooseny">I'm a current NYC renter!</span><span class="boxspan" id="chooseoot">I'm from out of town!</span></div></li>
+	
+	
+	<li class="whole line"><div align="center">Share some details about your place</div></li>
+
 		
 		<%fields_for 'user[listing_attr]' do |f_listing| %>
-		     <li><label for="user_listing_attr_address">Street address</label> </li> <%=f_listing.text_field :address, :class => 'text required', :size => '20' %> <br/>
+		     <li><label for="user_listing_attr_address">Street Address</label><%=f_listing.text_field :address, :class => 'text required', :size => '20' %></li>  
           
-          <li><label for="user_listing_attr_cross_street">Cross Street:</label> <br/>  <%=f_listing.text_field :cross_street, :value=>'East 11th St'%> <br/>
+          <li><label for="user_listing_attr_cross_street">Cross Street:</label><%=f_listing.text_field :cross_street,:class => 'text', :size => '15'%></li>
       
-          <li><label for="user_listing_attr_nhood">Neighborhood:</label> <br/>  <%= f_listing.collection_select :nhood_id, @nhoods, :id, :name, {:include_blank=>'Select'} %> <br/>
+          <li><label for="user_listing_attr_nhood">Neighborhood:</label> <%= f_listing.collection_select :nhood_id, @nhoods, :id, :name, {:include_blank=>'[select]'} %> </li>
 
-		      <li><label for="user_listing_attr_apt_type">Apartment type</label> </li>  <%= f_listing.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Select', :class=>'required'} %> <br/>
+		      <li><label for="user_listing_attr_apt_type">Apartment type</label><%= f_listing.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'[select]', :class=>'required'}, :width =>'10' %></li>
 
-		      <li><label for="user_listing_attr_avail_date">Available date</label> </li> <%= f_listing.text_field :avail_date, :class => 'text required', :size => '8' %> </li>
+		      <li><label for="user_listing_attr_avail_date">Available date</label><%= f_listing.text_field :avail_date, :class => 'text required', :size => '8' %> </li> 
 
-		      <li><label for="user_listing_attr_rent_range">Rent</label> </li>  <%= f_listing.collection_select :rent_range_id, @rent_ranges, :id, :name, {:include_blank=>'Select'}, {:value => 11, :class => 'required'} %>
+		      <li><label for="user_listing_attr_rent_range">Rent</label> <%= f_listing.collection_select :rent_range_id, @rent_ranges, :id, :name, {:include_blank=>'[select]'}, {:value => 11, :class => 'required'} %></li>
+ 
 		
-	
-		   <br/> 
-		
-		<%end%>
-		<div align="center" style="margin-top:20px">
+		<% end %>
 
-		<button id="submit_button" type="submit" class="positive">
-		        <img class="twelveem" src='/images/icons/16-em-check.png'/>Submit
-	    </button>
-		<br/>
+			<%= render :partial => '/shared/submit_button' %>
 		
 		<% end %>
 		
@@ -55,8 +57,9 @@
 </span>
 </div>
 
+</div>
 <!-- start content -->
-<div id="fullcontentcenter">
+<!-- <div id="fullcontentcenter">
 
 <div align="center"><span class="boxspan selected" id="chooseny">I'm a current NYC renter!</span><span class="boxspan" id="chooseoot">I'm from out of town!</span></div>
 
@@ -113,7 +116,7 @@
 		        <img class="twelveem" src='/images/icons/16-em-check.png'/>Submit
 	    </button>
 		<br/>
-		<!-- <span id="submit_error">please complete the required info</span></div> -->
+		 <span id="submit_error">please complete the required info</span></div> 
 
 		
 		<% end %>
@@ -121,7 +124,7 @@
 		
 	</ul>
 	</fieldset>
-</span>
+</span> -->
 <!-- <span id="ootform">
 	
 	<fieldset class="colored"><legend class="colored bigtext">Invite Some Friends</legend>
