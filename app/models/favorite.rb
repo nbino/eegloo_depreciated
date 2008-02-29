@@ -1,6 +1,7 @@
 class Favorite < ActiveRecord::Base
   belongs_to :listing, :counter_cache=>true
   belongs_to :user
+  has_many :favorite_comments,  :foreign_key=>'listing_id'
   validates_uniqueness_of :listing_id, :scope => [:user_id]
   
   
