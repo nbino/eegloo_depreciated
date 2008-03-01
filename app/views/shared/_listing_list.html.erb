@@ -1,8 +1,4 @@
 <div class="post">
-<!-- Don't see why that's necessary, it's reflected in the form
-	<span style="float:left;">Search
-	results for "[searchterm]"</span>
--->
 	<span style="float:right;">
 		<select>
 			<option>Sort...</option>
@@ -11,7 +7,8 @@
 			<!--<option value="rating">Rating</option>  I doubt users will review/rate appartments. Also creates spamming target. We can add that if we see that users are publishing reviews-->
 		</select>
 	</span>
-	<div class="line"></div>
+	<div style="clear:both"></div>
 </div>
 
-<%= render :partial => '/shared/listing_summary', :collection => @listings %>
+<!-- [EP] I think we're going back and forth here.  I have the latest version of the listing in shared/_listing.html.erb and have pointed this there for now.  If we're going to go with inline views, I think this is all we need right?  Right now we also have stuff in  _show_listing.  I copy pasted the Flag As... stuff.  Not sure what else we want to grab. -->
+<%= render :partial => '/shared/listing', :collection => @listings %>

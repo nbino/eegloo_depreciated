@@ -6,9 +6,9 @@
 			<ul>
 			<li>
 				<div class="header">
-					<span class="floatleft"><h2><%=listing.apt_type%> | <%=listing.nhood%></h2></span><span class="floatright"><%=listing.address%> | <%=listing.rent_range%></span>
+					<span class="floatleft"><h2>[<%= listing_counter + 1 %>] <%=listing.apt_type%> | <%=listing.nhood%></h2></span><span class="floatright"></span>
 					<div style="clear: both;"></div>	
-					<b>Available:</b> <%= listing.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=listing.created_at.strftime("%b %d, '%y")%>
+					<%=listing.address%> | <%=listing.rent_range%> | <b>Available:</b> <%= listing.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=listing.created_at.strftime("%b %d, '%y")%>
 					<div style="clear: both;"></div>
 				</div>	
 			</li>
@@ -30,10 +30,35 @@
 			<li><b>Features:</b> Elevator, gym</li>
 			<li><span class="pluses"><b>Pluses:</b> Rent stabilized, quiet, well maintained, public roof access, new appliances</span></li>
 			<li><span class="minuses"><b>Minuses:</b> Bad winter heat, roaches, poor cell phone signal (T-Mobile)</span></li>
-			<li><a href="#" class="more">Flag
-			this Listing</a>
-			<a href="#" class="more">Add
-			to Favorites</a></li>
+			<li><span id="bogus_flag_<%=listing.id%>">
+			<%=link_to_remote(
+			  'Flag as bogus', 
+			  :url=>listing_bogus_flags_url(listing), 
+			  :complete=>"$('spinner_#{listing.id}').hide();",
+			  :before=>"$('spinner_#{listing.id}').show();",
+			  :method=>:post,
+			  :update=>"bogus_flag_#{listing.id}")%>
+			</span>
+			|
+			<span id="na_flag_<%=listing.id%>">
+			<%=link_to_remote(
+			  'Flag as no longer available', 
+			  :url=>listing_na_flags_url(listing), 
+			  :complete=>"$('spinner_#{listing.id}').hide();",
+			  :before=>"$('spinner_#{listing.id}').show();",
+			  :method=>:post,
+			  :update=>"na_flag_#{listing.id}")%>
+			</span>
+			|
+			<span id="broker_flag_<%=listing.id%>">
+			<%=link_to_remote(
+			  'Flag as broker', 
+			  :url=>listing_broker_flags_url(listing), 
+			  :complete=>"$('spinner_#{listing.id}').hide();",
+			  :before=>"$('spinner_#{listing.id}').show();",
+			  :method=>:post,
+			  :update=>"broker_flag_#{listing.id}")%>
+			</span></li>
 			<li><b>Posted By:</b> <%= listing.user.username %></li>
 			<li><b>Comments:</b> [Display a few comments with a link to scroll for more, ajax-style]</li>
 			</ul>

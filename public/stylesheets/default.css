@@ -17,7 +17,7 @@ Yellow - #ffc
 
 
 body {
-	margin: 100px 0 0 0;
+	margin: 30px 0 0 0;
 	padding: 0;
 	background: #FFFFFF url(/images/img01.gif) repeat-x;
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -212,8 +212,8 @@ background:transparent url(/images/icons/12-em-cross.png) no-repeat scroll 0pt;
 #header {
 	width: 850px;
 	height: 82px;
-	margin: 0 auto 40px auto;
-	background: url(/images/img03.gif) repeat-x left bottom;
+	margin: 0 auto 0px auto;
+/*	background: url(/images/img03.gif) repeat-x left bottom;*/
 }
 
 #logo {
@@ -542,6 +542,9 @@ form  li {
 
 .post h2 {
 	font-size:14px;
+	text-transform: none;
+	
+	margin-bottom:5px;
 }
 
 .post .entry ul { 
@@ -553,9 +556,11 @@ form  li {
 }
 
 .post .entry .header {
-/*	padding:3px;*/
+	padding:5px;
 /*	border:1px solid #850808;*/
-/*	background: #FFEEEE;*/
+	background: #F0F0F0;
+	border: 1px solid #333333;
+	
 }
 
 
@@ -571,7 +576,8 @@ form  li {
 	background: #FE9EA0;
 }
 
-.post .linenopad {
+.post .entry .line {
+	padding-top: 5px;
 	background: url(/images/img03.gif) repeat-x;
 	
 }
@@ -641,17 +647,19 @@ form  li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	line-height: 15px;
+	
 }
 
 #leftbar li {
-	margin-bottom: 40px;
+	margin-bottom: 10px;
 }
 
 #leftbar li ul {
 }
 
 #leftbar li li {
-	margin: 0;
+
 }
 
 #leftbar h2 {

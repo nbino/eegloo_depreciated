@@ -38,9 +38,9 @@
       
           <li><label for="user_listing_attr_nhood">Neighborhood:</label> <%= f_listing.collection_select :nhood_id, @nhoods, :id, :name, {:include_blank=>'[select]'} %> </li>
 
-		      <li><label for="user_listing_attr_apt_type">Apartment type</label><%= f_listing.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'[select]', :class=>'required'}, :width =>'10' %></li>
+		      <li><label for="user_listing_attr_apt_type">Apartment Type</label><%= f_listing.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'[select]', :class=>'required'}, :width =>'10' %></li>
 
-		      <li><label for="user_listing_attr_avail_date">Available date</label><%= f_listing.text_field :avail_date, :class => 'text required', :size => '8' %> </li> 
+		      <li><label for="user_listing_attr_avail_date">Available Date</label><%= f_listing.text_field :avail_date, :class => 'text required', :size => '8' %> </li> 
 
 		      <li><label for="user_listing_attr_rent_range">Rent</label> <%= f_listing.collection_select :rent_range_id, @rent_ranges, :id, :name, {:include_blank=>'[select]'}, {:value => 11, :class => 'required'} %></li>
  
