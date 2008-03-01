@@ -10,7 +10,7 @@ class BogusFlagsController < ApplicationController
       @listing_id = params[:listing_id]
       @flag_type = 'bogus'
       
-      if Listing.find(@listing_id).bogus_flags.create({:user_id => session[:user_id]})
+      if Listing.find(@listing_id).bogus_flags.create({:user_id => current_user.id})
         
         format.html { render :partial=>'shared/flag' }
         format.xml  { render :xml => @favorite, :status => :created, :location => @favorite }

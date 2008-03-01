@@ -5,7 +5,11 @@ class FavoritesController < ApplicationController
   layout 'main'
   
   def index
-    @listings = User.find(session[:user_id]).favorite_listings
+    @listings =current_user.favorite_listings
+    
+    #ugly
+    #since listing lists are shared, identifies the list as favorites list as opposed to listing list, to gain additional functionality
+    @this_is_favorites = true
 
     respond_to do |format|
       format.html # index.html.erb

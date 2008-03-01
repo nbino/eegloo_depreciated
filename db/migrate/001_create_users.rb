@@ -6,11 +6,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :remember_token
       t.string :activation_code, :password_reset_code, :limit => 40
       t.datetime :remember_token_expires_at, :activated_at
-      t.boolean :enabled, :admin, :default => false
+      t.boolean :enabled, :admin, :default => true
       t.timestamps
     end
-    
-    
   end
 
   def self.down

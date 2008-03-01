@@ -1,17 +1,17 @@
 <div class="post">
+<!-- Don't see why that's necessary, it's reflected in the form
 	<span style="float:left;">Search
 	results for "[searchterm]"</span>
+-->
 	<span style="float:right;">
 		<select>
 			<option>Sort...</option>
 			<option value="rent">Rent</option>
 			<option value="popularity">Popularity</option>
-			<option value="rating">Rating</option>
+			<!--<option value="rating">Rating</option>  I doubt users will review/rate appartments. Also creates spamming target. We can add that if we see that users are publishing reviews-->
 		</select>
 	</span>
 	<div class="line"></div>
 </div>
 
-<%= render(:partial => '/shared/listing' ,
-      	   :collection => @listings )
-%>
+<%= render :partial => '/shared/listing_summary', :collection => @listings %>

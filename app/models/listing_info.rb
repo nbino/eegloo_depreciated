@@ -1,7 +1,7 @@
 class ListingInfo < ActiveRecord::Base
   has_many :bedrooms
   has_one :livingroom
-  belongs_to :listing
+  belongs_to :listing 
   belongs_to :floor_type
   belongs_to :heat_q
   belongs_to :ac_type

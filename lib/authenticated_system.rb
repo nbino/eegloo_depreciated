@@ -86,7 +86,7 @@ module AuthenticatedSystem
         format.html do
           store_location
           flash[:error] = "You must be logged in to access this feature."
-          redirect_to :controller => '/session', :action => 'new'
+          redirect_to new_session_url
         end
         format.xml do
           request_http_basic_authentication 'Web Password'

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 11) do
+ActiveRecord::Schema.define(:version => 12) do
 
   create_table "apt_types", :force => true do |t|
     t.string   "name"
@@ -26,9 +26,21 @@ ActiveRecord::Schema.define(:version => 11) do
     t.datetime "updated_at"
   end
 
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "listing_id"
+    t.string   "type"
+    t.string   "content"
+    t.integer  "rating",     :default => 0
+    t.boolean  "private",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "favorites", :force => true do |t|
-    t.integer  "listing_id", :null => false
-    t.integer  "user_id",    :null => false
+    t.integer  "listing_id",              :null => false
+    t.integer  "user_id",                 :null => false
+    t.integer  "favorite_comments_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -85,16 +97,17 @@ ActiveRecord::Schema.define(:version => 11) do
   end
 
   create_table "listings", :force => true do |t|
-    t.integer  "user_id",                           :null => false
+    t.integer  "user_id",                               :null => false
     t.string   "address"
     t.string   "cross_street"
     t.integer  "apt_type_id"
     t.integer  "nhood_id"
     t.integer  "rent_range_id"
-    t.integer  "bogus_flags_count",  :default => 0
-    t.integer  "broker_flags_count", :default => 0
-    t.integer  "na_flags_count",     :default => 0
-    t.integer  "favorites_count",    :default => 0
+    t.integer  "bogus_flags_count",      :default => 0
+    t.integer  "broker_flags_count",     :default => 0
+    t.integer  "na_flags_count",         :default => 0
+    t.integer  "favorites_count",        :default => 0
+    t.integer  "listing_comments_count", :default => 0
     t.datetime "avail_date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -120,9 +133,9 @@ ActiveRecord::Schema.define(:version => 11) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username",                                :default => "",    :null => false
-    t.string   "email",                                   :default => "",    :null => false
-    t.string   "password",                                :default => "",    :null => false
+    t.string   "username",                                :default => "",   :null => false
+    t.string   "email",                                   :default => "",   :null => false
+    t.string   "password",                                :default => "",   :null => false
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
     t.string   "remember_token"
@@ -130,8 +143,8 @@ ActiveRecord::Schema.define(:version => 11) do
     t.string   "password_reset_code",       :limit => 40
     t.datetime "remember_token_expires_at"
     t.datetime "activated_at"
-    t.boolean  "enabled",                                 :default => false
-    t.boolean  "admin",                                   :default => false
+    t.boolean  "enabled",                                 :default => true
+    t.boolean  "admin",                                   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

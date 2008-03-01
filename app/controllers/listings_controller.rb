@@ -2,22 +2,21 @@ class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.xml
   
+  before_filter :login_required
   
   def index
     
-    #before_filter :login_required
-    @user = User.find(session[:user_id])
     @nhoods = Nhood.find :all
     @apt_types = AptType.find :all
     @rent_ranges = RentRange.find :all
     @floor_types = FloorType.find :all
     @ac_types = AcType.find :all
-    @cellphone_select = CellphoneQ.find :all
-    @maintenance_select = MaintenanceQ.find :all
-    @heat_select = HeatQ.find :all
-    @bathroom_select = BathroomQ.find :all
-    @appliances_select = AppliancesQ.find :all
-    @cellphone_select = CellphoneQ.find :all
+    @cellphone_quality_choices = CellphoneQ.find :all
+    @maintenance_quality_choices = MaintenanceQ.find :all
+    @heat_quality_choices = HeatQ.find :all
+    @bathroom_quality_choices = BathroomQ.find :all
+    @appliances_quality_choices = AppliancesQ.find :all
+    @cellphone_quality_choices = CellphoneQ.find :all
     @nbors_noise_levels = NborsNoiseLevel.find :all
     @street_noise_levels = StreetNoiseLevel.find :all
     @back_yard_types = BackYardType.find :all
@@ -26,61 +25,11 @@ class ListingsController < ApplicationController
     if !params[:listing_info]
       @listings = Listing.find :all, :limit => 20
     else
-      
-      #list all values that have operator other than "="
-      sql_ops = 
-      {
-      #~ 'apt_type_id'=>'=',
-      #~ 'avail_date'=>'=',
-      #~ 'n_hood'=>'=',
-      #~ 'elevator'=>'=', 
-      #~ 'multi_level'=>'=', 
-      #~ 'penthouse'=>'=', 
-      #~ 'private_entrance'=>'=', 
-      #~ 'back_yard'=>'=', 
-      #~ 'gym'=>'=', 
-      #~ 'laundry'=>'=', 
-      #~ 'dogs_allowed'=>'=', 
-      #~ 'cats_allowed'=>'=', 
-      #~ 'broadband'=>'=', 
-      #~ 'doorman'=>'=', 
-      #~ 'rent_stabilized'=>'=',
-      #~ 'rent_controlled'=>'=',
-      #~ 'convertable'=>'=',
-      #~ 'separate_kitchen'=>'=',
-      #'no_of_balconies'=>'>=',
-      #'no_of_patios'=>'>=',
-      'sq_footage'=>'>=',
-      'ceiling_height'=>'>=',
-      'appliance_q_id'=>'>=',
-      'bathroom_q_id'=>'>=',
-      'cellphone_q_id'=>'>=',
-      'street_noise_level_id'=>'>=',
-      'nbors_noise_level_id'=>'>=',
-      'ubound'=>'<=',
-      'comment'=>'LIKE'}
-      
-      conditions_t=[]
-      
-      # add wildcard characters to LIKE parameter
-      params[:listing_info].each {|key,val| params[:listing_info][key] = "%#{val}%" if val != '' && sql_ops[key] == 'LIKE'}
-      
-      
-      
-      #pests doesn't work
-      #comment doesn't work
-      debugger  
+      #clean up params
       params[:listing_info].delete_if {|key, val| val=="0" || val=="" || key=='pests'}
       
-      params[:listing_info] .each {|key, val| conditions_t << "#{key} #{sql_ops[key]||'='} :#{key}"}
-      conditions = conditions_t.join(' AND ')
+      @listings = Listing.do_search params[:listing_inf], current_user.id, 20
       
-        
-      @listings = Listing.find(
-        :all,
-        :joins => [:listing_info, :rent_range],
-        :conditions=>[conditions, params[:listing_info]],
-        :limit=>20)
     end
 
     respond_to do |format|
@@ -93,6 +42,7 @@ class ListingsController < ApplicationController
   # GET /listings/1.xml
   def show
     @listing = Listing.find(params[:id])
+    @comment = ListingComment.new()
     respond_to do |format|
       format.html { render :layout => "main" }
       format.xml  { render :xml => @listing }

@@ -13,8 +13,8 @@ class CreateAptTypes < ActiveRecord::Migration
     {:name=>'1 Bedroom', :bedrooms=>1},
     {:name=>'Jr. 2 Bedroom', :bedrooms=>2},
     {:name=>'2 bedroom', :bedrooms=>2},
-    {:name=>'Jr. 3 bedroom', :bedrooms=>3},
     {:name=>'3 bedroom', :bedrooms=>3},
+    {:name=>'Jr. 3 bedroom', :bedrooms=>3},
     {:name=>'4 bedroom', :bedrooms=>4}
     ].each {|vals| AptType.create(vals)}
     

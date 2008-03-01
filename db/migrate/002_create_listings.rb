@@ -4,7 +4,7 @@ class CreateListings < ActiveRecord::Migration
       t.belongs_to :user, :null => false
       t.string :address, :cross_street
       t.integer :apt_type_id, :nhood_id, :rent_range_id
-      t.integer :bogus_flags_count, :broker_flags_count, :na_flags_count, :favorites_count, :default=>0
+      t.integer :bogus_flags_count, :broker_flags_count, :na_flags_count, :favorites_count, :listing_comments_count, :default=>0
       t.datetime :avail_date
       t.timestamps
     end

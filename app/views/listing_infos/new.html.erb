@@ -5,7 +5,7 @@
 	<div id="listview_m" style="margin-left:50px">
 	
 	<ul>
-		<% form_for( [@listing, @listing_info], :url=>listing_listing_info_url(@listing) ) do |f| %>
+		<% form_for( @listing_info, :url=>listing_listing_info_url(@listing) ) do |f| %>
 		
 		
 		<li class="whole line">Numbers</li>
