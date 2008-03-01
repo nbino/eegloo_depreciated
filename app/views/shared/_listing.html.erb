@@ -3,34 +3,40 @@
 	<div class="entry">
 		<div class="floatleft">
 			
+			<ul>
+			<li>
+				<div class="header">
+					<span class="floatleft"><h2><%=listing.apt_type%> | <%=listing.nhood%></h2></span><span class="floatright"><%=listing.address%> | <%=listing.rent_range%></span>
+					<div style="clear: both;"></div>	
+					<b>Available:</b> <%= listing.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=listing.created_at.strftime("%b %d, '%y")%>
+					<div style="clear: both;"></div>
+				</div>	
+			</li>
+			<li class="linenopad"><b>Basics:</b> 1000 sq ft, 10 ft ceilings, 1 bathroom, separate kitchen, central A/C, wood floors, dogs ok, cats ok</li>
+			<li><b>Bedroom:</b> 10 x 10, bright, faces garden</li>
+			<li><b>Living Room:</b> 6x7, dark, faces street</li>
+			<li>
 			<!-- image -->
-			<img style="width: 70px; height: 50px;" alt="" class="left bordered_img" src="
-			<%if listing.visuals? %>
-			  <%if listing.photo_access?%>/images/stock_apt1_small.jpg	
-			  <%else%>/images/image_lock.gif
-			  <%end%>
-			<%else%>/images/image_none.gif
-			<%end%>
-			"/>
-			<!-- end image -->
-			
-			<%= link_to listing.address, listing_url(listing)%>
-			
-			, New York, NY<br /> 
-			
-			<b><%=listing.rent_range%></b> / month<br/> <%=listing.apt_type%> <br/>
-			Available on <%= listing.avail_date.strftime("%b %d, '%y") %>
-			
+				<img style="width: 70px; height: 50px;" alt="" class="bordered_img" src="
+				<%if listing.visuals? %>
+				  <%if listing.photo_access?%>/images/stock_apt1_small.jpg	
+				  <%else%>/images/image_lock.gif
+				  <%end%>
+				<%else%>/images/image_none.gif
+				<%end%>
+				"/>
+				<!-- end image -->
+			</li>
+			<li><b>Features:</b> Elevator, gym</li>
+			<li><span class="pluses"><b>Pluses:</b> Rent stabilized, quiet, well maintained, public roof access, new appliances</span></li>
+			<li><span class="minuses"><b>Minuses:</b> Bad winter heat, roaches, poor cell phone signal (T-Mobile)</span></li>
+			<li><a href="#" class="more">Flag
+			this Listing</a>
+			<a href="#" class="more">Add
+			to Favorites</a></li>
+			<li><b>Posted By:</b> <%= listing.user.username %></li>
+			<li><b>Comments:</b> [Display a few comments with a link to scroll for more, ajax-style]</li>
+			</ul>
 		</div>
-		<div class="floatright"><br/><br/><%=listing.nhood%></div>
 	</div>
-
-	<div class="meta">
-	<p class="byline">Posted on <%=listing.created_at.strftime("%b %d, '%y")%> by <%=
-  listing.user.username %></p>
-<p class="links"><a href="#" class="more">Flag
-this Listing</a><a href="#" class="more">Add
-to Favorites</a> <b>|</b> <a href="#" class="comments">Comments ($num)</a></p>
-	</div>
-
 </div>

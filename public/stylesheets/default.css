@@ -535,9 +535,45 @@ form  li {
 	background: url(/images/img03.gif) repeat-x left bottom;
 }
 
+/* For the listings index entries */
 .post .entry {
-	padding: 0px 0 10px 0;
 	overflow: auto;
+}
+
+.post h2 {
+	font-size:14px;
+}
+
+.post .entry ul { 
+	line-height: 12px;
+}
+
+.post .entry li {
+	margin-bottom:5px;
+}
+
+.post .entry .header {
+/*	padding:3px;*/
+/*	border:1px solid #850808;*/
+/*	background: #FFEEEE;*/
+}
+
+
+.post .entry .pluses {
+	padding: 2px;
+	background: #CCFFCC;
+	
+}
+
+.post .entry .minuses {
+	
+	padding: 2px;
+	background: #FE9EA0;
+}
+
+.post .linenopad {
+	background: url(/images/img03.gif) repeat-x;
+	
 }
 
 .post .line {
