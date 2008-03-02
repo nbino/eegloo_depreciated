@@ -23,10 +23,50 @@ class ListingInfosController < ApplicationController
       format.xml  { render :xml => @listing_info }
     end
   end
-
+  
+  #[EP] For drag and drop
+  def update_positions
+    params[:sortable_list].each_index do |i|
+      item = ListItem.find(params[:sortable_list][i])
+      item.position = i
+      item.save
+    end
+    @list = List.find(:all, :order => 'position')    
+    render :layout => false, :action => :list
+  end
+  
+  
   # GET /listing_infos/new
   # GET /listing_infos/new.xml
   def new
+    
+    @goodokbad_items = [
+      {:id => :maintenance_q_id, :label => 'Maintenance' },
+      {:id => :bathroom_q_id, :label => 'Bathrooms' },
+      {:id => :appliances_q_id, :label => 'Appliances' },
+      {:id => :heat_q_id, :label => 'Heat' },
+      {:id => :street_noise_level_id, :label => 'Street Noise' },
+      {:id => :nbors_noise_level_id, :label => 'Neighbor Noise' },
+      {:id => :cellphone_q_id, :label => 'Cellphone' }]
+      
+    @items = [
+      
+      {:id => :elevator, :label => 'Elevator' },
+      {:id => :laundry, :label => 'Laundry' },
+      {:id => :gym, :label => 'Gym' }, 
+      {:id => :doorman, :label => 'Doorman' },
+      {:id => :broadband, :label => 'Broadband' },
+      {:id => :multilevel, :label => 'Multi-level' },
+      {:id => :penthouse, :label => 'Penthouse' },
+      {:id => :balcony, :label => 'Balcony' },
+      {:id => :backyard, :label => 'Backyard' },
+      {:id => :separate_kitchen, :label => 'Separate Kitchen' },
+      {:id => :roaches, :label => 'Roaches' },
+      {:id => :rodents, :label => 'Rodents' },
+      {:id => :rent_stabilized, :label => 'Rent Stabilized' },
+      {:id => :rent_controlled, :label => 'Rent Controlled'}]
+      
+      
     @listing_info = ListingInfo.new
     #@listing_info = YAML.load(LISTING_YAML)
     

@@ -1008,3 +1008,16 @@ button.positive, .buttons a.positive{
     border:1px solid #d12f19;
     color:#fff;
 }
+
+
+/* listings_info new */
+#sort_items {
+	width: 125px;
+	float:left;
+}
+
+#sort_items ul li {
+	width: 125px;
+	line-height: 14px;
+	
+}

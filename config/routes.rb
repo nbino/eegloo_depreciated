@@ -6,10 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :password
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  # [EP] does this need to be here?
-  map.connect "/listings", :controller => 'listings', :action => 'index'
- 
- 
+  
   map.resources :listings, :has_many => [:visuals, :favorites, :bogus_flags, :broker_flags, :na_flags, :listing_comments], :has_one => [:listing_info]
   
   map.resources :users
