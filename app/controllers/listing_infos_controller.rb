@@ -41,7 +41,7 @@ class ListingInfosController < ApplicationController
   def new
     
     @goodokbad_items = [
-      {:id => :maintenance_q_id, :label => 'Maintenance' },
+      {:id => :maintenance_q_id, :label => 'Maintenance', :good =>'Well-maintained', :ok =>'Maintenance ok', :poor => 'Poor maintenance'},
       {:id => :bathroom_q_id, :label => 'Bathrooms' },
       {:id => :appliances_q_id, :label => 'Appliances' },
       {:id => :heat_q_id, :label => 'Heat' },

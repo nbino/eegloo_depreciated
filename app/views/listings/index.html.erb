@@ -16,18 +16,30 @@
 		<ul>
 		  <li id="search">
 		    <h2><b>Map</b></h2>
-		    <div id="map" style="position:absolute;"><img class="bordered_img" style="width: 300px; height: 300px;" alt="" src="/images/map.gif" /> </li></ul></div>
-		    <script type="text/javascript">
-
-    	var slideEffect = new Fx.Style('map', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
-		window.addEvent('load', function() {
-		var top = $('map').getPosition().y - 10;
-		window.addEvent('scroll', function(){
-      		slideEffect.start.delay(600, slideEffect, Math.max(0, document.documentElement.scrollTop - top));
-   		 });
-		new SmoothScroll({duration:700, transition:Fx.Transitions.circOut});
-  		});
-
-    </script>
+		    <div id="map">
+				<%= image_tag 'map.gif', { :size => '300x300', :class => 'bordered_img'}%>
+			</div>
+		  </li>
+		</ul>
+	 </div>
+		
+		<script type="text/javascript">
+		
+			var slideEffect = new Fx.Style('map', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
+			// var slideEffect2 = new Fx.Style('search', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
+			
+			  window.addEvent('load', function() {
+				
+			    var top = $('map').getPosition().y ;
+			    window.addEvent('scroll', function(){
+			      slideEffect.start.delay(600, slideEffect, Math.max(0, document.documentElement.scrollTop - top + 40));
+				  // slideEffect2.start.delay(600, slideEffect2, Math.max(0, document.documentElement.scrollTop - top + 40));
+			    });
+			
+			    new SmoothScroll({duration:700, transition:Fx.Transitions.circOut});
+			  });
+			
+	
+	    </script>
 	</div>
 <!-- end rightbar -->

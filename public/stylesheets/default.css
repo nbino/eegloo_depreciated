@@ -196,12 +196,14 @@ input.radio {
 }
 
 .selected-list ul li {
-background:transparent url(/images/icons/12-em-cross.png) no-repeat scroll 0pt;
+background:transparent url(/images/12-em-cross.png) no-repeat scroll 0pt;
 	color:#666666;
 	margin-bottom:2px;
 	padding-left:17px;
 	text-decoration:none;
 }
+
+
 
 /* End Form */
 
@@ -647,12 +649,16 @@ form  li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	line-height: 15px;
 	
 }
 
 #leftbar li {
-	margin-bottom: 10px;
+	line-height: 15px;
+	margin-bottom: 5px;
+}
+
+#leftbar #search {
+	line-height: 26px;
 }
 
 #leftbar li ul {
@@ -663,8 +669,8 @@ form  li {
 }
 
 #leftbar h2 {
-	margin-bottom: 10px;
-	background: url(/images/img03.gif) repeat-x left bottom;
+/*	margin-bottom: 10px;*/
+/*	background: url(/images/img03.gif) repeat-x left bottom;*/
 	font-size: 16px;
 }
 
@@ -693,8 +699,8 @@ form  li {
 }
 
 #rightbar h2 {
-	margin-bottom: 10px;
-	background: url(/images/img03.gif) repeat-x left bottom;
+/*	margin-bottom: 10px;*/
+/*	background: url(/images/img03.gif) repeat-x left bottom;*/
 	font-size: 16px;
 }
 
@@ -704,7 +710,7 @@ form  li {
 }
 
 #search h2 {
-	margin-bottom: 20px;
+/*	margin-bottom: 20px;*/
 }
 
 

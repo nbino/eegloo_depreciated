@@ -25,8 +25,6 @@ class ListingsController < ApplicationController
       #pests doesn't work
       conditions = 'rent_ranges.u_bound < :rent_range'
       
-      
-      
       ['apt_type_id',
       'avail_date',
       'n_hood',
