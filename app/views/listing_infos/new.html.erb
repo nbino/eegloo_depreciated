@@ -1,4 +1,4 @@
-svn<!-- start content -->
+<!-- start content -->
 <div id="fullcontentcenter" align="center">
 	<fieldset class="colored"><legend class="colored bigtext">Add Some Details</legend>
 	
@@ -63,65 +63,7 @@ svn<!-- start content -->
 		<li><label for="listing_info_separate_kitchen">Seperate Kitchen</label><%= f.check_box :separate_kitchen%></li> 
 		<li><label for="listing_info_rent_controlled">Rent Controlled</label><%= f.check_box :rent_controlled%></li>
 		<li><label for="listing_info_rent_stabilized">Rent Stabilized</label><%= f.check_box :rent_stabilized%></li> 
-		
-		<li class="whole">&nbsp;</li>
-		
-		<li class="whole">
-			
-			<span id="sort_items">
-				<ul id="sortable_list">
-					<li>&nbsp;</li>
-				<% @goodokbad_items.each do |item| %>    
-				  <li><b><%= item[:label] %></b> <%= image_tag "thumb_up.png" , :size=> "12x12" %> <%= image_tag "tag.png" , :size=> "12x12"%> <%= image_tag "thumb_down.png", :size=> "12x12" %></li>
-				<% end %>
-				</ul>
-			</span>
-			<span id="sort_items">
-				<ul id="sortable_list">
-				  <li><div align="center"><%= image_tag "thumb_up.png" , :size=> "12x12" %></div></li>
-				</ul>
-			</span>
-			<span id="sort_items">
-				<ul id="sortable_list">
-				  <li><div align="center"><%= image_tag "tag.png" , :size=> "12x12" %></div></li>
-				</ul>
-			</span>
-			<span id="sort_items">
-				<ul id="sortable_list">
-				  <li><div align="center"><%= image_tag "thumb_down.png" , :size=> "12x12" %></div></li>
-				</ul>
-			</span>
-			<div style="clear:both">
-
-			<%= sortable_element('sortable_list', :update => 'items', :url => {:action => :update_positions}) %>
-			
-		</li>
-		
-		<li class="whole">
-			
-			<span id="sort_items">
-				<ul id="sortable_list">
-					<li>&nbsp;</li>
-				<% @items.each do |item| %>    
-				  <li><b><%= item[:label] %></b> <%= image_tag "16-em-check.png" , :size=> "12x12" %> <%= image_tag "16-em-cross.png" , :size=> "12x12"%></li>
-				<% end %>
-				</ul>
-			</span>
-			<span id="sort_items">
-				<ul id="sortable_list">
-				  <li><div align="center"><%= image_tag "16-em-check.png" , :size=> "12x12"%></div></li>
-				</ul>
-			</span>
-			<span id="sort_items">
-				<ul id="sortable_list">
-				  <li><div align="center"><%= image_tag "16-em-cross.png" , :size=> "12x12" %></div></li>
-				</ul>
-			</span>
-			<div style="clear:both">
-			
-			<%= sortable_element('sortable_list', :update => 'items', :url => {:action => :update_positions}) %>
-			
-		</li>
+	
 		
 		
 		<li class="whole">

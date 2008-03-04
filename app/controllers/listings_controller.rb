@@ -6,22 +6,25 @@ class ListingsController < ApplicationController
   
   def index
     
-    @nhoods = Nhood.find :all
     @apt_types = AptType.find :all
-    @rent_ranges = RentRange.find :all
-    @floor_types = FloorType.find :all
+    @nhoods = Nhood.find :all
     @ac_types = AcType.find :all
-    @cellphone_quality_choices = CellphoneQ.find :all
-    @maintenance_quality_choices = MaintenanceQ.find :all
-    @heat_quality_choices = HeatQ.find :all
-    @bathroom_quality_choices = BathroomQ.find :all
-    @appliances_quality_choices = AppliancesQ.find :all
-    @cellphone_quality_choices = CellphoneQ.find :all
+    @cellphone_select = CellphoneQ.find :all
+    @maintenance_select = MaintenanceQ.find :all
+    @heat_select = HeatQ.find :all
+    @bathroom_select = BathroomQ.find :all
+    @appliances_select = AppliancesQ.find :all
+    @cellphone_select = CellphoneQ.find :all
     @nbors_noise_levels = NborsNoiseLevel.find :all
     @street_noise_levels = StreetNoiseLevel.find :all
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
-    
+    @pets_choices = Pets.find :all
+    @floor_types = FloorType.find(:all)
+    @ac_types = AcType.find(:all)
+    @light_levels = LightLevel.find(:all)
+    @window_directions = WindowDirection.find(:all)
+   
     if !params[:listing_info]
       @listings = Listing.find :all, :limit => 20
     else

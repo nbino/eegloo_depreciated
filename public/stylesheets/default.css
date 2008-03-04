@@ -655,6 +655,7 @@ form  li {
 #leftbar li {
 	line-height: 15px;
 	margin-bottom: 5px;
+	padding-bottom: 0px;
 }
 
 #leftbar #search {

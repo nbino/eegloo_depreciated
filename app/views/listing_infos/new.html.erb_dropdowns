@@ -67,12 +67,12 @@ Adding more details about your apartment allows you to view highly detailed list
   <label for="listing_info_floor_type">Floor Type</label> <%=radio(f, :floor_type, @floor_types)%> &nbsp;&nbsp;
   
   
-  <label for="listing_info_heat_q">Heat:</label> <br/>  <%= f.collection_select :heat_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_heat_q">Heat:</label> <br/>  <%= f.collection_select :heat_q, @Select, :id, :name, {:include_blank=>'Select'} %> <br/>
   <label for="listing_info_heat_q">A/C Type:</label> <br/>  <%= f.collection_select :ac_type, @ac_types, :id, :name, {:include_blank=>'Select'} %> <br/>
-  <label for="listing_info_maintenance_q">Maintenance:</label> <br/>  <%= f.collection_select :maintenance_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
-  <label for="listing_info_appliance_q">Appliances Condition:</label> <br/>  <%= f.collection_select :appliance_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
-  <label for="listing_info_bathroom_q">Bathroom Fixtures Condition:</label> <br/>  <%= f.collection_select :bathroom_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
-  <label for="listing_info_cellphone_q">Cellphone Signal:</label> <br/>  <%= f.collection_select :cellphone_q, @quality_choices, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_maintenance_q">Maintenance:</label> <br/>  <%= f.collection_select :maintenance_q, @Select, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_appliance_q">Appliances Condition:</label> <br/>  <%= f.collection_select :appliance_q, @Select, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_bathroom_q">Bathroom Fixtures Condition:</label> <br/>  <%= f.collection_select :bathroom_q, @Select, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_cellphone_q">Cellphone Signal:</label> <br/>  <%= f.collection_select :cellphone_q, @Select, :id, :name, {:include_blank=>'Select'} %> <br/>
   
   <label for="listing_info_street_noise_level">Street Noise:</label> <br/>  <%= f.collection_select :street_noise_level, @noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>
   <label for="listing_info_nbors_noise_level">Neighbor Noise:</label> <br/>  <%= f.collection_select :nbors_noise_level, @noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>

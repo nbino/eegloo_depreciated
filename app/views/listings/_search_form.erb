@@ -31,9 +31,9 @@
   <label for="listing_info_back_yard">Roof Access</label><br/>  <%= f.collection_select :roof_access_type_id, @roof_access_types, :id, :name, {:include_blank=>'Select'} %>  <br/>
   <label for="listing_info_floor_type">Floor Type</label><br/> <%=f.collection_select :floor_type_id_id, @floor_types, :id, :name, {:include_blank=>'Select'} %> <br/>
   <label for="listing_info_heat_q">A/C Type</label><br/>   <%= f.collection_select  :ac_type_id, @ac_types, :id, :name, {:include_blank=>'Select'}  %> <br/>
-  <label for="listing_info_appliance_q">Min Appliances Condition</label><br/>   <%= f.collection_select  :appliance_q_id, @appliances_Select, :id, :name, {:include_blank=>'Select'}  %> <br/>
-  <label for="listing_info_bathroom_q">Min Bathroom Condition</label><br/>   <%= f.collection_select  :bathroom_q_id, @bathroom_Select, :id, :name, {:include_blank=>'Select'}  %> <br/>
-  <label for="listing_info_cellphone_q">Min Cellphone Signal</label><br/>  <%= f.collection_select  :cellphone_q_id, @cellphone_Select, :id, :name, {:include_blank=>'Select'} %> <br/>
+  <label for="listing_info_appliance_q">Min Appliances Condition</label><br/>   <%= f.collection_select  :appliance_q_id, @appliances_select, :id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_bathroom_q">Min Bathroom Condition</label><br/>   <%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'Select'}  %> <br/>
+  <label for="listing_info_cellphone_q">Min Cellphone Signal</label><br/>  <%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'Select'} %> <br/>
   
   <label for="listing_info_street_noise_level">Max Street Noise</label><br/> <%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'Select'} %> <br/>
   <label for="listing_info_nbors_noise_level">Max Neighbor Noise</label><br/> <%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels,:id, :name, {:include_blank=>'Select'}  %> <br/>
