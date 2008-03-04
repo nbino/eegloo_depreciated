@@ -14,7 +14,7 @@
 development:
   adapter: mysql
   database: f_dev
-  username: 
+  username: bob
   password:
   host: localhost
 
