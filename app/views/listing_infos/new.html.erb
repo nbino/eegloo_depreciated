@@ -25,45 +25,46 @@
 		<%= f.collection_select  :appliances_q_id, @appliances_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_bathroom_q">Bathroom Cond</label>   
 		<%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>	
-		<li><label for="listing_info_heat_q">Heat</label>   
-		<%= f.collection_select  :heat_q_id, @heat_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		
+
 	
-		<li class="whole line">Building</li>
+		<li class="whole line">Primary</li>
+		
 		<li><label for="listing_info_elevator">Elevator</label><%= f.check_box :elevator %></li>
 		<li><label for="listing_info_laundry">Laundry</label><%= f.check_box :laundry %></li>
 		<li><label for="listing_info_gym">Gym</label><%= f.check_box :gym %></li>
 		<li><label for="listing_info_doorman">Doorman</label><%= f.check_box :doorman %></li>
-		<li><label for="listing_info_multi_level">Multi Level</label><%= f.check_box :multi_level %></li>
-		<li><label for="listing_info_penthouse">Penthouse</label><%= f.check_box :penthouse %></li>
-		<li><label for="listing_info_balcony">Balcony</label><%= f.check_box :balcony %></li>
-		<li><label for="listing_info_patio">Patio</label><%= f.check_box :patio %></li>
-		<li><label for="listing_info_back_yard">Backyard</label>   
-		<%= f.collection_select  :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		<li><label for="listing_info_roaches">Roaches</label><%= f.check_box :roaches %></li>	
-		<li><label for="listing_info_rodents">Rodents</label><%= f.check_box :rodents %></li>		
-		<li><label for="listing_info_broadband">Broadband</label><%= f.check_box :broadband %></li>
-		
-		<li class="whole line">Other</li>
-		
-		<li><label for="listing_info_floor_type">Floor Type</label><%= f.collection_select  :floor_type, @floor_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		<li><label for="listing_info_heat_q">Heat</label><%= f.collection_select  :heat_q, @heat_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_pets">Pets</label> 
+		<%= f.collection_select  :pets_id, @pets_choices, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_heat_q">Heat</label>   
+		<%= f.collection_select  :heat_q_id, @heat_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_heat_q">A/C</label><%= f.collection_select  :ac_type, @ac_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		
+		<li class="whole line">Secondary</li>
+		
 		<li><label for="listing_info_street_noise_level">Street Noise</label> 
 		<%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
 		<li><label for="listing_info_street_noise_level">Neighbor Noise</label> 
 		<%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		<li><label for="listing_info_cellphone">Cellphone</label> 
-		<%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		<li><label for="listing_info_pets">Pets</label> 
-		<%= f.collection_select  :pets_id, @pets_choices, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
-		
 		
 		<li><label for="listing_info_convertable">Convertible</label><%= f.check_box :convertable%></li> 
+		<li><label for="listing_info_multi_level">Multi Level</label><%= f.check_box :multi_level %></li>
+		<li><label for="listing_info_penthouse">Penthouse</label><%= f.check_box :penthouse %></li>
+		<li><label for="listing_info_patio">Patio</label><%= f.check_box :patio %></li>
+		<li><label for="listing_info_balcony">Balcony</label><%= f.check_box :balcony %></li>
 		<li><label for="listing_info_separate_kitchen">Seperate Kitchen</label><%= f.check_box :separate_kitchen%></li> 
+		<li><label for="listing_info_back_yard">Backyard</label>   
+		<%= f.collection_select  :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_roof_access">Roof Access</label>   
+		<%= f.collection_select  :roof_access_type_id, @roof_access_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_floor_type">Floor Type</label><%= f.collection_select  :floor_type, @floor_types, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_cellphone">Cellphone</label> 
+		<%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[select]', :class=>'required'} %></li>
+		<li><label for="listing_info_broadband">Broadband</label><%= f.check_box :broadband %></li>	
+		<li><label for="listing_info_roaches">Roaches</label><%= f.check_box :roaches %></li>	
+		<li><label for="listing_info_rodents">Rodents</label><%= f.check_box :rodents %></li>		
 		<li><label for="listing_info_rent_controlled">Rent Controlled</label><%= f.check_box :rent_controlled%></li>
 		<li><label for="listing_info_rent_stabilized">Rent Stabilized</label><%= f.check_box :rent_stabilized%></li> 
-	
+
 		
 		
 		<li class="whole">

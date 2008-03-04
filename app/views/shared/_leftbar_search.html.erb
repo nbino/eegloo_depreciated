@@ -13,49 +13,50 @@
 			</li>
 			<li>Rent: <%= f.text_field :lbound, :size=>4%> to <%= f.text_field :ubound, :size=>4%>
 			</li>
-			<li>Avail. Date: <%=f.text_field :avail_date, :size=>6%>
+			<li>Avail: <%= f.calendar_date_select :avail_date, :size => 9%>
 			</li>
 			<li>Sq Footage: <%=f.text_field :sq_footage, :size=>4%>
 			</li>
 			<li><%= f.collection_select  :maintenace_q_id, @maintenance_select, :id, :name, {:include_blank=>'[Maintenace]'}  %></li>
-			<li><%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[Bathroom Cond]'}  %> </li>
 			<li><%= f.collection_select  :appliance_q_id, @appliances_select, :id, :name, {:include_blank=>'[Appliances Cond]'}  %></li>
+			<li><%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[Bathroom Cond]'}  %> </li>
+
 			
 			
 			<li><%= f.check_box :elevator%> Elevator</li>
 			<li><%= f.check_box :laundry%> Laundry</li>
 			<li><%= f.check_box :gym%> Gym</li>
 			<li><%= f.check_box :doorman%> Doorman</li>
-			<li><%= f.check_box :convertable%> Convertible</li>
 			<li><%= f.check_box :pets%> Pets</li>
-			<li>[# Bathrooms:]</li>
+
 			<li><%= f.collection_select :heat_q_id, @heat_select, :id, :name, {:include_blank=>'[Heat]'} %></li>
 			<li><%= f.collection_select  :ac_type_id, @ac_types, :id, :name, {:include_blank=>'[A/C Type]'}  %> </li>
 			
-			<li><%= f.check_box :broadband%> Broadband-ready</li>
-			<li><%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[Cellphone]'} %> </li>
+	
 			<li><%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'[Street Noise]'} %> </li>
 			<li><%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels,:id, :name, {:include_blank=>'[Neighbor Noise]'}  %> </li>
-			
+						
+			<li><%= f.check_box :convertable%> Convertible</li>
 			<li><%= f.check_box :multi_level%> Multi-level</li>
 			<li><%= f.check_box :penthouse%> Penthouse</li>
 			<li><%= f.check_box :no_of_patios%> Patio</li>
 			<li><%= f.check_box :private_entrance%> Private Entrance</li>
 			<li><%= f.check_box :balcony%> Balcony</li>
+			<li><%= f.check_box :separate_kitchen%> Separate Kitchen</li>
 			<li><%= f.collection_select :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'[Backyard]'} %>  </li>
 			<li><%= f.collection_select :roof_access_type_id, @roof_access_types, :id, :name, {:include_blank=>'[Roof Access]'} %></li>
 			<li><%=f.collection_select :floor_type_id_id, @floor_types, :id, :name, {:include_blank=>'[Floor Type]'} %> </li>
-			<li><%= f.check_box :separate_kitchen%> Separate Kitchen</li>
+			<li>[# Bathrooms:]</li>
+			<li>Ceiling Height: <%=f.text_field :ceiling_height, :size=>4%>
 			
+			<li><%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[Cellphone]'} %> </li>
+			<li><%= f.check_box :broadband%> Broadband-ready</li>
 			<li><%= f.check_box :roach%> Roach-free</li>
 			<li><%= f.check_box :rodent%> Rodent-free</li>
 			
 			<li><%= f.check_box :rent_controlled%> Rent Controlled</li>
 			<li><%= f.check_box :rent_stabilized%> Rent Stabilized</li>
 			
-			
-			
-			<li>Ceiling Height: <%=f.text_field :ceiling_height, :size=>4%>
 			</li>
 			
 			<!-- Must Haves: Well Maintained, Nice Bathrooms, Nice Appliances, Well-heated, Elevator, Laundry, Gym, Doorman, Pets OK, Multi-level, Penthouse, Balcony, Backyard, Roach-free, Rodent-free, Broadband, Low Street Noise, Low Neighbor Noise, Good Cellphone Coverage, Convertible, Separate Kitchen, Rent Controlled, Rent Stabilized -->

@@ -70,6 +70,8 @@ class ListingInfosController < ApplicationController
     @listing_info = ListingInfo.new
     #@listing_info = YAML.load(LISTING_YAML)
     
+    @apt_types = AptType.find :all
+    @nhoods = Nhood.find :all
     @ac_types = AcType.find :all
     @cellphone_select = CellphoneQ.find :all
     @maintenance_select = MaintenanceQ.find :all
@@ -79,14 +81,13 @@ class ListingInfosController < ApplicationController
     @cellphone_select = CellphoneQ.find :all
     @nbors_noise_levels = NborsNoiseLevel.find :all
     @street_noise_levels = StreetNoiseLevel.find :all
-    @balcony_types = BalconyType.find :all
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
     @pets_choices = Pets.find :all
-    @floor_types = FloorType.find(:all)
-    @ac_types = AcType.find(:all)
-    @light_levels = LightLevel.find(:all)
-    @window_directions = WindowDirection.find(:all)
+    @floor_types = FloorType.find :all
+    @ac_types = AcType.find :all
+    @light_levels = LightLevel.find :all
+    @window_directions = WindowDirection.find :all
     
     apt_type = @listing.apt_type
     

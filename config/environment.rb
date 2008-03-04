@@ -58,5 +58,15 @@ Rails::Initializer.run do |config|
   #config.active_record.observers = :user_observer
 
   # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
+  # config.active_record.default_timezone = :utc  
+
 end
+
+CalendarDateSelect::FORMATS[:american] = {
+# Here's the code to pass to Date#strftime
+  :date => "%m/%d/%Y",
+  :time => " %I:%M %p",  # notice the space before time.  If you want date and time to be seperated with a space, put the leading space here.
+  :javascript_include => "american"
+}
+
+CalendarDateSelect.format = :american
