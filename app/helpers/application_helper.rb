@@ -14,8 +14,8 @@ module ApplicationHelper
     def yes_no_radio(method)
       #form_builder.select(method, { 'No' => 0, 'Yes' => 1}, {:include_blank => 'Select'})
       output = ''
-      output += "#{radio_button(method, 1)}y "
-      output += "#{radio_button(method, 0)}n"
+      output += "#{radio_button(method, 1)}Yes &nbsp;&nbsp;"
+      output += "#{radio_button(method, 0)}No"
       output
     end
     
