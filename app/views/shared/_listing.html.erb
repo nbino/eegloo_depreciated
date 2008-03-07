@@ -1,3 +1,4 @@
+<% l = listing; li=listing.listing_info %>
 <div class="post">
 
 	<div class="entry">
@@ -6,21 +7,32 @@
 			<ul>
 			<li>
 				<div class="header">
-					<span class="floatleft"><h2>[<%= listing_counter + 1 %>] <%=listing.apt_type%> | <%=listing.nhood%></h2></span><span class="floatright"></span>
+					<span class="floatleft"><h2>[<%= listing_counter + 1 %>] <%=l.apt_type%> | <%=l.nhood%></h2></span><span class="floatright"></span>
 					<div style="clear: both;"></div>	
-					<%=listing.address%> | <%=listing.rent_range%> | <b>Available:</b> <%= listing.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=listing.created_at.strftime("%b %d, '%y")%>
+					<%=l.address%> | <%=l.rent_range%> | <b>Available:</b> <%= l.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=l.created_at.strftime("%b %d, '%y")%>
 					<div style="clear: both;"></div>
 				</div>	
 			</li>
+        <li><b>Contact:</b> <%=li.landlord_phone_number != '' ? "#{li.landlord_phone_number} (landlord)" : "#{li.broker_phone_numbe} (broker)"%> <%=li.broker_only ? '- through broker only' : ''%>
+        
 			<!-- [EP][TODO] We need to replace these placeholders with real stuff -->
-			<li class="linenopad"><b>Basics:</b> 1000 sq ft, 10 ft ceilings, 1 bathroom, separate kitchen, central A/C, wood floors, dogs ok, cats ok</li>
-			<li><b>Bedroom:</b> 10 x 10, bright, faces garden</li>
-			<li><b>Living Room:</b> 6x7, dark, faces street</li>
+			<li class="linenopad"><b>Basics:</b> 
+      <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%=pluralize li.no_of_bathrooms,  'bathroom' %>, 
+      <%= li.separate_kitchen? ? 'separate kitchen' : 'kitchenette' %>, <%=li.ac_type%> A/C, <%=li.floor_type%> floors, <%=li.pets%> ok</li>
+			<li><b>Rooms:</b> 
+      <%if li.livingroom?%>
+        <%=li.livingroom.length%> x <%=li.livingroom.length%>, <%=li.livingroom.light_level %> livingroom with <%=li.livingroom.window_direction%> view, 
+      <%end%>
+      <%li.bedrooms.each_with_index do |bedroom, i|%>
+        <%=bedroom.length%> x <%=bedroom.width%>, <%=bedroom.light_level%> bedroom with <%=bedroom.window_direction%> view <%=i < li.bedrooms.size - 1 ? ',' : ''%>
+      <%end %>
+			
+      </li>
 			<li>
 			<!-- image -->
 				<img style="width: 70px; height: 50px;" alt="" class="bordered_img" src="
-				<%if listing.visuals? %>
-				  <%if listing.photo_access?%>/images/stock_apt1_small.jpg	
+				<%if l.visuals? %>
+				  <%if l.photo_access?%>/images/stock_apt1_small.jpg	
 				  <%else%>/images/image_lock.gif
 				  <%end%>
 				<%else%>/images/image_none.gif
@@ -28,39 +40,85 @@
 				"/>
 				<!-- end image -->
 			</li>
-			<li><b>Building:</b> Elevator, gym</li>
-			<li><span class="pluses"><b>Pluses:</b> Rent stabilized, quiet, well maintained, public roof access, new appliances</span></li>
-			<li><span class="minuses"><b>Minuses:</b> Bad winter heat, roaches, poor cell phone signal (T-Mobile)</span></li>
-			<li><span id="bogus_flag_<%=listing.id%>">
+			<li><b>Building:</b> 
+        <%=
+      {
+        'elevator'=> li.elevator?,
+        'walkup' => !li.elevator?,
+        'doorman' => li.doorman?,
+        'laundromat' => li.laundry?,
+        'gym' => li.gym?
+      }.keys_to_sentence_sens_false_values%>
+       </li>
+			<li><span class="pluses"><b>Pluses:</b> 
+      <%=
+      {
+        'rent stabilized'=>li.rent_stabilized?,
+		    'rent controlled'=>li.rent_controlled?,
+        'good heat' => li.heat_q.most_desirable?,
+        'quiet' => li.quiet?,
+        '#{li.maintenance_q} maintainance' => li.maintenance_q.most_desirable?,
+        "#{li.appliances_q} appliances" => li.appliances_q.most_desirable?,
+        "#{li.bathroom_q} bathroom" => li.bathroom_q.most_desirable?,
+        'multi-level'=>li.multi_level?, 
+        'penthouse'=>li.penthouse?, 
+		    'private entrance'=>li.private_entrance?,  
+        "#{li.roof_access_type} roof access" => !li.roof_access_type.none?,
+        "#{li.back_yard_type} back yard" => !li.back_yard_type.none?,  
+        'balcony' => li.balcony?,
+        'patio' => li.patio?,
+        'broadband capable' => li.broadband?
+       }.keys_to_sentence_sens_false_values%>
+        
+      </span></li>
+			<li><span class="minuses"><b>Minuses:</b> 
+      <%=
+       {
+        "#{li.heat_q} heat" => !li.heat_q.most_desirable?,
+        "#{li.nbors_noise_level} neighboor noise" => !li.nbors_noise_level.most_desirable?,
+        "#{li.street_noise_level} street noise" => !li.street_noise_level.most_desirable?,
+        "#{li.maintenance_q} maintanance" => !li.maintenance_q.most_desirable?,
+        "#{li.appliances_q} appliances" => !li.appliances_q.most_desirable?,
+        "#{li.bathroom_q} bathroom" => !li.bathroom_q.most_desirable?,
+        'not broadband capable' => !li.broadband?,
+         "#{li.cellphone_q} cellphone signal (#{li.cellphone_provider})" => !li.cellphone_q.most_desirable?,
+         'roaches' => li.roaches?,
+         'roadents' => li.rodents?,
+         'ants' => li.ants?
+       }.keys_to_sentence_sens_false_values%>
+      </span></li>
+      <li><span id="favorites_info_<%=l.id%>">
+
+      <%=link_to_remote( 
+        'Add to favorites', 
+        :url=>listing_favorites_url(listing), 
+        :update=>"favorites_info_#{l.id}",
+        :method=>:post)%>
+    </span>	
+      <li><span id="bogus_flag_<%=l.id%>">
 			<%=link_to_remote(
 			  'Flag as bogus', 
 			  :url=>listing_bogus_flags_url(listing), 
-			  :complete=>"$('spinner_#{listing.id}').hide();",
-			  :before=>"$('spinner_#{listing.id}').show();",
 			  :method=>:post,
-			  :update=>"bogus_flag_#{listing.id}")%>
+			  :update=>"bogus_flag_#{l.id}")%>
 			</span>
 			|
-			<span id="na_flag_<%=listing.id%>">
+			<span id="na_flag_<%=l.id%>">
 			<%=link_to_remote(
 			  'Flag as no longer available', 
 			  :url=>listing_na_flags_url(listing), 
-			  :complete=>"$('spinner_#{listing.id}').hide();",
-			  :before=>"$('spinner_#{listing.id}').show();",
 			  :method=>:post,
-			  :update=>"na_flag_#{listing.id}")%>
+			  :update=>"na_flag_#{l.id}")%>
 			</span>
 			|
-			<span id="broker_flag_<%=listing.id%>">
+			<span id="broker_flag_<%=l.id%>">
 			<%=link_to_remote(
 			  'Flag as broker', 
 			  :url=>listing_broker_flags_url(listing), 
-			  :complete=>"$('spinner_#{listing.id}').hide();",
-			  :before=>"$('spinner_#{listing.id}').show();",
 			  :method=>:post,
-			  :update=>"broker_flag_#{listing.id}")%>
+			  :update=>"broker_flag_#{l.id}")%>
 			</span></li>
-			<li><b>Posted By:</b> <%= listing.user.username %></li>
+			<li><b>Posted By:</b> <%= l.user.username %></li>
 			<li><b>Comments:</b> [Display a few comments]</li>
 			</ul>
 		</div>

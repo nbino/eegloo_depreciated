@@ -10,17 +10,19 @@ class CreateAttrValues < ActiveRecord::Migration
   
 # searh assumes that qualitative values should range from bad to good  
 
-    %w{Quiet Ok Noisy}.each do |name| 
+    ['a lot of', 'average', 'quiet'].each do |name| 
       NborsNoiseLevel.create :name => name
       StreetNoiseLevel.create :name => name
     end
     
     
-    %w{Dark Dim Bright}.each {|name| LightLevel.create :name => name}
+    %w{dark dim bright}.each {|name| LightLevel.create :name => name}
     
-    ['Garden', 'Street', 'Air Shaft'].each {|name| WindowDirection.create :name => name}
+    ['air shaft', 'street', 'garden'].each {|name| WindowDirection.create :name => name}
     
-    %w{Poor Average Excellent}.each do |name| 
+    %w{Cingular Nextel Pre-paid Sprint T-Mobile Verizon}.each {|name| CellphoneProvider.create :name => name} 
+    
+    %w{poor average excellent}.each do |name| 
       HeatQ.create :name => name
       BathroomQ.create :name => name
       AppliancesQ.create :name => name
@@ -28,13 +30,13 @@ class CreateAttrValues < ActiveRecord::Migration
       MaintenanceQ.create :name => name
     end
     
-    ['No', 'Cats', 'Dogs', 'Cats & Dogs'].each {|name| Pets.create :name => name}
+    ['no', 'cats', 'dogs', 'cats & dogs'].each {|name| Pets.create :name => name}
     
-    %w{Carpet Hardwood Linoleum}.each {|name| FloorType.create :name => name}
+    %w{linoleum carpet hardwood}.each {|name| FloorType.create :name => name}
     
-    %w(None Central Window Wall).each {|name| AcType.create :name => name}
+    %w(no window wall central).each {|name| AcType.create :name => name}
     
-    %w(None Private Public).each do |name| 
+    %w(none private public).each do |name| 
       RoofAccessType.create :name => name
       BackYardType.create :name => name
     end

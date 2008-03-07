@@ -16,6 +16,7 @@ class CreateListingInfos < ActiveRecord::Migration
         :appliances_q_id,
         :bathroom_q_id,
         :cellphone_q_id,
+	:cellphone_provider_id,
         :pets_id
         
       t.string :landlord_phone_number, :broker_phone_number, :comment

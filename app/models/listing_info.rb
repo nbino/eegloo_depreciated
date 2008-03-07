@@ -13,6 +13,7 @@ class ListingInfo < ActiveRecord::Base
   belongs_to :appliances_q
   belongs_to :bathroom_q
   belongs_to :cellphone_q
+  belongs_to :cellphone_provider
   belongs_to :pets
   
   def livingroom_info=(livingroom_info)
@@ -25,6 +26,10 @@ class ListingInfo < ActiveRecord::Base
   
   def livingroom?
     !livingroom.nil?
+  end
+  
+  def quiet?
+    nbors_noise_level.most_desirable? && street_noise_level.most_desirable?
   end
   
   

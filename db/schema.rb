@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 13) do
     t.integer  "appliances_q_id"
     t.integer  "bathroom_q_id"
     t.integer  "cellphone_q_id"
+    t.integer  "cellphone_provider_id"
     t.integer  "pets_id"
     t.string   "landlord_phone_number"
     t.string   "broker_phone_number"

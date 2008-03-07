@@ -7,8 +7,8 @@ class AddTestData < ActiveRecord::Migration
     :user_id=>i+1, 
     :address=>"#{i} #{i} st", 
     :cross_street=>"#{i+3} st", 
-    :apt_type_id=>AptType.find(:all)[rand(5)].id, 
-    :nhood_id=>Nhood.find(:all)[rand(14)].id, 
+    :apt_type_id=>AptType.find(:all)[rand(8)].id, 
+    :nhood_id=>Nhood.find(:all)[rand(26)].id, 
     :rent_range_id=>RentRange.find(:all)[rand(10)].id,
     :avail_date=> "#{rand(11)+1}/#{rand(29)+1}/2008")
     
@@ -29,6 +29,7 @@ class AddTestData < ActiveRecord::Migration
         :appliances_q_id=>AppliancesQ.find(:all)[rand(2)].id,
         :bathroom_q_id=>BathroomQ.find(:all)[rand(2)].id,
         :cellphone_q_id=>CellphoneQ.find(:all)[rand(2)].id,
+        :cellphone_provider_id=>CellphoneProvider.find(:all)[rand(4)].id,
         :pets_id=>Pets.find(:all)[rand(2)].id,
         :landlord_phone_number=>'(123)555-55-55',
         :broker_phone_number=>'(123)555-55-55',
