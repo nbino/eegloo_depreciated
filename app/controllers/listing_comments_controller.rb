@@ -47,7 +47,7 @@ class ListingCommentsController < ApplicationController
       if @listing.comments.create(params[:listing_comment].merge({:user_id => current_user.id}))
         flash[:notice] = 'Comments was successfully created.'
         @comment = ListingComment.new
-        format.html { render :partial=>'shared/comment_list' }
+        format.html { render :partial=>'shared/comment_list', :locals=>{:comments=>@listing.comments} }
         format.xml  { render :xml => @comments, :status => :created, :location => @comments }
       else
         format.html { render :action => "new" }

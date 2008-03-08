@@ -1,4 +1,5 @@
-<%remote_form_for [@listing, @comment], :update=>"comments_block_#{@listing.id}" do |f|%>
+<%remote_form_for [listing, comment], :update=>"comments_block_#{listing.id}" do |f|%>
     <%=f.text_area  :content, :cols => 20, :rows => 5%><br/>
-    <%=f.submit "Done"%>
+    <%=f.submit "Done", :onclick => visual_effect(:slide_up, "add_comment_block_#{listing.id}", :duration => 0.5 )-%>
 <%end%>
+

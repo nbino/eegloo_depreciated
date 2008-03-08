@@ -393,11 +393,12 @@
         </fieldset>
 
         <div class="boxdiv"> 
-        <div id="comments_block_<%=@listing.id%>">
-        <%=render_partial 'shared/comment_list'%>
+        <div id="comments_block_<%=l.id%>">
+        <%=render_partial 'shared/comment_list', :object=>l.comments%>
         </div>
         <br/>
         Add comment<br>
+        <div id="add_comment_block_<%=l.id%>">
         <%= render :partial=>'/shared/create_comment'%> 
         </div>
         </div>

@@ -1,5 +1,11 @@
-<h1>Listing visuals</h1>
+<%if @visuals.size == 0 %>
+  No photos uploaded.
+<%end%>
+  
+<table><tr>
+<% @visuals.each do |visual|  %>
+    <td><%= image_tag(visual.public_filename(:thumb), :height=>100, :width=>120) %> <br/> <%=visual.comment %></td>
+  <%end%>
+</tr></table>
 
-<%= ['asdf', nil, 'zxcv', 'asdfa'].to_sentence_sens_nil%>
 
-<%=debug(Quality.find(:all))%>

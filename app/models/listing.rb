@@ -1,7 +1,8 @@
 class Listing < ActiveRecord::Base
   
   has_many :favorites
-  has_many :visuals
+  has_many :photos
+  has_many :movies
   has_many :broker_flags
   has_many :na_flags
   has_many :bogus_flags
@@ -38,19 +39,6 @@ class Listing < ActiveRecord::Base
   
   def listing_info?
     !listing_info.nil?
-  end
-  
-  def photo_access?
-    true
-    #photos.size = 3
-  end
-  
-  def video_access?
-    videos?
-  end
-  
-  def listing_info_access?
-    listing_info?
   end
   
   SQL_OPERATORS = 

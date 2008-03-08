@@ -4,8 +4,7 @@ class ListingsController < ApplicationController
   
   before_filter :login_required
   
-  def index
-    
+  def load_dropdown_values
     @apt_types = AptType.find :all
     @nhoods = Nhood.find :all
     @ac_types = AcType.find :all
@@ -20,10 +19,17 @@ class ListingsController < ApplicationController
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
     @pets_choices = Pets.find :all
-    @floor_types = FloorType.find(:all)
-    @ac_types = AcType.find(:all)
-    @light_levels = LightLevel.find(:all)
-    @window_directions = WindowDirection.find(:all)
+    @floor_types = FloorType.find:all
+    @ac_types = AcType.find:all
+    @light_levels = LightLevel.find:all
+    @window_directions = WindowDirection.find:all
+    @cell_phone_providers_select = CellphoneProvider.find :all
+    @rent_ranges = RentRange.find :all
+  end
+  
+  def index
+    
+    load_dropdown_values
    
     if !params[:listing_info]
       @listings = Listing.find :all, :limit => 20
@@ -66,6 +72,12 @@ class ListingsController < ApplicationController
   # GET /listings/1/edit
   def edit
     @listing = Listing.find(params[:id])
+    
+    load_dropdown_values
+    respond_to do |format|
+      format.html { render :layout => "main" }
+      format.xml  { render :xml => @listing }
+    end
   end
 
   # POST /listings
@@ -97,7 +109,7 @@ class ListingsController < ApplicationController
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
         flash[:notice] = 'Listing was successfully updated.'
-        format.html { redirect_to(@listing) }
+        format.html { render :action => "edit" }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

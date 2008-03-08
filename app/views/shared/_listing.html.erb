@@ -1,10 +1,9 @@
-<% l = listing; li=listing.listing_info %>
+<% l = listing %>
 <div class="post">
 
 	<div class="entry">
 		<div class="floatleft">
-			
-			<ul>
+ 			<ul>
 			<li>
 				<div class="header">
 					<span class="floatleft"><h2>[<%= listing_counter + 1 %>] <%=l.apt_type%> | <%=l.nhood%></h2></span><span class="floatright"></span>
@@ -13,114 +12,93 @@
 					<div style="clear: both;"></div>
 				</div>	
 			</li>
-        <li><b>Contact:</b> <%=li.landlord_phone_number != '' ? "#{li.landlord_phone_number} (landlord)" : "#{li.broker_phone_numbe} (broker)"%> <%=li.broker_only ? '- through broker only' : ''%>
+        <li>Popularity: <%=l.favorites.count%> | Bogus flags: <%=l.bogus_flag_count%> | N/A flags:  <%=l.na_flag_count%> | Broker flags: <%=l.broker_flag_count%></li>
         
-			<!-- [EP][TODO] We need to replace these placeholders with real stuff -->
-			<li class="linenopad"><b>Basics:</b> 
-      <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%=pluralize li.no_of_bathrooms,  'bathroom' %>, 
-      <%= li.separate_kitchen? ? 'separate kitchen' : 'kitchenette' %>, <%=li.ac_type%> A/C, <%=li.floor_type%> floors, <%=li.pets%> ok</li>
-			<li><b>Rooms:</b> 
-      <%if li.livingroom?%>
-        <%=li.livingroom.length%> x <%=li.livingroom.length%>, <%=li.livingroom.light_level %> livingroom with <%=li.livingroom.window_direction%> view, 
-      <%end%>
-      <%li.bedrooms.each_with_index do |bedroom, i|%>
-        <%=bedroom.length%> x <%=bedroom.width%>, <%=bedroom.light_level%> bedroom with <%=bedroom.window_direction%> view <%=i < li.bedrooms.size - 1 ? ',' : ''%>
-      <%end %>
-			
-      </li>
 			<li>
 			<!-- image -->
-				<img style="width: 70px; height: 50px;" alt="" class="bordered_img" src="
-				<%if l.visuals? %>
-				  <%if l.photo_access?%>/images/stock_apt1_small.jpg	
-				  <%else%>/images/image_lock.gif
+				
+				<%if !current_user.photo_access?%>
+          Images are locked. <a href="#">Unlock</a><br/>
+            <%3.times do |i|%>
+              <%=image_tag('locked.jpg')%>
+            <%end%>  
+            
+          <%else%>
+            <%if l.photos.size == 0 %>
+              no photos :-(. <a href="#">request photos</a>
+            <%else%>
+              <table width=100%><tr>
+              <% l.photos.each do |visual|  %>
+                  <td><%= image_tag(visual.public_filename(:thumb), :height=>50, :width=>60) %> <br/> <%=visual.comment %></td>
+                <%end%>
+              </tr></table>
+				  
 				  <%end%>
-				<%else%>/images/image_none.gif
+				
 				<%end%>
-				"/>
 				<!-- end image -->
-			</li>
-			<li><b>Building:</b> 
-        <%=
-      {
-        'elevator'=> li.elevator?,
-        'walkup' => !li.elevator?,
-        'doorman' => li.doorman?,
-        'laundromat' => li.laundry?,
-        'gym' => li.gym?
-      }.keys_to_sentence_sens_false_values%>
-       </li>
-			<li><span class="pluses"><b>Pluses:</b> 
-      <%=
-      {
-        'rent stabilized'=>li.rent_stabilized?,
-		    'rent controlled'=>li.rent_controlled?,
-        'good heat' => li.heat_q.most_desirable?,
-        'quiet' => li.quiet?,
-        '#{li.maintenance_q} maintainance' => li.maintenance_q.most_desirable?,
-        "#{li.appliances_q} appliances" => li.appliances_q.most_desirable?,
-        "#{li.bathroom_q} bathroom" => li.bathroom_q.most_desirable?,
-        'multi-level'=>li.multi_level?, 
-        'penthouse'=>li.penthouse?, 
-		    'private entrance'=>li.private_entrance?,  
-        "#{li.roof_access_type} roof access" => !li.roof_access_type.none?,
-        "#{li.back_yard_type} back yard" => !li.back_yard_type.none?,  
-        'balcony' => li.balcony?,
-        'patio' => li.patio?,
-        'broadband capable' => li.broadband?
-       }.keys_to_sentence_sens_false_values%>
         
-      </span></li>
-			<li><span class="minuses"><b>Minuses:</b> 
-      <%=
-       {
-        "#{li.heat_q} heat" => !li.heat_q.most_desirable?,
-        "#{li.nbors_noise_level} neighboor noise" => !li.nbors_noise_level.most_desirable?,
-        "#{li.street_noise_level} street noise" => !li.street_noise_level.most_desirable?,
-        "#{li.maintenance_q} maintanance" => !li.maintenance_q.most_desirable?,
-        "#{li.appliances_q} appliances" => !li.appliances_q.most_desirable?,
-        "#{li.bathroom_q} bathroom" => !li.bathroom_q.most_desirable?,
-        'not broadband capable' => !li.broadband?,
-         "#{li.cellphone_q} cellphone signal (#{li.cellphone_provider})" => !li.cellphone_q.most_desirable?,
-         'roaches' => li.roaches?,
-         'roadents' => li.rodents?,
-         'ants' => li.ants?
-       }.keys_to_sentence_sens_false_values%>
-      </span></li>
-      <li><span id="favorites_info_<%=l.id%>">
+        
+        
+  
 
-      <%=link_to_remote( 
-        'Add to favorites', 
-        :url=>listing_favorites_url(listing), 
-        :update=>"favorites_info_#{l.id}",
-        :method=>:post)%>
-    </span>	
-      <li><span id="bogus_flag_<%=l.id%>">
-			<%=link_to_remote(
-			  'Flag as bogus', 
-			  :url=>listing_bogus_flags_url(listing), 
-			  :method=>:post,
-			  :update=>"bogus_flag_#{l.id}")%>
-			</span>
-			|
-			<span id="na_flag_<%=l.id%>">
-			<%=link_to_remote(
-			  'Flag as no longer available', 
-			  :url=>listing_na_flags_url(listing), 
-			  :method=>:post,
-			  :update=>"na_flag_#{l.id}")%>
-			</span>
-			|
-			<span id="broker_flag_<%=l.id%>">
-			<%=link_to_remote(
-			  'Flag as broker', 
-			  :url=>listing_broker_flags_url(listing), 
-			  :method=>:post,
-			  :update=>"broker_flag_#{l.id}")%>
-			</span></li>
-			<li><b>Posted By:</b> <%= l.user.username %></li>
-			<li><b>Comments:</b> [Display a few comments]</li>
-			</ul>
-		</div>
-	</div>
+
+			</li>
+  	   <%if current_user.listing_info_access?%>
+          <%if l.listing_info?%> 
+              <%=render :partial => 'shared/listing_info', :locals => {:li=>l.listing_info}%>
+          <%else%>
+            No detiailed info is available. <a href="#">Request detailed info</a>
+          <%end%>
+        <%else%>
+          <%=render :partial=>'shared/locked_listing_info'%>
+         <%end%>
+        
+        <li><span id="favorites_info_<%=l.id%>">
+
+          <%=link_to_remote( 
+            'Add to favorites', 
+            :url=>listing_favorites_url(listing), 
+            :update=>"favorites_info_#{l.id}",
+            :method=>:post)%>
+        </span>	
+        |
+          <span id="bogus_flag_<%=l.id%>">
+          <%=link_to_remote(
+            'Flag as bogus', 
+            :url=>listing_bogus_flags_url(listing), 
+            :method=>:post,
+            :update=>"bogus_flag_#{l.id}")%>
+          </span>
+          |
+          <span id="na_flag_<%=l.id%>">
+          <%=link_to_remote(
+            'Flag as no longer available', 
+            :url=>listing_na_flags_url(listing), 
+            :method=>:post,
+            :update=>"na_flag_#{l.id}")%>
+          </span>
+          |
+          <span id="broker_flag_<%=l.id%>">
+          <%=link_to_remote(
+            'Flag as broker', 
+            :url=>listing_broker_flags_url(listing), 
+            :method=>:post,
+            :update=>"broker_flag_#{l.id}")%>
+          </span></li>
+        <li><b>Posted By:</b> <%= l.user.username %></li>
+        <li><b>Comments:</b></li>
+        <div id="comments_block_<%=l.id%>">
+        <%=render :partial=>'shared/comment_list', :locals=>{:comments=>l.comments}%>
+        </div>
+        <br/>
+        <%= link_to "Add comment",  "#", :onclick => visual_effect(:slide_down, "add_comment_block_#{l.id}", :duration => 0.5 )-%>
+         
+            
+        <div id="add_comment_block_<%=l.id%>" style="display:none">
+        <%= render :partial=>'/shared/create_comment', :locals=>{:listing=>l, :comment=>ListingComment.new}%> 
+        </div>
+        </ul>
+      </div>
+    </div>
 </div>

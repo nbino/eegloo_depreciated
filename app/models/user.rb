@@ -62,6 +62,19 @@ class User < ActiveRecord::Base
     @activated
   end
  
+ 
+  def photo_access?
+    listing.photos.size == 3
+  end
+  
+  def video_access?
+    videos?
+  end
+  
+  def listing_info_access?
+    listing.listing_info?
+  end
+  
   # Returns the user or nil.
   # Updated 2/20/08
   def self.authenticate(email, password)    

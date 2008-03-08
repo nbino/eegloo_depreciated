@@ -1028,3 +1028,7 @@ button.positive, .buttons a.positive{
 	line-height: 14px;
 	
 }
+
+li.crossed_out {
+	text-decoration: line-through
+}

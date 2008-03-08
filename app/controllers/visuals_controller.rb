@@ -4,7 +4,7 @@ class VisualsController < ApplicationController
   before_filter :find_listing
   
   def index
-    @visuals = Visual.find(:all)
+    @visuals = Listing.find(params[:listing_id]).photos
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,8 +28,10 @@ class VisualsController < ApplicationController
   def new
     @visual = Visual.new
     
+    @visuals = Listing.find(params[:listing_id]).photos
+    
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => "main" }
       format.xml  { render :xml => @visual }
     end
   end
@@ -42,12 +44,12 @@ class VisualsController < ApplicationController
   # POST /visuals
   # POST /visuals.xml
   def create
-    @visual = Visual.new(params[:visual])
+    @photo = Photo.new(params[:visual])
     
     respond_to do |format|
-      if @listing.visuals << @visual
-        flash[:notice] = 'Visual was successfully created.'
-        format.html { redirect_to :action => "new" }
+      if @listing.photos << @photo
+        @visuals = Listing.find(params[:listing_id]).photos
+        format.html { render :action => 'index' }
         format.xml  { render :xml => @visual, :status => :created, :location => @visual }
         
       else

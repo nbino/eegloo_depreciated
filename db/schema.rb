@@ -111,9 +111,9 @@ ActiveRecord::Schema.define(:version => 13) do
     t.integer  "apt_type_id"
     t.integer  "nhood_id"
     t.integer  "rent_range_id"
-    t.integer  "bogus_flags_count",      :default => 0
-    t.integer  "broker_flags_count",     :default => 0
-    t.integer  "na_flags_count",         :default => 0
+    t.integer  "bogus_flag_count",       :default => 0
+    t.integer  "broker_flag_count",      :default => 0
+    t.integer  "na_flag_count",          :default => 0
     t.integer  "favorites_count",        :default => 0
     t.integer  "listing_comments_count", :default => 0
     t.datetime "avail_date"
