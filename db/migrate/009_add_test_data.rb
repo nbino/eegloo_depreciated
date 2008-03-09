@@ -81,7 +81,7 @@ class AddTestData < ActiveRecord::Migration
           :thumbnail=>'thumb',
           :comment=>"bedroom #{i}")
       
-        u.listing.visuals[i] = v
+        u.listing.photos[i] = v
       
         Visual.create(
           :parent_id=>v.id,

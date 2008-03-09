@@ -17,11 +17,12 @@
 			</li>
 			<li>Sq Footage: <%=f.text_field :sq_footage, :size=>4%>
 			</li>
+			
+			
 			<li><%= f.collection_select  :maintenace_q_id, @maintenance_select, :id, :name, {:include_blank=>'[Maintenace]'}  %></li>
 			<li><%= f.collection_select  :appliance_q_id, @appliances_select, :id, :name, {:include_blank=>'[Appliances Cond]'}  %></li>
 			<li><%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[Bathroom Cond]'}  %> </li>
 
-			
 			
 			<li><%= f.check_box :elevator%> Elevator</li>
 			<li><%= f.check_box :laundry%> Laundry</li>

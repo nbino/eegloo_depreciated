@@ -55,7 +55,7 @@
 
 
 </p>
-<%if listing.visuals? %>
+<%if listing.photos? %>
   
   <%if listing.photo_access?%>
     hover to enlarge the image
@@ -66,7 +66,7 @@
       <table cellspacing=10>
       <tr>
       <!--image_tag(visual.public_filename(:thumb), :height=>100, :width=>120) -->
-      <% listing.visuals.each_with_index do |visual, i|  %>
+      <% listing.photos.each_with_index do |visual, i|  %>
             <td><%= listing.photo_access? ?image_tag("#{i+1}.gif", :height=>100, :width=>120) : image_tag(visial.blank_image)%> <br/> <%=visual.comment %></td>
       <%end%>
       </tr>
