@@ -10,5 +10,6 @@
 	<div style="clear:both"></div>
 </div>
 
-<%= render :partial => '/shared/listing', :collection => @listings %>
+<!-- [EP] Limiting this number to make refreshes faster -->
+<%= render :partial => '/shared/listing', :collection => @listings[0...3] %>
 

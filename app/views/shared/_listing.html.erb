@@ -18,14 +18,15 @@
 			<!-- image -->
 				
 				<%if !current_user.photo_access?%>
-          Images are locked. <a href="#">Unlock</a><br/>
-            <%3.times do |i|%>
-              <%=image_tag('locked.jpg')%>
-            <%end%>  
+         			<div class="lockedheader">
+						<%=image_tag 'images.png', :title => 'Images'%> <a href="#"><%= image_tag 'lock.png', :onmouseover => "this.src='/images/lock_open.png'", :onmouseout => "this.src='/images/lock.png'", :title => 'Unlock Images' %></a>
+						
+					</div>
+
             
-          <%else%>
+          		<%else%>
             <%if l.photos.size == 0 %>
-              no photos :-(. <a href="#">request photos</a>
+              No Photos Submitted<a href="#">request photos</a>
             <%else%>
               <table width=100%><tr>
               <% l.photos.each do |visual|  %>
@@ -48,7 +49,7 @@
           <%if l.listing_info?%> 
               <%=render :partial => 'shared/listing_info', :locals => {:li=>l.listing_info}%>
           <%else%>
-            No detiailed info is available. <a href="#">Request detailed info</a>
+            No detailed info is available <a href="#">Request detailed info</a>
           <%end%>
         <%else%>
           <%=render :partial=>'shared/locked_listing_info'%>
@@ -57,7 +58,7 @@
         <li><span id="favorites_info_<%=l.id%>">
 
           <%=link_to_remote( 
-            'Add to favorites', 
+            (image_tag 'star.png', :title => "Add to Favorites" ), 
             :url=>listing_favorites_url(listing), 
             :update=>"favorites_info_#{l.id}",
             :method=>:post)%>
@@ -65,7 +66,7 @@
         |
           <span id="bogus_flag_<%=l.id%>">
           <%=link_to_remote(
-            'Flag as bogus', 
+            (image_tag 'exclamation.png', :title => "Flag as Bogus" ),
             :url=>listing_bogus_flags_url(listing), 
             :method=>:post,
             :update=>"bogus_flag_#{l.id}")%>
@@ -73,7 +74,7 @@
           |
           <span id="na_flag_<%=l.id%>">
           <%=link_to_remote(
-            'Flag as no longer available', 
+            (image_tag 'cancel.png', :title => "Flag as No Longer Available" ), 
             :url=>listing_na_flags_url(listing), 
             :method=>:post,
             :update=>"na_flag_#{l.id}")%>
@@ -81,7 +82,7 @@
           |
           <span id="broker_flag_<%=l.id%>">
           <%=link_to_remote(
-            'Flag as broker', 
+            (image_tag 'money_dollar.png', :title => "Flag as Broker Listing" ), 
             :url=>listing_broker_flags_url(listing), 
             :method=>:post,
             :update=>"broker_flag_#{l.id}")%>

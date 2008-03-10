@@ -22,11 +22,22 @@
 	</div>
 	<div id="menu">
 		<ul id="menuul">
-		  <li class="active"><%=link_to('Search Listings', listings_url)%> </li>
-		  <li><%=link_to('My Favorites', favorites_url)%></li>
-       <li><%=link_to('My Listing', edit_listing_url(current_user.listing))%></li>
-       <li>My Friends</li>
-       
+			
+			
+		<% menu_items = [['Search listings','zoom.png',listings_url],
+						 ['My Favorites','folder_heart.png', favorites_url],  
+						 ['My Listing','pencil.png', edit_listing_url(current_user.listing)], 
+						 ['My Friends','group.png', '#']] %>
+						
+						<% menu_items.each do |m| 
+							 content_tag 'li', 
+								:onmouseover => "this.setStyle('background-color:#FFF')", 
+								:onmouseout => "this.setStyle('background-color:#F0F0F0')",
+								:onclick => ("window.location='"+m[2]+"'") do %>
+							 		<%= image_tag(m[1])+' '+m[0] %>
+							<% end
+						end %>
+		
 		</ul>
 	</div>
 </div>

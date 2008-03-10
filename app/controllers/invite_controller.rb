@@ -27,7 +27,7 @@ class InviteController < ApplicationController
     require "contacts"
 		login = params[:invite][:login]
 		password = params[:invite][:password]
-		Contacts.new(:gmail, login, password).contacts.each { |c| 
+		Contacts.new(params[:invite][:service], login, password).contacts.each { |c| 
 		  @contacts << Invite.new({:name => c[0], :email => c[1]})
 		}
 		render :partial=>'contact', :collection => @contacts

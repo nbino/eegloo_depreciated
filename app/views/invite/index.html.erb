@@ -8,7 +8,7 @@
 			<% form_remote_tag :url => '/invite/get', :update => 'selected-list-ul' do -%>
 			<ul>
 				<li>import contacts</li>
-				<li><%= select 'invite', 'service',  {'gmail'=>'gmail','facebook'=>'facebook','yahoo'=>'yahoo','hotmail'=>'hotmail'}  %></li>
+				<li><%= select :invite, :service,  {'gmail'=>'gmail','facebook'=>'facebook','yahoo'=>'yahoo','hotmail'=>'hotmail'}  %></li>
 				<li>username</li>
 				<li>
 					<%= text_field :invite, :login, {:size => '10'} %>		</li>
