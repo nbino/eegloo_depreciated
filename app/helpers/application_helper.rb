@@ -5,17 +5,16 @@ module ApplicationHelper
   
   
   class ActionView::Helpers::FormBuilder
-    def collection_radio(method, collection)
+    def collection_radio(method, collection, options={})
       output = ''
-      collection.each {|thing| output += "#{radio_button(method, thing.id)} #{thing.name}"}
+      collection.each {|thing| output += "#{radio_button(method, thing.id, options)} #{thing.name}"}
       output
     end
     
-    def yes_no_radio(method)
-      #form_builder.select(method, { 'No' => 0, 'Yes' => 1}, {:include_blank => 'Select'})
+    def yes_no_radio(method, options={})
       output = ''
-      output += "#{radio_button(method, 1)}Yes &nbsp;&nbsp;"
-      output += "#{radio_button(method, 0)}No"
+      output += "#{radio_button(method, true, options)}Yes &nbsp;&nbsp;"
+      output += "#{radio_button(method, false, options)}No"
       output
     end
     

@@ -15,7 +15,6 @@ class CreateAttrValues < ActiveRecord::Migration
       StreetNoiseLevel.create :name => name
     end
     
-    
     %w{dark dim bright}.each {|name| LightLevel.create :name => name}
     
     ['air shaft', 'street', 'garden'].each {|name| WindowDirection.create :name => name}

@@ -1,7 +1,7 @@
 
           <li class="linenopad"><b>Basics:</b> 
           
-          <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%=pluralize li.no_of_bathrooms,  'bathroom' %>, 
+          <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%=li.no_of_bathrooms == 0 ? 'shared bathroom' :  pluralize(li.no_of_bathrooms,  'bathroom') %>, 
           <%= li.separate_kitchen? ? 'separate kitchen' : 'kitchenette' %>, <%=li.ac_type%> A/C, <%=li.floor_type%> floors, <%=li.pets%> ok</li>
           <li><b>Rooms:</b> 
           <%if li.livingroom?%>

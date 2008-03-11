@@ -16,6 +16,8 @@ class ListingInfo < ActiveRecord::Base
   belongs_to :cellphone_provider
   belongs_to :pets
   
+  MAX_BATHROOMS = 3
+  
   def livingroom_info=(livingroom_info)
     build_livingroom livingroom_info
   end
@@ -31,9 +33,5 @@ class ListingInfo < ActiveRecord::Base
   def quiet?
     nbors_noise_level.most_desirable? && street_noise_level.most_desirable?
   end
-  
-  
-  
-  
   
 end
