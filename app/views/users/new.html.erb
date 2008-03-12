@@ -1,6 +1,3 @@
-<%= error_messages_for :user %>
-
-
 <!-- start content -->
 <div id="fullcontentcenter">
 
@@ -12,10 +9,14 @@
 	<ul><li><div align="center" style="line-height:14px">We hate signups as much as you - but our apartment database depends on the contribution of users like you.  Therefore, to get an invite, just tell us a little about your current place.  If you're not a NYC renter, we'll still let you in - just help us spread the word about our service to your friends!</div></li></ul>
 		
 	<fieldset class="colored"><legend class="colored bigtext">Sign Up & List Your Place</legend>
-
+		
 	<ul>
 		
-		<% form_for @user do |f| %>
+		<% if flash[:error] then %>
+			<li style="text-align:center;color:#b31b1b;line-height:12px"><%= flash[:error] %><br/><br/></span></li>
+		<% end %>
+		
+		<% form_for @user, :html => {:id => 'user_form'} do |f| %>
 		
 		<li><label>Username</label><%= f.text_field :username, :class => 'required text', :size => '15' %></li>
 		
@@ -29,7 +30,7 @@
 	<li class="whole"><div align="center"><span class="boxspan selected" id="chooseny">I'm a current NYC renter!</span><span class="boxspan" id="chooseoot">I'm from out of town!</span></div></li>
 	
 	
-	<li class="whole line"><div align="center">Share some details about your place</div></li>
+	<li class="whole"><div align="center">Share some details about your place</div></li>
 
 		
 		<%fields_for 'user[listing_attr]' do |f_listing| %>
@@ -49,13 +50,15 @@
 		<% end %>
 
 			<%= render :partial => '/shared/submit_button' %>
+			
+			
 		
 		<% end %>
-		
 		
 	</ul>
 	</fieldset>
 </span>
+
 </div>
 
 </div>

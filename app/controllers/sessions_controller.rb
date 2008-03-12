@@ -7,7 +7,7 @@
   def new
     @user = User.new
     respond_to do |format|
-      format.html 
+      format.html { render :layout => "main" }
     end
     
   end

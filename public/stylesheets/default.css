@@ -179,33 +179,47 @@ input.radio {
 .selected-list {
 	border: 1px solid #000;
 	background:#FFFFFF none repeat scroll 0%;
-	height:180px;
+	height:100px;
 	overflow-x:hidden;
 	overflow-y:auto;
-	width:300px;
+	width:450px;
 	padding: 0px;
+	padding-bottom:15px;
 }
 
 .selected-list ul {
-	list-style-image:none;
-	list-style-position:outside;
 	list-style-type:none;
-	margin:5px;
-	padding:0px;
 	line-height: 12px;
 }
 
 .selected-list ul li {
-background:transparent url(/images/12-em-cross.png) no-repeat scroll 0pt;
-	color:#666666;
-	margin-bottom:2px;
-	padding-left:17px;
-	text-decoration:none;
+
+}
+
+#selected-list-ul {
+	padding-top: 5px;
+	
+}
+
+#selected-list-ul li {
+	
+	padding-left: 10px;
+	
+}
+
+/* override */
+.plain {
+	display:inline;
+	float:none;
+	font-weight:normal;
+	margin-right:0;
+	text-align:left;
+	width:100%;
 }
 
 
-
 /* End Form */
+
 
 
 

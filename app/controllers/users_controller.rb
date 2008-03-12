@@ -47,22 +47,27 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     cookies.delete :auth_token
-    respond_to do |format|
-
-      if @user = User.create!(params[:user])
-          
-        flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
+ 
+      begin
         
+        @user = User.create!(params[:user])
+        flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
         # skip other registration steps
-        format.html { redirect_to listings_url  }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        respond_to do |format|
+          format.html { redirect_to listings_url  }
+          format.xml  { render :xml => @user, :status => :created, :location => @user }
+        end
           
-      else
-        format.html { render :action => "new", :layout => "main" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      rescue ActiveRecord::RecordInvalid => error
+        
+        errors = error.record.errors.to_a.collect { |key,value| key = key.capitalize + " " + value } # We have to do this because without it, there is no space and the key field is all lowercase.
+        flash[:error] = errors.to_sentence
+        redirect_to '/users/new'
+        #format.html { render :action => "new", :layout => "main" }
+        #format.xml  { render :xml => error.record.errors, :status => :unprocessable_entity }
       end
 
-    end
+    
   end
 
   # PUT /users/1

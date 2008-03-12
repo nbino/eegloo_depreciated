@@ -23,8 +23,9 @@
 	<div id="menu">
 		<ul id="menuul">
 			
+		<% if current_user != :false then 
 			
-		<% menu_items = [['Search listings','zoom.png',listings_url],
+			menu_items = [['Listings','chart_bar.png',listings_url],
 						 ['My Favorites','folder_heart.png', favorites_url],  
 						 ['My Listing','pencil.png', edit_listing_url(current_user.listing)], 
 						 ['My Friends','group.png', '#']] %>
@@ -36,8 +37,8 @@
 								:onclick => ("window.location='"+m[2]+"'") do %>
 							 		<%= image_tag(m[1])+' '+m[0] %>
 							<% end
-						end %>
-		
+						end 
+		 end %>
 		</ul>
 	</div>
 </div>

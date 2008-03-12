@@ -3,61 +3,63 @@
 
 <div style="clear: both;">&nbsp;</div>
 	<fieldset class="colored"><legend class="colored bigtext">Invite Friends</legend>
-	<ul>
-		<div style="margin-left:75px;width:150px;float:left;text-align:center">
-			<% form_remote_tag :url => '/invite/get', :update => 'selected-list-ul' do -%>
-			<ul>
-				<li>import contacts</li>
-				<li><%= select :invite, :service,  {'gmail'=>'gmail','facebook'=>'facebook','yahoo'=>'yahoo','hotmail'=>'hotmail'}  %></li>
-				<li>username</li>
-				<li>
-					<%= text_field :invite, :login, {:size => '10'} %>		</li>
-				<li>password</li>
-				<li>
-					<%= password_field :invite, :password, {:size => '10'}  %>		</li>
-				<li>
-					<%= submit_tag 'Get' %>
-				</li>    
-				<!-- <button type="button" onclick="getContacts()">
-					Get <%= image_tag "arrow-right.gif" , :class => "twelveem" %></button> -->
-			</ul>
-			<% end -%>
-		</div>
-		<div style="float:left">
-			<ul style="">
-				<li>friend's email<br/>
-				<div style="margin-bottom:10px">			
-					
-					<% form_remote_tag :url => '/invite/add', :update => 'selected-list-ul' do -%>
-					
-					<%= text_field :invite, :email, {:size => '20'} %>
-					
-					<%= submit_tag 'Add' %>
-				<!-- <button id="add_email" type="button" onclick="addEmail()">
-					 Add Email <%= image_tag "user_add.png" , :class => "twelveem" %></button> -->
-					<% end -%>
-				</div>
-				</li>
-				<li>
-					<div class="selected-box">
-		            <div class="selected-list">
-		              <ul id="selected-list-ul">
+	<ul style="padding-left:75px"><li>Friend's Emails (Separate by Comma)
+		</li>
+		<li>
+		<%= text_area :invite, :emails, :rows => 5, :style=> 'width:450px' %>
+		</li>
+		<% form_remote_tag :url => '/invite/get', :loading => "$('selected-list-ul').innerHTML='<li>Loading...</li>'", :update => 'selected-list-ul', :html => {:name => 'inviteform'} do -%>
+		<li style='padding-top:15px'>Import Friends From: &nbsp;<%= select 'invite', 'service',  {'Gmail'=>'gmail','Facebook'=>'facebook','Yahoo'=>'yahoo','Hotmail'=>'hotmail'}  %> <%= text_field :invite, :login, {:size => '10'} %> &nbsp;<%= password_field :invite, :password, {:size => '10'}  %> &nbsp;<%= submit_tag 'Get' %><% end -%>
+		</li>
+		<li>
+			<div class="selected-box">
+        	    <div class="selected-list">
+					<form name="importform">
+					<ul id="selected-list-ul">
+						
+				
+					</ul>
+					</form>
+					<script language="javascript">
+						function addInvites() {
+							
+							var x = document.forms.importform.elements.contact;
+							if (!x) { return; }
+							
+							var v = $('invite_emails').value;
+							var str = '';
+							for (var i=0;i<x.length;i++) { if (x[i].checked) {str += ', '+x[i].value}}
+							v = v.replace(/\w*,\w*$/,'');
+							if (v.length == 0) {str = str.substring(2,str.length)}	
+							$('invite_emails').value = v + str;
+						
+							
+							$('selected-list-ul').innerHTML = '';
+							// for (var i=0;i<x.length;i++) { x[i].checked=false }
+													
+						}
+					</script>
+	            </div>
+ 			</div>
+		</li>
+		<li><%= button_to_function 'Add', 'addInvites()' %></li>
 		
-					  </ul>
-		            </div>
-         			</div>
-				</li>
-				<li>Subject<br/><input id="address" class="text" type="text" size="30"/></li>
-				<li>Message<br/><textarea rows="5" cols="40"></textarea></li>
-				<li>+ Standard link text</li>
-				<li><div align="center" style="margin-top:20px">
+		
+		<li>Subject<br/>
+			<%= text_field :invite, :subject, :style=> 'width:450px' %>
+		<li>Message<br/>
+			
+			<%= text_area :invite, :message, :rows => 5, :style=> 'width:450px' %>
+			
+		</li>
+		<li>+ Standard link text</li>
+		<li><div align="center" style="margin-top:20px">
 
-				<button id="submit_button" type="submit" class="positive"><%= image_tag "16-em-check.png" , :class => "twelveem" %> Send Invites
-			    </button>
-				<br/></li>
-			</ul>
-		</div>
-	</ul>
+		<button id="submit_button" type="submit" class="positive"><%= image_tag "16-em-check.png" , :class => "twelveem" %> Send Invites
+	    </button>
+		<br/></li>
+		
+	</li></ul>
 	</fieldset>
 </span>
 </div>
