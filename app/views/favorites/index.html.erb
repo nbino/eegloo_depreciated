@@ -1,12 +1,45 @@
+<!-- start leftbar render :partial=>'search_form' -->
+	<div id="leftbar">
+		<%=render :partial=>'/shared/leftbar_favorites'%>
+	</div>
+<!-- end leftbar -->
 
+<!-- start content -->
+	<div id="content">
+		[Selected listing is rendered here]
+	</div>
 
-<table width="100%" CELLSPACING=5>
-  <tr>
-  <td width="175" bgcolor="#6699CC" valign="top">
-  not sure what to put here
-  </td>
-  <td valign="top">
-  <%=render :partial=>'/shared/listing_list'%>
-  </td>
-  </tr>
-</table>
+<!-- end content -->
+
+<!-- start rightbar -->
+	<div id="rightbar">
+		<ul>
+		  <li id="search">
+		    <h2><b>Map</b></h2>
+		    <div id="map">
+				<%= image_tag 'map.gif', { :size => '225x225', :class => 'bordered_img'}%>
+			</div>
+		  </li>
+		</ul>
+	 </div>
+		
+		<script type="text/javascript">
+		
+			var slideEffect = new Fx.Style('map', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
+			// var slideEffect2 = new Fx.Style('search', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
+			
+			  window.addEvent('load', function() {
+				
+			    var top = $('map').getPosition().y ;
+			    window.addEvent('scroll', function(){
+			      slideEffect.start.delay(600, slideEffect, Math.max(0, document.documentElement.scrollTop - top + 40));
+				  // slideEffect2.start.delay(600, slideEffect2, Math.max(0, document.documentElement.scrollTop - top + 40));
+			    });
+			
+			    new SmoothScroll({duration:700, transition:Fx.Transitions.circOut});
+			  });
+			
+	
+	    </script>
+	</div>
+<!-- end rightbar -->

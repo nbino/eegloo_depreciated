@@ -46,7 +46,7 @@ p, ul, ol {
 	margin: 0 0 2em 0;
 	text-align: justify;
 	line-height: 26px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .single {
@@ -251,7 +251,7 @@ input.radio {
 }
 
 #logo h2 {
-	margin-top: -5px;
+	margin-top: 0px;
 	font-size: 12px;
 	color: #A0A0A0;
 }
@@ -322,7 +322,7 @@ ul {
 
 #content {
 	float: left;
-	width: 350px;
+	width: 400px;
 	padding-left: 25px;
 }
 
@@ -360,8 +360,8 @@ ul {
 }
 
 #viewmap {
-	width: 250px; 
-	height: 250px; 
+	width: 225px; 
+	height: 225px; 
 	border: 1px solid #000;
 	position: relative;
 	top: -26px;
@@ -568,13 +568,16 @@ form  li {
 .post h2 {
 	font-size:14px;
 	text-transform: none;
-	
 	margin-bottom:5px;
 }
 
 .post .entry ul { 
 	line-height: 15px;
+
+	padding: 0px;
+	margin: 0px;
 }
+
 
 .post .entry li {
 	margin-bottom:5px;
@@ -609,26 +612,29 @@ form  li {
 }
 
 .post .entry .line {
-	padding-top: 5px;
-	background: url(/images/img03.gif) repeat-x;
+		padding: 15px 30px 10px 0px;
+	/*	background: url(/images/img03.gif) repeat-x;*/
+		border-top: 1px solid #F0F0F0;
 	
 }
 
 .post .line {
 	padding: 15px 30px 10px 0px;
-	background: url(/images/img03.gif) repeat-x;
-	
+/*	background: url(/images/img03.gif) repeat-x;*/
+	border-top: 1px solid #F0F0F0;
 }
 
 .line {
 	/* padding: 15px 0 10px 0;*/
-	background: url(/images/img03.gif) repeat-x;
-	
+/*	background: url(/images/img03.gif) repeat-x;*/
+border-top: 1px solid #F0F0F0;	
+padding-top: 6px;
 }
 
 .post .meta {
 	padding: 0px 0 20px 0;
-	background: url(/images/img03.gif) repeat-x;
+/*	background: url(/images/img03.gif) repeat-x;*/
+border-top: 1px solid #F0F0F0;
 }
 
 .post .meta p {
@@ -670,6 +676,10 @@ form  li {
 
 /* Leftbar */
 
+.strike {
+	text-decoration: line-through;
+}
+
 #leftbar {
 	float: left;
 	width: 150px;
@@ -682,21 +692,24 @@ form  li {
 	
 }
 
-#leftbar li {
-	line-height: 15px;
-	margin-bottom: 5px;
+#leftsearch_neighborhood li {
+	margin-bottom: 0px;
 	padding-bottom: 0px;
 }
+
+#leftbar li {
+	line-height: 8px;
+	margin-bottom: 0px;
+	padding-bottom: 5px;
+}
+
 
 #leftbar #search {
 	line-height: 26px;
 }
 
-#leftbar li ul {
-}
-
-#leftbar li li {
-
+#leftbar p, #leftbar ul {
+	font-size:11px;
 }
 
 #leftbar h2 {
@@ -705,11 +718,35 @@ form  li {
 	font-size: 16px;
 }
 
+#leftbar label {
+	display: inline;
+	float: none;
+	font-weight: normal;
+	margin-right: 0px;
+	text-align: left;
+	width: 100%;
+}
+.leftsearch_box {
+		padding:4px;
+		background: #F0F0F0;
+		border: 1px solid #333333;		
+}
+
+.leftsearch_items  {
+	padding-top:4px;
+	margin-bottom: 0px;
+}
+
+.leftsearch_header {
+	padding:2px;
+	font-weight:bold;
+}
+
 /* Sidebar */
 
 #rightbar {
 	float: right;
-	width: 300px;
+	width: 250px;
 }
 
 #rightbar ul {
@@ -1004,7 +1041,7 @@ button img, .buttons a img{
 
 button:hover, a:hover{
     background-color:#dff4ff;
-    border:1px solid #c2e1ef;
+    /* border:1px solid #c2e1ef; */
     /*color:#336699;*/
 }
 a:active{
