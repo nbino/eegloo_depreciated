@@ -1,4 +1,3 @@
 <%=link_to('Required info', edit_listing_url(current_user.listing))%> | 
 <%=link_to('Images and video', new_listing_visual_path(current_user.listing))%> | 
-<!-- edit_listing_listing_info seems to be broken for singleton resorces-->
-<%=link_to 'Detailed info', edit_listing_listing_info_path(current_user.listing)%>
+<%=link_to 'Detailed info', new_listing_listing_info_path(current_user.listing)%>

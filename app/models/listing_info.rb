@@ -18,12 +18,26 @@ class ListingInfo < ActiveRecord::Base
   
   MAX_BATHROOMS = 3
   
+  
   def livingroom_info=(livingroom_info)
-    build_livingroom livingroom_info
+    #create
+    if livingroom.nil?
+      #on create it creates associations as well
+      build_livingroom livingroom_info 
+    else
+      #on update it does not. NEED TO CALL SAVE EXPLICITLY
+      livingroom.attributes = livingroom_info
+    end
+    
   end
   
   def bedrooms_info=(bedrooms_info)
-    bedrooms.build bedrooms_info
+    if bedrooms.size == 0
+      bedrooms.build bedrooms_info
+    else
+      #form helper for [bedrooms_info][] indexes each bedroom by id. Does not save,  NEED TO CALL SAVE EXPLICITLY
+      bedrooms.each {|bedroom| bedroom.attributes = bedrooms_info[bedroom.id.to_s]}
+    end
   end
   
   def livingroom?

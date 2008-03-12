@@ -16,32 +16,24 @@ class ListingInfosController < ApplicationController
   # GET /listing_infos/new
   # GET /listing_infos/new.xml
   def new
-    
-    unless @listing.listing_info.nil?
-      redirect_to :action => 'edit'
-      return
-    end
-    
+    redirect_to :action => 'edit' unless @listing.listing_info.nil?
     init_select_values
-    
     @listing_info = ListingInfo.new
     @listing_info.livingroom = Livingroom.new
     @listing.apt_type.bedrooms.times {@listing_info.bedrooms.build}
   
     respond_to do |format|
       format.html 
-      #format.xml  { render :xml => @listing_info }
+      format.xml  { render :xml => @listing_info }
     end
- end
+  end
 
   # GET /listing_infos/1/edit
   def edit
-    unless @listing_info = @listing.listing_info
-      redirect_to :action => 'new'
-      return
-    end
+    redirect_to :action => 'new' unless @listing_info = @listing.listing_info
     
     init_select_values
+    
     respond_to do |format|
       format.html 
       #format.xml  { render :xml => @listing_info }
@@ -52,9 +44,14 @@ class ListingInfosController < ApplicationController
   # POST /listing_infos.xml
   def create
     @listing_info = @listing.build_listing_info params[:listing_info]
+    @listing_info.livingroom.build params[:livingroom_info]
+    @listing_info.bedrooms.build  = params[:bedroom_info]
     
     respond_to do |format|
-      if @listing_info.save
+      if @listing_info.valid? && @listing_info.livingroom.valid? && @listing_info.bedrooms.all?(&:valid?)
+        @listing_info.save!
+        @listing_info.livingroom.save!
+        @listing_info.bedrooms.each(&:save!)
         flash[:notice] = 'ListingInfo was successfully created.'
         format.html { redirect_to :action=>'edit'}
         format.xml  { render :xml => @listing_info, :status => :created, :location => @listing_info }
@@ -69,14 +66,18 @@ class ListingInfosController < ApplicationController
   # PUT /listing_infos/1.xml
   def update
     @listing_info = @listing.listing_info
+    
     @listing_info.attributes = params[:listing_info]
+    @listing_info.livingroom.attributes = params[:livingroom_info]
+    @listing_info.bedrooms.each {|bedroom| bedroom.attributes = params[:bedroom_info][bedroom.id.to_s]}
+    
 
     respond_to do |format|
-      #need to call save explicitly for associations
-      if @listing_info.valid? && @listing_info.livingroom.valid? && @listing_info.bedrooms.all?(&:valid?) 
+      if @listing_info.valid? && @listing_info.livingroom.valid? && @listing_info.bedrooms.all?(&:valid?)
         @listing_info.save!
         @listing_info.livingroom.save!
         @listing_info.bedrooms.each(&:save!)
+        
         flash[:notice] = 'ListingInfo was successfully updated.'
         format.html { redirect_to(:action=>'edit') }
         format.xml  { head :ok }

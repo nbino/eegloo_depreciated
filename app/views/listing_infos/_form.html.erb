@@ -24,7 +24,7 @@
 
     
     <li class="whole line">Living Room</li>
-      <% fields_for('listing_info[livingroom_info]' ) do |f_room| %>
+      <% fields_for('listing_info[livingroom_info]', @listing_info.livingroom ) do |f_room| %>
   
         <li><label for="livingroom_info_length">Length</label>  <%=f_room.text_field :length, :size=>3%> </li>
         <li><label for="livingroom_info_width">Width</label>  <%=f_room.text_field :width, :size=>3%> </li>
