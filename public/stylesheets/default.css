@@ -272,7 +272,7 @@ ul {
 	list-style: none;
 }
 
-#menu li {
+.menu li {
 	display: inline;
 	background-color: #F0F0F0;
 	border: 1px solid #000;
@@ -281,13 +281,13 @@ ul {
 	cursor: pointer;
 }
 
-#menu img {
+.menu img {
 	position:relative;
 	top:4px;
 	
 }
 
-#menu a, a:hover  {
+.menu a, a:hover  {
 	
 	text-decoration: none;
 	color: #000;
@@ -301,15 +301,12 @@ ul {
 	
 }
 
-#menu a:hover {
+.menu a:hover {
 	border:0;
 	background:none;
 	text-decoration: underline;
 }
 
-#menu .active a {
-	/* background: url(/images/img02.gif) repeat-x left bottom; */
-}
 
 /* Page */
 
@@ -631,6 +628,13 @@ border-top: 1px solid #F0F0F0;
 padding-top: 6px;
 }
 
+.blackline {
+	/* padding: 15px 0 10px 0;*/
+/*	background: url(/images/img03.gif) repeat-x;*/
+border-top: 1px solid #000;	
+padding-top: 6px;
+}
+
 .post .meta {
 	padding: 0px 0 20px 0;
 /*	background: url(/images/img03.gif) repeat-x;*/
@@ -709,6 +713,10 @@ border-top: 1px solid #F0F0F0;
 }
 
 #leftbar p, #leftbar ul {
+	font-size:11px;
+}
+
+.smalltext {
 	font-size:11px;
 }
 

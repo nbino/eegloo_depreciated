@@ -1,19 +1,39 @@
-<%=render :partial=>'shared/my_listing_navigation'%>
+<div id="fullcontentcenter" align="center">
+
+	<%=render :partial=>'shared/my_listing_navigation'%>
+
+	<fieldset class="colored"><legend class="colored bigtext">Images & Videos</legend>
+
+	<div id="listview_m" style="margin-left:50px">
+
+	<ul class="smalltext whole">
+		
+		<li class="whole">
+		<%= error_messages_for :visual %>
+
+		<% form_for([@listing, @visual], :html => { :multipart => true, :target=>'visuals_list' } ) do |f| %>
+		<li class="whole"><label>Picture / Video:</label> <%= f.file_field :uploaded_data %></li>
+		<li class="whole"><label>Description:</label> <%= f.text_field :comment %></li>
+		
+		<li class="whole" style="text-align:center"><%= f.submit "Upload File" %></li>
+
+		<% end %> 
+		<li class="whole">&nbsp;</li>
+		<li class="whole" style="text-align:center">Uploaded photos and videos</li>
+		<li class="whole">
+		  <iframe name="visuals_list" frameborder="0" width="100%" height="300" src="<%=listing_visuals_url current_user.listing%>"></iframe>
+		
+		</li>
+
+	</ul>
+
+	</div>
+	</fieldset>
+</div>
 
 
-<b>Upload photos and videos</b>
-<%= error_messages_for :visual %>
 
-A picture is worth a thousand words. Posting 3 photos gets you access to all photos. Posting a video gets you access to all photos and videos.
-<% form_for([@listing, @visual], :html => { :multipart => true, :target=>'visuals_list' } ) do |f| %>
-  <div>
-    <label for="visual_uploaded_data">Upload A Photo or Video:</label> <br/> <%= f.file_field :uploaded_data %> <br/>
-    <label for="visual_comment">Description:</label> <br/> <%= f.text_field :comment %> <br/>
-    <%= f.submit "Add" %>
-  </div>
 
-<% end %> 
-  <b>Uploaded photos and videos</b>
-  <br>  
-  <iframe name="visuals_list" frameborder="0" width="100%" height="300" src="<%=listing_visuals_url current_user.listing%>"></iframe>
+
+
 

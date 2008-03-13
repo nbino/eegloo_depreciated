@@ -1,3 +1,18 @@
-<%=link_to('Required info', edit_listing_url(current_user.listing))%> | 
-<%=link_to('Images and video', new_listing_visual_path(current_user.listing))%> | 
-<%=link_to 'Detailed info', new_listing_listing_info_path(current_user.listing)%>
+<div class="menu" style="text-align:center"><ul class="whole" style="text-align:center">
+	
+	<% menu_items = [['Required Info','chart_bar.png',edit_listing_url(current_user.listing)],
+					 ['Detailed Info','pencil.png', new_listing_listing_info_path(current_user.listing)],  
+					 ['Images & Video','images.png', new_listing_visual_path(current_user.listing)]
+					] %>
+
+					<% menu_items.each do |m| 
+						 content_tag 'li', 
+							:onmouseover => "this.setStyle('background-color:#FFF')", 
+							:onmouseout => "this.setStyle('background-color:#F0F0F0')",
+							:onclick => ("window.location='"+m[2]+"'") do %>
+						 		<%= image_tag(m[1])+' '+m[0] %>
+						<% end
+					end 
+	%>
+	
+</ul></div>
