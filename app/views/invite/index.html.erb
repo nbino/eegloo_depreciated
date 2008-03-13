@@ -8,10 +8,15 @@
 		<li>
 		<%= text_area :invite, :emails, :rows => 5, :style=> 'width:450px' %>
 		</li>
+
+	</ul>
+	
+	<ul style="padding-top:0px; padding-left:45px"><li>	
+		<div class="lockedheader" style="padding-left:20px;padding-right:20px;width:470px"><ul>
 		<% form_remote_tag :url => '/invite/get', :loading => "$('selected-list-ul').innerHTML='<li>Loading...</li>'", :update => 'selected-list-ul', :html => {:name => 'inviteform'} do -%>
-		<li style='padding-top:15px'>Import Friends From: &nbsp;<%= select 'invite', 'service',  {'Gmail'=>'gmail','Facebook'=>'facebook','Yahoo'=>'yahoo','Hotmail'=>'hotmail'}  %> <%= text_field :invite, :login, {:size => '10'} %> &nbsp;<%= password_field :invite, :password, {:size => '10'}  %> &nbsp;<%= submit_tag 'Get' %><% end -%>
+		<li>Import Friends From: &nbsp;<%= select 'invite', 'service',  {'Gmail'=>'gmail','Facebook'=>'facebook','Yahoo'=>'yahoo','Hotmail'=>'hotmail'}  %> <%= text_field :invite, :login, {:size => '10'} %> &nbsp;<%= password_field :invite, :password, {:size => '10'}  %> &nbsp;<%= submit_tag 'Get' %><% end -%>
 		</li>
-		<li>
+		<li style="margin-top:20px">
 			<div class="selected-box">
         	    <div class="selected-list">
 					<form name="importform">
@@ -42,9 +47,13 @@
 	            </div>
  			</div>
 		</li>
-		<li><%= button_to_function 'Add', 'addInvites()' %></li>
+		<li style="margin-top:10px;text-align:center"><%= button_to_function 'Add Selected to Invite List', 'addInvites()' %></li>
+		</ul>
+			
+		</div>
+		</ul></li>
 		
-		
+		<ul style="padding-top:0px;padding-left:75px">
 		<li>Subject<br/>
 			<%= text_field :invite, :subject, :style=> 'width:450px' %>
 		<li>Message<br/>

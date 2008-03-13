@@ -179,7 +179,7 @@ input.radio {
 .selected-list {
 	border: 1px solid #000;
 	background:#FFFFFF none repeat scroll 0%;
-	height:100px;
+	height:175px;
 	overflow-x:hidden;
 	overflow-y:auto;
 	width:450px;
@@ -588,7 +588,7 @@ form  li {
 	
 }
 
-.post .entry .lockedheader {
+.lockedheader {
 	padding:5px;
 	border:1px dashed #000;*/
 	background: #FFF;
