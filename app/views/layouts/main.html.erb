@@ -26,9 +26,10 @@
 		<% if current_user != :false then 
 			
 			menu_items = [['Listings','chart_bar.png',listings_url],
-						 ['My Favorites','folder_heart.png', favorites_url],  
-						 ['My Listing','pencil.png', edit_listing_url(current_user.listing)], 
-						 ['My Friends','group.png', '/invite']] %>
+						 ['Favorites','folder_heart.png', favorites_url],  
+						 ['Edit My Listing','pencil.png', edit_listing_url(current_user.listing)], 
+						 ['Friends','group.png', '/invite'],
+						 ['Log Out','pencil.png', '#']] %>
 						
 						<% menu_items.each do |m| 
 							 content_tag 'li', 

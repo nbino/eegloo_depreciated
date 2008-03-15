@@ -92,6 +92,7 @@ class ListingsController < ApplicationController
 
     @room1.listing = @room2.listing = @room3.listing = @room4.listing = @living_room.listing = @listing
     
+    update_geocode
     @listing.save!
     
     respond_to do |format|
@@ -105,7 +106,8 @@ class ListingsController < ApplicationController
   # PUT /listings/1.xml
   def update
     @listing = Listing.find(params[:id])
-
+    update_geocode
+    
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
         flash[:notice] = 'Listing was successfully updated.'
@@ -116,8 +118,26 @@ class ListingsController < ApplicationController
         format.xml  { render :xml => @listing.errors, :status => :unprocessable_entity }
       end
     end
+    
   end
 
+  def update_geocode
+    g = get_geocode(@listing.address)
+    @listing.latitude = g[:latitude]
+    @listing.latitude = g[:longitude]
+  end
+  
+  def get_geocode(address)
+    logger.debug 'starting geocoder call for address: '+address
+    # this is where we call the geocoding web service
+    server = XMLRPC::Client.new2('http://rpc.geocoder.us/service/xmlrpc')
+    result = server.call2('geocode', address)
+    logger.debug "Geocode call: "+result.inspect
+    
+    return {:success=> true, :latitude=> result[1][0]['lat'], 
+		:longitude=> result[1][0]['long']}
+  end
+  
   # DELETE /listings/1
   # DELETE /listings/1.xml
   def destroy

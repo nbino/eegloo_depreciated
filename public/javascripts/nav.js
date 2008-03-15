@@ -1,22 +1,55 @@
-// var list = $$('#menuul li');
-// list.each(function(element) {
-// 
-// 	var fx = new Fx.Styles(element, {duration:200, wait:false});
-// 
-// 	element.addEvent('mouseenter', function(){
-// 		fx.start({
-// 			'padding-top': 30,
-// 			'background-color': '#666',
-// 			color: '#FFFFFF'
-// 		});
-// 	});
-// 
-// 	element.addEvent('mouseleave', function(){
-// 		fx.start({
-// 			'padding-top': 7,
-// 			'background-color': '#b31b1b',
-// 			'color': '#FFF'
-// 		});
-// 	});
-// 
-// 	});
+var mInt = null, startScroll;
+
+function onscroll(e) {
+	if (mInt)
+		clearInterval(mInt);
+	else
+		startScroll = document.documentElement.scrollTop;
+
+	mInt = setInterval("moveDiv()", 300);
+}
+
+function getScrollY(){
+	if(window.pageYOffset){
+		var num = window.pageYOffset;
+	}else if(document.documentElement && document.documentElement.scrollTop){
+		var num = document.documentElement.scrollTop;
+	}else{
+		var num = document.body.scrollTop;
+	}
+	return num;
+}
+
+function moveDiv() {
+	var num = getScrollY();	
+	if(startScroll==num){
+		clearInterval(mInt);
+		mInt = null;
+		doMmove(num);		
+	}	
+	
+	startScroll = num;
+}
+
+function getPosition( oLink ) {
+	if( oLink.offsetParent ) {
+		  var posX = null, posY = null;
+		for( posX = 0, posY = 0; oLink.offsetParent; oLink = oLink.offsetParent ) {
+  			posX += oLink.offsetLeft;
+  			posY += oLink.offsetTop;
+		}
+	
+		return [ posX, posY ];
+	}
+	
+	return [ oLink.x, oLink.y ];
+}
+
+function doMmove(num) {
+	var scrollBox = document.getElementById('map');
+	var mapTop = getPosition($('mapouter'));
+	if(num>(mapTop[1]-4))
+		new Effect.Move(scrollBox,{x:0, y: (num-(mapTop[1]-4)), mode: 'absolute'});				
+	else
+		new Effect.Move(scrollBox,{x:0, y: 0, mode: 'absolute'});			
+}

@@ -13,33 +13,42 @@
 
 <!-- start rightbar -->
 	<div id="rightbar">
+		<div id="mapouter">
 		<ul>
 		  <li id="search">
-		    <h2><b>Map</b></h2>
-		    <div id="map">
-				<%= image_tag 'map.gif', { :size => '225x225', :class => 'bordered_img'}%>
+		    <span style="font-size:16px;margin-right:20px"><b>map</b></span>
+		    <div id="map" class="map" style="text-align:right">
+				<%= link_to_function("Toggle Map Size","toggleMapSize();moveDiv()")%>
+				<%= image_tag 'map.gif', { :class => 'mapimg', :id => 'mapimg'}%>
+				
+			
 			</div>
 		  </li>
 		</ul>
+			</div>
+		
 	 </div>
-		
-		<script type="text/javascript">
-		
-			var slideEffect = new Fx.Style('map', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
-			// var slideEffect2 = new Fx.Style('search', 'margin-top', {wait:false, duration:800, transition:Fx.Transitions.circOut});
-			
-			  window.addEvent('load', function() {
-				
-			    var top = $('map').getPosition().y ;
-			    window.addEvent('scroll', function(){
-			      slideEffect.start.delay(600, slideEffect, Math.max(0, document.documentElement.scrollTop - top + 40));
-				  // slideEffect2.start.delay(600, slideEffect2, Math.max(0, document.documentElement.scrollTop - top + 40));
-			    });
-			
-			    new SmoothScroll({duration:700, transition:Fx.Transitions.circOut});
-			  });
-			
 	
-	    </script>
+	<% javascript_tag do -%>
+		
+		function toggleMapSize() {
+			
+			if ($('map').className == 'map') { 
+				$('map').className = 'mapexpanded';
+				$('mapimg').className = 'mapimgexpanded';				 
+				$('leftbar').setStyle({display:'none'});
+				$('rightbar').className = 'rightbarlarge';
+			} else {
+				$('map').className = 'map';
+				$('mapimg').className = 'mapimg';
+				$('leftbar').setStyle({display:'block'});
+				$('rightbar').className = 'rightbar';
+			}					
+									
+		}
+  	<% end -%>	
+
+	<%= javascript_include_tag :nav %>
+	
 	</div>
 <!-- end rightbar -->

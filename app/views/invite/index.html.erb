@@ -57,15 +57,21 @@
 		<li>Subject<br/>
 			<%= text_field :invite, :subject, :style=> 'width:450px' %>
 		<li>Message<br/>
+			Hi [friend],
 			
+			[Yourname] has sent you an invite to our service, Freshpaint, a place for NYC renters (and would-be renters) to exchange information about apartments.  Please click [here] to accept [yourname]'s invite and check out what we're doing!
+			
+			[More about Freshpaint] Our goal is to connect renters to vacancies as efficiently as possible - without all the hassle, cost, guessing, and wasted time that has come to be associated with apartment-hunting in the big city.
+			
+			[The following is a little note from [Yourname]]
 			<%= text_area :invite, :message, :rows => 5, :style=> 'width:450px' %>
+			
 			
 		</li>
 		<li>+ Standard link text</li>
 		<li><div align="center" style="margin-top:20px">
 
-		<button id="submit_button" type="submit" class="positive"><%= image_tag "16-em-check.png" , :class => "twelveem" %> Send Invites
-	    </button>
+		<%= submit_tag 'Send Invites' %>
 		<br/></li>
 		
 	</li></ul>
