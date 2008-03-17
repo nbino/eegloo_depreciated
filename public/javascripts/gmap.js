@@ -1,38 +1,63 @@
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAoTxjcscTPeNniIcHVHOnLRQB8YSA1xJSjpLwFJKRsAnUFEZj6xRq47GZaHePBFWEJb3_UcaQ5438FA"
-     type="text/javascript"></script>
-
-
 var YWSID = "-yb90ZjSY4KwDecRo73C3A"; // common required parameter (api key)
- var map = null;
- var icon = null;
-	var homelatlng = new GLatLng(40.752068, -73.985005);
- /*
-  * Creates the map object and calls setCenterAndBounds
-  * to instantiate it.
-  */
+var map = null;
+var icon = null;
+var bounds = null;
+
+
+var cm_baseIcon = new GIcon();
+cm_baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+cm_baseIcon.iconSize = new GSize(20, 34);
+cm_baseIcon.shadowSize = new GSize(37, 34);
+cm_baseIcon.iconAnchor = new GPoint(9, 34);
+cm_baseIcon.infoWindowAnchor = new GPoint(9, 2);
+cm_baseIcon.infoShadowAnchor = new GPoint(18, 25);
+
+
+
  function load() {
      map = new GMap2(document.getElementById("map"));
-
-
+	 map.setCenter(new GLatLng(40.752068, -73.985005),0);
+	 bounds = new GLatLngBounds();
+	
 	 // Yelp thing for later
      //GEvent.addListener(map, "load", function() {updateMap("restaurants");});
-     
-	 map.setCenter(homelatlng,15);
-     map.addControl(new GSmallMapControl());
+
+	// [EP] hack
+	var latlngs = [[40.752068, -73.985005],[40.752621,-73.975480]];
+	
+	for (var i=0;i<latlngs.length;i++) {
+		
+		var k = i+1;
+		var markerOpts = {};
+	    var nIcon = new GIcon(cm_baseIcon);
+		nIcon.imageOut = "http://gmaps-samples.googlecode.com/svn/trunk/markers/red/marker" + k + ".png";
+	    nIcon.imageOver = "http://gmaps-samples.googlecode.com/svn/trunk/markers/red/marker" + k + ".png";
+	    nIcon.image = nIcon.imageOut; 
+	    markerOpts.icon = nIcon;
+		
+	  	point = new GLatLng(latlngs[i][0],latlngs[i][1]);	
+		map.addOverlay(new GMarker(point,markerOpts));
+		bounds.extend(point);
+		
+	}
+	
+	map.setZoom(map.getBoundsZoomLevel(bounds));
+	map.zoomOut();
+	map.setCenter(bounds.getCenter());
+	map.addControl(new GSmallMapControl());
 
      // map.setMapType(G_HYBRID_MAP);
 
      // if (window.attachEvent) window.attachEvent("onresize", function() { map.checkResize()} );
      // else if (window.addEventListener) window.addEventListener("resize", function() { map.checkResize()}, false);
 
-     // setup our marker icon
-     icon = new GIcon();
-     icon.image = "images/icons/marker_star.png";
-     icon.shadow = "images/icons/marker_shadow.png";
-     icon.iconSize = new GSize(20, 29);
-     icon.shadowSize = new GSize(38, 29);
-     icon.iconAnchor = new GPoint(15, 29);
-     icon.infoWindowAnchor = new GPoint(15, 3);
+     // icon = new GIcon();
+     // icon.image = "images/icons/marker_star.png";
+     // icon.shadow = "images/icons/marker_shadow.png";
+     // icon.iconSize = new GSize(20, 29);
+     // icon.shadowSize = new GSize(38, 29);
+     // icon.iconAnchor = new GPoint(15, 29);
+     // icon.infoWindowAnchor = new GPoint(15, 3);
  }
 
 

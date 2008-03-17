@@ -1119,6 +1119,7 @@ li.crossed_out {
 	float: right;
 	width:400px;
 	height:400px;
+	border: 1px solid #000;
 
 }
 
@@ -1126,6 +1127,7 @@ li.crossed_out {
 	float:right;
 	width:250px;
 	height:250px;
+	border: 1px solid #000;
 }
 
 .mapimgexpanded {

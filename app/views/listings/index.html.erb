@@ -13,34 +13,37 @@
 
 <!-- start rightbar -->
 	<div id="rightbar">
+		
+		
 		<div id="mapouter">
 		<ul>
 		  <li id="search">
 		    <span style="font-size:16px;margin-right:20px"><b>map</b></span>
-		    <div id="map" class="map" style="text-align:right">
-				<%= link_to_function("Toggle Map Size","toggleMapSize();moveDiv()")%>
-				<%= image_tag 'map.gif', { :class => 'mapimg', :id => 'mapimg'}%>
-				
+		    <%= link_to_function("Toggle Map Size","toggleMapSize();moveDiv()")%>
+			<div id="map" class="map" style="text-align:right">		
 			
 			</div>
 		  </li>
 		</ul>
-			</div>
+		</div>
 		
 	 </div>
 	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAoTxjcscTPeNniIcHVHOnLRQB8YSA1xJSjpLwFJKRsAnUFEZj6xRq47GZaHePBFWEJb3_UcaQ5438FA"
+	     type="text/javascript"></script>
+	<%= javascript_include_tag 'gmap.js' %>
 	<% javascript_tag do -%>
 		
 		function toggleMapSize() {
 			
 			if ($('map').className == 'map') { 
 				$('map').className = 'mapexpanded';
-				$('mapimg').className = 'mapimgexpanded';				 
+				<!-- $('mapimg').className = 'mapimgexpanded'; -->				 
 				$('leftbar').setStyle({display:'none'});
 				$('rightbar').className = 'rightbarlarge';
 			} else {
 				$('map').className = 'map';
-				$('mapimg').className = 'mapimg';
+				<!-- $('mapimg').className = 'mapimg'; -->
 				$('leftbar').setStyle({display:'block'});
 				$('rightbar').className = 'rightbar';
 			}					

@@ -2,7 +2,7 @@
 <div class="post">
 	
 	<div class="entry">
- 			<% content_tag 'div', :class => 'header', :onclick => "Element.toggle('listingshow_'+#{listing_counter.to_s});Element.toggle('min_'+#{listing_counter.to_s});Element.toggle('max_'+#{listing_counter.to_s})", :style => 'cursor:pointer;background:#F0F0F0' do %>
+ 			<% content_tag 'div', :class => 'header', :onclick => "Element.toggle('listingshow_'+#{listing_counter.to_s});Element.toggle('min_'+#{listing_counter.to_s});Element.toggle('max_'+#{listing_counter.to_s});new Effect.Highlight('listingshow_'+#{listing_counter.to_s})", :style => 'cursor:pointer;background:#F0F0F0' do %>
 			<ul>
 				<li style="margin-bottom:0px">
 					

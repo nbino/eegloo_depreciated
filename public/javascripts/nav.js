@@ -46,8 +46,8 @@ function getPosition( oLink ) {
 }
 
 function doMmove(num) {
-	var scrollBox = document.getElementById('map');
-	var mapTop = getPosition($('mapouter'));
+	var scrollBox = document.getElementById('mapouter');
+	var mapTop = getPosition($('rightbar'));
 	if(num>(mapTop[1]-4))
 		new Effect.Move(scrollBox,{x:0, y: (num-(mapTop[1]-4)), mode: 'absolute'});				
 	else
