@@ -1,25 +1,9 @@
-// Copyright (c) 2005 Marty Haught, Thomas Fuchs 
+// script.aculo.us slider.js v1.7.1_beta3, Fri May 25 17:19:41 +0200 2007
+
+// Copyright (c) 2005-2007 Marty Haught, Thomas Fuchs 
 //
-// See http://script.aculo.us for more info
-// 
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to
-// the following conditions:
-// 
-// The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// script.aculo.us is freely distributable under the terms of an MIT-style license.
+// For details, see the script.aculo.us web site: http://script.aculo.us/
 
 if(!Control) var Control = {};
 Control.Slider = Class.create();
@@ -63,8 +47,13 @@ Control.Slider.prototype = {
     this.alignX = parseInt(this.options.alignX || '0');
     this.alignY = parseInt(this.options.alignY || '0');
     
-    this.trackLength = this.maximumOffset() - this.minimumOffset()-2;
-    this.handleLength = this.isVertical() ? this.handles[0].offsetHeight : this.handles[0].offsetWidth;
+    this.trackLength = this.maximumOffset() - this.minimumOffset();
+
+    this.handleLength = this.isVertical() ? 
+      (this.handles[0].offsetHeight != 0 ? 
+        this.handles[0].offsetHeight : this.handles[0].style.height.replace(/px$/,"")) : 
+      (this.handles[0].offsetWidth != 0 ? this.handles[0].offsetWidth : 
+        this.handles[0].style.width.replace(/px$/,""));
 
     this.active   = false;
     this.dragging = false;
@@ -135,18 +124,22 @@ Control.Slider.prototype = {
     if(value < this.range.start) return this.range.start;
     return value;
   },
+
+// [EP] modified
   setValue: function(sliderValue, handleIdx){
     if(!this.active) {
-      this.activeHandle    = this.handles[handleIdx];
-      this.activeHandleIdx = handleIdx;
+      this.activeHandleIdx = handleIdx || 0;
+      this.activeHandle    = this.handles[this.activeHandleIdx];
       this.updateStyles();
     }
     handleIdx = handleIdx || this.activeHandleIdx || 0;
     if(this.initialized && this.restricted) {
-      if((handleIdx>0) && (sliderValue<this.values[handleIdx-1]))
-        sliderValue = this.values[handleIdx-1];
-      if((handleIdx < (this.handles.length-1)) && (sliderValue>this.values[handleIdx+1]))
-        sliderValue = this.values[handleIdx+1];
+      if((handleIdx>0) && (sliderValue <= this.values[handleIdx-1]+this.increment))
+		return;
+        //sliderValue = this.values[handleIdx-1] + this.increment;
+      if((handleIdx < (this.handles.length-1)) && (sliderValue >= this.values[handleIdx+1]-this.increment))
+		return;
+        //sliderValue = this.values[handleIdx+1] - this.increment;
     }
     sliderValue = this.getNearestValue(sliderValue);
     this.values[handleIdx] = sliderValue;
@@ -180,8 +173,11 @@ Control.Slider.prototype = {
     return(this.isVertical() ? this.alignY : this.alignX);
   },
   maximumOffset: function(){
-    return(this.isVertical() ?
-      this.track.offsetHeight - this.alignY : this.track.offsetWidth - this.alignX);
+    return(this.isVertical() ? 
+      (this.track.offsetHeight != 0 ? this.track.offsetHeight :
+        this.track.style.height.replace(/px$/,"")) - this.alignY : 
+      (this.track.offsetWidth != 0 ? this.track.offsetWidth : 
+        this.track.style.width.replace(/px$/,"")) - this.alignY);
   },  
   isVertical:  function(){
     return (this.axis == 'vertical');
@@ -200,10 +196,10 @@ Control.Slider.prototype = {
   setSpan: function(span, range) {
     if(this.isVertical()) {
       span.style.top = this.translateToPx(range.start);
-      span.style.height = this.translateToPx(range.end - range.start);
+      span.style.height = this.translateToPx(range.end - range.start + this.range.start);
     } else {
       span.style.left = this.translateToPx(range.start);
-      span.style.width = this.translateToPx(range.end - range.start);
+      span.style.width = this.translateToPx(range.end - range.start + this.range.start);
     }
   },
   updateStyles: function() {
@@ -217,7 +213,8 @@ Control.Slider.prototype = {
         
         var handle = Event.element(event);
         var pointer  = [Event.pointerX(event), Event.pointerY(event)];
-        if(handle==this.track) {
+        var track = handle;
+        if(track==this.track) {
           var offsets  = Position.cumulativeOffset(this.track); 
           this.event = event;
           this.setValue(this.translateToValue( 
@@ -230,14 +227,16 @@ Control.Slider.prototype = {
           // find the handle (prevents issues with Safari)
           while((this.handles.indexOf(handle) == -1) && handle.parentNode) 
             handle = handle.parentNode;
-        
-          this.activeHandle    = handle;
-          this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
-          this.updateStyles();
-        
-          var offsets  = Position.cumulativeOffset(this.activeHandle);
-          this.offsetX = (pointer[0] - offsets[0]);
-          this.offsetY = (pointer[1] - offsets[1]);
+            
+          if(this.handles.indexOf(handle)!=-1) {
+            this.activeHandle    = handle;
+            this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
+            this.updateStyles();
+            
+            var offsets  = Position.cumulativeOffset(this.activeHandle);
+            this.offsetX = (pointer[0] - offsets[0]);
+            this.offsetY = (pointer[1] - offsets[1]);
+          }
         }
       }
       Event.stop(event);
@@ -247,8 +246,7 @@ Control.Slider.prototype = {
    if(this.active) {
       if(!this.dragging) this.dragging = true;
       this.draw(event);
-      // fix AppleWebKit rendering
-      if(navigator.appVersion.indexOf('AppleWebKit')>0) window.scrollBy(0,0);
+      if(Prototype.Browser.WebKit) window.scrollBy(0,0);
       Event.stop(event);
    }
   },

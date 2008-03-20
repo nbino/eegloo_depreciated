@@ -1,5 +1,9 @@
 var mInt = null, startScroll;
 
+function na() {
+	return;
+}
+
 function onscroll(e) {
 	if (mInt)
 		clearInterval(mInt);

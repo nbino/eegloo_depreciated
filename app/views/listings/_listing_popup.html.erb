@@ -1,0 +1,9 @@
+<div id="listing_popup_<%= listing.id %>" class="popup" style="display:none;position:absolute;width:120px;height:80px">
+  <p>
+    <b>Flag listing as:</b>
+	<br/>
+	<select><option>Bogus</option><option>Broker Listing</option><option>Not Available</option></select>
+	<input type="submit" value="Flag It"></input>
+  </p>
+</div>
+<%= javascript_tag "new Popup('listing_popup_#{listing.id}','listing_link_#{listing.id}',{trigger:'click',position:'240,-100'})" %>
