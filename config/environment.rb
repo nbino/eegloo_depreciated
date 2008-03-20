@@ -62,4 +62,4 @@ Rails::Initializer.run do |config|
 
 end
 
-CalendarDateSelect.format = :format_american
+CalendarDateSelect.format = :american
