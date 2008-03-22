@@ -1,5 +1,3 @@
-
-
 class ListingInfosController < ApplicationController
   # GET /listing_infos
   # GET /listing_infos.xml
@@ -111,7 +109,6 @@ class ListingInfosController < ApplicationController
     @street_noise_levels = StreetNoiseLevel.find :all
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
-    @pets_choices = Pets.find :all
     @floor_types = FloorType.find :all
     @ac_types = AcType.find :all
     @light_levels = LightLevel.find :all

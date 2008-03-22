@@ -1,8 +1,8 @@
 
           <li class="linenopad"><b>Basics:</b> 
           
-          <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%=li.no_of_bathrooms == 0 ? 'shared bathroom' :  pluralize(li.no_of_bathrooms,  'bathroom') %>, 
-          <%= li.separate_kitchen? ? 'separate kitchen' : 'kitchenette' %>, <%=li.ac_type%> A/C, <%=li.floor_type%> floors, <%=li.pets%> ok</li>
+          <%= li.sq_footage %> sq feet, <%= li.ceiling_height %> ft ceilings, <%='convertable, ' if li.convertable%><%="#{li.bathroom_n} bathroom(s)" %>, 
+          <%= li.separate_kitchen? ? 'separate kitchen' : 'kitchenette' %>, <%=li.ac_type%> A/C, <%=li.floor_type%> floors, <%=li.dogs_allowed? ? 'dogs ok' : 'no dogs'%>, <%=li.cats_allowed? ? 'cats ok' : 'no cats'%></li>
           <li><b>Rooms:</b> 
           <%if li.livingroom?%>
             <%=li.livingroom.length%> x <%=li.livingroom.length%>, <%=li.livingroom.light_level %> livingroom with <%=li.livingroom.window_direction%> view, 
@@ -20,17 +20,18 @@
             'walkup' => !li.elevator?,
             'doorman' => li.doorman?,
             'laundromat' => li.laundry?,
-            'gym' => li.gym?
+            'gym' => li.gym?,
+            'rent stabilized'=>li.rent_stabilized?,
+            'rent controlled'=>li.rent_controlled?
           }.keys_to_sentence_sens_false_values%>
            </li>
-          <li><span class="pluses"><b>Pluses:</b> 
+          <li><div class="pluses"><b>Pluses:</b> 
           <%=
           {
-            'rent stabilized'=>li.rent_stabilized?,
-            'rent controlled'=>li.rent_controlled?,
             'good heat' => li.heat_q.most_desirable?,
-            'quiet' => li.quiet?,
-            '#{li.maintenance_q} maintainance' => li.maintenance_q.most_desirable?,
+            "#{li.nbors_noise_level} neighboors" => li.nbors_noise_level.most_desirable?,
+            "#{li.street_noise_level} street" => li.street_noise_level.most_desirable?,
+            "#{li.maintenance_q} maintainance" => li.maintenance_q.most_desirable?,
             "#{li.appliances_q} appliances" => li.appliances_q.most_desirable?,
             "#{li.bathroom_q} bathroom" => li.bathroom_q.most_desirable?,
             'multi-level'=>li.multi_level?, 
@@ -43,8 +44,9 @@
             'broadband capable' => li.broadband?
            }.keys_to_sentence_sens_false_values%>
             
-          </span></li>
-          <li><span class="minuses"><b>Minuses:</b> 
+          </div></li>
+          <li/>
+          <li><div class="minuses"><b>Minuses:</b> 
           <%=
            {
             "#{li.heat_q} heat" => !li.heat_q.most_desirable?,
@@ -59,5 +61,9 @@
              'roadents' => li.rodents?,
              'ants' => li.ants?
            }.keys_to_sentence_sens_false_values%>
-          </span></li>
+          </div></li>
           
+          <li class="linenopad"><b>Tenant experience:</b> 
+          <%=li.comment%>
+          
+          </li>

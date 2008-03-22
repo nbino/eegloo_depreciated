@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 13) do
+ActiveRecord::Schema.define(:version => 14) do
 
   create_table "apt_types", :force => true do |t|
     t.string   "name"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 13) do
     t.integer  "listing_id"
     t.integer  "sq_footage"
     t.integer  "ceiling_height"
-    t.integer  "no_of_bathrooms"
+    t.integer  "bathroom_n_id"
     t.integer  "floor_type_id"
     t.integer  "heat_q_id"
     t.integer  "ac_type_id"
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(:version => 13) do
     t.integer  "bathroom_q_id"
     t.integer  "cellphone_q_id"
     t.integer  "cellphone_provider_id"
-    t.integer  "pets_id"
     t.string   "landlord_phone_number"
     t.string   "broker_phone_number"
     t.string   "comment"
@@ -100,6 +99,9 @@ ActiveRecord::Schema.define(:version => 13) do
     t.boolean  "separate_kitchen"
     t.boolean  "balcony"
     t.boolean  "patio"
+    t.boolean  "loft"
+    t.boolean  "dogs_allowed"
+    t.boolean  "cats_allowed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -108,6 +110,8 @@ ActiveRecord::Schema.define(:version => 13) do
     t.integer  "user_id",                               :null => false
     t.string   "address"
     t.string   "cross_street"
+    t.float    "latitude"
+    t.float    "longtitude"
     t.integer  "apt_type_id"
     t.integer  "nhood_id"
     t.integer  "rent_range_id"
@@ -119,6 +123,11 @@ ActiveRecord::Schema.define(:version => 13) do
     t.datetime "avail_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "read_listings", :force => true do |t|
+    t.integer "user_id"
+    t.integer "listing_id"
   end
 
   create_table "rent_ranges", :force => true do |t|

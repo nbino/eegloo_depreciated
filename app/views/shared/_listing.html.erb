@@ -1,115 +1,80 @@
 <% l = listing %>
+<%update_page do |page|%>
 <div class="post">
-	
 	<div class="entry">
- 			<% content_tag 'div', :class => 'header', :onclick => "Element.toggle('listingshow_'+#{listing_counter.to_s},'appear');Element.toggle('min_'+#{listing_counter.to_s});Element.toggle('max_'+#{listing_counter.to_s});new Effect.Highlight('listingshow_'+#{listing_counter.to_s})", :style => 'cursor:pointer;background:#F0F0F0' do %>
+    <% content_tag 'div', :class => 'header', :onclick => [visual_effect(:toggle_slide, "listingshow_#{listing_counter}", :duration => 0.4 ), page.toggle("min_#{listing_counter}", "max_#{listing_counter}")], :style => 'cursor:pointer;background:#F0F0F0' do %>
 			<ul>
 				<li style="margin-bottom:0px">
-					
-				
+					<%#=l.read%>
+                
 						<span class="floatleft"><h2>[<%= listing_counter + 1 %>] <%=l.apt_type%> | <%=l.nhood%> | <%=l.rent_range%></h2></span><span class="floatright" id="min_<%= listing_counter %>" style="display:none">[+]</span><span class="floatright" id="max_<%= listing_counter %>">[-]</span>
 						<div style="clear: both;"></div>	
-						<%=l.address%> | <b>Available:</b> <%= l.avail_date.strftime("%b %d, '%y") %> | <b>Posted:</b> <%=l.created_at.strftime("%b %d, '%y")%>
+						<%=l.address%> | Available: <%= l.avail_date.strftime("%b %d, '%y") %> | Posted: <%=l.created_at.strftime("%b %d, '%y")%>
 				</li>
 		
     		</ul>
 			<% end %>
+      
 			<div id="listingshow_<%= listing_counter %>" style="border:1px solid gray;border-top:0;padding:6px; background:#FFF">
 				
 			<ul style="padding-top:3px">
 				<li>Popularity: <%=l.favorites.count%> | Bogus flags: <%=l.bogus_flag_count%> | N/A flags:  <%=l.na_flag_count%> | Broker flags: <%=l.broker_flag_count%></li>
 				<li>
-					<%if !current_user.photo_access?%>
-	        			<div class="lockedheader">
+            <%if !current_user.photo_access?%>
+	        		<div class="lockedheader">
 							<%=image_tag 'images.png', :title => 'Images'%> <a href=""><%= image_tag 'lock.png', :onmouseover => "this.src='/images/lock_open.png'", :onmouseout => "this.src='/images/lock.png'", :title => 'Unlock Images' %></a>
 							<br><span style="font-size:10px">Images are currently <b>locked</b>.<br/>Upload images of your own listing to view images.</span>
 						</div>
-	         			<%else%>
-	           			<%if l.photos.size == 0 %>
-	             			No Photos Submitted<a href="">request photos</a>
-	           		<%else%>
-	             			<table width=100%><tr>
-	             			<% l.photos.each do |visual|  %>
-	                 		<td><%= image_tag(visual.public_filename(:thumb), :height=>50, :width=>60) %> <br/> <%=visual.comment %></td>
-	               	<%end%>
-	            			</tr></table>
+	         	<%else%>
+	          	<%if l.photos.size == 0 %>
+	          		No Photos Submitted<a href="">request photos</a>
+	          	<%else%>
+	          		<table width=100%>
+                    <tr>
+                      <% l.photos.each do |visual|  %>
+                          <td><%= image_tag(visual.public_filename(:thumb), :height=>50, :width=>60) %> <br/> <%=visual.comment %></td>
+                      <%end%>
+	            		</tr>
+                  </table>
 				  	<%end%>
 					<%end%>
 				<!-- end image -->
 				</li>
-	  	   		<%if current_user.listing_info_access?%>
-	          		<%if l.listing_info?%> 
-	              		<%=render :partial => 'shared/listing_info', :locals => {:li=>l.listing_info}%>
-	          		<%else%>
-	            		No detailed info is available <a href="">Request detailed info</a>
-	          		<%end%>
-	        		<%else%><%=render :partial=>'shared/locked_listing_info'%><%end%>
+            <%if current_user.listing_info_access?%>
+                <%if l.listing_info?%> 
+                    <%=render :partial => 'shared/listing_info', :locals => {:li=>l.listing_info}%>
+                <%else%>
+                  No detailed info is available <a href="">Request detailed info</a>
+                <%end%>
+            <%else%>
+              <%=render :partial=>'shared/locked_listing_info'%>
+            <%end%>
    
-	        	<!-- <li><span id="favorites_info_<%=l.id%>">
-		          		<%=link_to_remote( 
-				            (image_tag 'star.png', :title => "Add to Favorites" ), 
-				            :url=>listing_favorites_url(listing), 
-				            :update=>"favorites_info_#{l.id}",
-				            :method=>:post)%>
-		        		</span>	|
-		          		<span id="bogus_flag_<%=l.id%>">
-		          		<%=link_to_remote(
-				            (image_tag 'exclamation.png', :title => "Flag as Bogus" ),
-				            :url=>listing_bogus_flags_url(listing), 
-				            :method=>:post,
-				            :update=>"bogus_flag_#{l.id}")%>
-		          		</span>
-		          |
-		          		<span id="na_flag_<%=l.id%>">
-				          <%=link_to_remote(
-				            (image_tag 'cancel.png', :title => "Flag as No Longer Available" ), 
-				            :url=>listing_na_flags_url(listing), 
-				            :method=>:post,
-				            :update=>"na_flag_#{l.id}")%>
-				          </span>
-				          |
-				          <span id="broker_flag_<%=l.id%>">
-				          <%=link_to_remote(
-				            (image_tag 'money_dollar.png', :title => "Flag as Broker Listing" ), 
-				            :url=>listing_broker_flags_url(listing), 
-				            :method=>:post,
-				            :update=>"broker_flag_#{l.id}")%>
-				          </span>
-					</li> -->
-	      		  <li><b>Posted By:</b> <%= l.user.username %></li>
-	 			  <li style="text-align:right"><div style="position:relative">
-					<%= link_to "Comments",  "javascript:na()", :onclick => "Element.toggle('comments_block_'+#{l.id},'appear')" -%> | <span id="listing_link_<%= listing.id %>" class="popup_link"><a href="javascript:na()">Flag this Listing</a></span>
-					<%= render :partial => 'listing_popup', :locals => {:listing => l} %>
-					
-					&nbsp;
-				  </div>
+	        <li><b>Posted By:</b> <%= l.user.username %></li>
+	 			 <li style="text-align:right">
+            <div style="position:relative">
+              <%= link_to "Comments",  "javascript:na()", :onclick => "Element.toggle('comments_block_'+#{l.id},'appear')" -%> | <span id="listing_link_<%= listing.id %>" class="popup_link"><a href="javascript:na()">Flag this Listing</a></span>
+              <%= render :partial => 'listing_popup', :locals => {:listing => l} %>
+              
+              &nbsp;
+            </div>
 
-				  </li>
+            </li>
 				
 					
-					<li id="comments_block_<%=l.id%>" style="display:none;text-align:left">
+            <li id="comments_block_<%=l.id%>" style="display:none;text-align:left">
 						
-					<b>Comments:</b><br/>
+              <b>Comments:</b><br/>
 			        <%=render :partial=>'shared/comment_list', :locals=>{:comments=>l.comments}%>
 
-					<%= render :partial=>'/shared/create_comment', :locals=>{:listing=>l, :comment=>ListingComment.new}%> 			
-					</li>
+                <%= render :partial=>'/shared/create_comment', :locals=>{:listing=>l, :comment=>ListingComment.new}%> 			
+            </li>
 					
 			  	
 				
-			      <!-- <li><b>Comments:</b></li>
-			      <li>
-						<div id="comments_block_<%=l.id%>">
-				        <%=render :partial=>'shared/comment_list', :locals=>{:comments=>l.comments}%>
-				        </div>
-				        <br/>
-						<%= link_to "Add comment",  "#", :onclick => visual_effect(:slide_down, "add_comment_block_#{l.id}", :duration => 0.5 )-%>
-         
-				        <div id="add_comment_block_<%=l.id%>" style="display:none">
-				        <%= render :partial=>'/shared/create_comment', :locals=>{:listing=>l, :comment=>ListingComment.new}%> </div>
-				  </li> -->
-			 
-			  </ul>
+			     
+          </ul>
 			 </div>
-    </div>
-</div>
+      </div>
+  </div>
+<% end %>

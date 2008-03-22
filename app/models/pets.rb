@@ -1,2 +1,0 @@
-class Pets < AttrValue
-end

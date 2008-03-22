@@ -37,6 +37,10 @@ module ApplicationHelper
     end
   end
   
+  def auto_submit(form_name)
+    "document.forms['#{form_name}'].onsubmit();"
+  end
+  
   
   class Object::TrueClass
     def to_yn_s

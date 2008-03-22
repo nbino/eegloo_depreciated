@@ -2,6 +2,8 @@
 <!--:url => { :action => "show" },-->
 
 <% form_for( :listing_info, :html => { :method => 'get' } ) do |f| %>
+
+
   <p>
   
   <label for="listing_attr_apt_type">Apartment Type</label><br/>  <%= f.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Select'} %> <br/>

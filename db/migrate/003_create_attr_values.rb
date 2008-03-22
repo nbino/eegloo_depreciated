@@ -1,7 +1,7 @@
 class CreateAttrValues < ActiveRecord::Migration
   def self.up
     create_table :attr_values do |t|
-      t.string :name
+      t.string :name, :unique=>true
       t.string :type
       t.integer :acc, :default=>0 #accessory flag field
       
@@ -19,6 +19,8 @@ class CreateAttrValues < ActiveRecord::Migration
     
     ['air shaft', 'street', 'garden'].each {|name| WindowDirection.create :name => name}
     
+    %w{shared 1 2 3}.each {|name| BathroomN.create :name => name}
+    
     %w{Cingular Nextel Pre-paid Sprint T-Mobile Verizon}.each {|name| CellphoneProvider.create :name => name} 
     
     %w{poor average excellent}.each do |name| 
@@ -29,13 +31,11 @@ class CreateAttrValues < ActiveRecord::Migration
       MaintenanceQ.create :name => name
     end
     
-    ['no', 'cats', 'dogs', 'cats & dogs'].each {|name| Pets.create :name => name}
-    
     %w{linoleum carpet hardwood}.each {|name| FloorType.create :name => name}
     
     %w(no window wall central).each {|name| AcType.create :name => name}
     
-    %w(none private public).each do |name| 
+    %w(none public private).each do |name| 
       RoofAccessType.create :name => name
       BackYardType.create :name => name
     end

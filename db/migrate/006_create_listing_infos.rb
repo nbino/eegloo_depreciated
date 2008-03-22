@@ -4,7 +4,7 @@ class CreateListingInfos < ActiveRecord::Migration
       t.integer :listing_id,
         :sq_footage,
         :ceiling_height,
-        :no_of_bathrooms,
+        :bathroom_n_id,
         :floor_type_id,
         :heat_q_id,
         :ac_type_id,
@@ -16,8 +16,7 @@ class CreateListingInfos < ActiveRecord::Migration
         :appliances_q_id,
         :bathroom_q_id,
         :cellphone_q_id,
-        :cellphone_provider_id,
-        :pets_id
+        :cellphone_provider_id
         
       t.string :landlord_phone_number, :broker_phone_number, :comment
       
@@ -38,7 +37,10 @@ class CreateListingInfos < ActiveRecord::Migration
         :convertable,
         :separate_kitchen,
         :balcony,
-        :patio
+        :patio,
+        :loft,
+        :dogs_allowed,
+        :cats_allowed
 
       t.timestamps
     end

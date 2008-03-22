@@ -14,7 +14,7 @@ class ListingInfo < ActiveRecord::Base
   belongs_to :bathroom_q
   belongs_to :cellphone_q
   belongs_to :cellphone_provider
-  belongs_to :pets
+  belongs_to :bathroom_n
   
   MAX_BATHROOMS = 3
   

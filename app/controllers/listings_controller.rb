@@ -3,6 +3,7 @@ class ListingsController < ApplicationController
   # GET /listings.xml
   
   before_filter :login_required
+  #layout 'main'
   
   def load_dropdown_values
     @apt_types = AptType.find :all
@@ -12,41 +13,57 @@ class ListingsController < ApplicationController
     @maintenance_select = MaintenanceQ.find :all
     @heat_select = HeatQ.find :all
     @bathroom_select = BathroomQ.find :all
+    @no_of_bathrooms_select = BathroomN.find :all
     @appliances_select = AppliancesQ.find :all
     @cellphone_select = CellphoneQ.find :all
     @nbors_noise_levels = NborsNoiseLevel.find :all
     @street_noise_levels = StreetNoiseLevel.find :all
     @back_yard_types = BackYardType.find :all
     @roof_access_types = RoofAccessType.find :all
-    @pets_choices = Pets.find :all
     @floor_types = FloorType.find:all
     @ac_types = AcType.find:all
     @light_levels = LightLevel.find:all
     @window_directions = WindowDirection.find:all
     @cell_phone_providers_select = CellphoneProvider.find :all
     @rent_ranges = RentRange.find :all
+    
   end
   
   def index
     
     load_dropdown_values
    
-    if !params[:listing_info]
-      @listings = Listing.find :all, :limit => 20
-    else
-      #clean up params
-      params[:listing_info].delete_if {|key, val| val=="0" || val=="" || key=='pests'}
-      
-      @listings = Listing.do_search params[:listing_inf], current_user.id, 20
-      
-    end
-
+    @listings = Listing.do_search [], current_user.id, 20
+    
     respond_to do |format|
-      format.html { render :layout => "main" }
+      format.html { render :layout => 'main' }
       format.xml  { render :xml => @listings }
     end
   end
 
+  def search
+    #clean up params
+    params[:listing_info].delete_if {|key, val| val=="0" || val=="" || val=='Comment keywords'}
+    
+    #handle nhoods speratly
+    params[:listing_info][:nhoods] = params[:nhoods]
+    
+    #convert pests into roaches ants and mice
+    params[:listing_info][:roaches], params[:listing_info][:ants], params[:listing_info][:mice] = 0 unless params[:listing_info][:pests_free].nil?
+    
+    params.delete :pest_free
+    
+    
+    @listings = Listing.do_search params[:listing_info], current_user.id, 20
+    @test='start'
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @listings }
+    end
+    
+  end
+
+    
   # GET /listings/1
   # GET /listings/1.xml
   def show
@@ -83,20 +100,19 @@ class ListingsController < ApplicationController
   # POST /listings
   # POST /listings.xml
   def create
-    @listing = Listing.new(params[:listing])
-    @room1 = Room.new(params[:room1])
-    @room2 = Room.new(params[:room2])
-    @room3 = Room.new(params[:room3])
-    @room4 = Room.new(params[:room4])
-    @living_room = Room.new(params[:living_room])
+    #~ @listing = Listing.new(params[:listing])
+    #~ @room1 = Room.new(params[:room1])
+    #~ @room2 = Room.new(params[:room2])
+    #~ @room3 = Room.new(params[:room3])
+    #~ @room4 = Room.new(params[:room4])
+    #~ @living_room = Room.new(params[:living_room])
 
-    @room1.listing = @room2.listing = @room3.listing = @room4.listing = @living_room.listing = @listing
+    #~ @room1.listing = @room2.listing = @room3.listing = @room4.listing = @living_room.listing = @listing
     
-    update_geocode
-    @listing.save!
+    #~ @listing.save!
     
     respond_to do |format|
-      format.html { render :action => "new" }
+      format.html { render :patial => 'shared/listing_list'}
       format.xml  { render :xml => @listing.errors, :status => :unprocessable_entity }
     end
       
@@ -106,8 +122,7 @@ class ListingsController < ApplicationController
   # PUT /listings/1.xml
   def update
     @listing = Listing.find(params[:id])
-    update_geocode
-    
+
     respond_to do |format|
       if @listing.update_attributes(params[:listing])
         flash[:notice] = 'Listing was successfully updated.'
@@ -118,26 +133,8 @@ class ListingsController < ApplicationController
         format.xml  { render :xml => @listing.errors, :status => :unprocessable_entity }
       end
     end
-    
   end
 
-  def update_geocode
-    g = get_geocode(@listing.address)
-    @listing.latitude = g[:latitude]
-    @listing.latitude = g[:longitude]
-  end
-  
-  def get_geocode(address)
-    logger.debug 'starting geocoder call for address: '+address
-    # this is where we call the geocoding web service
-    server = XMLRPC::Client.new2('http://rpc.geocoder.us/service/xmlrpc')
-    result = server.call2('geocode', address)
-    logger.debug "Geocode call: "+result.inspect
-    
-    return {:success=> true, :latitude=> result[1][0]['lat'], 
-		:longitude=> result[1][0]['long']}
-  end
-  
   # DELETE /listings/1
   # DELETE /listings/1.xml
   def destroy

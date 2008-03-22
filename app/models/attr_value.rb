@@ -11,11 +11,19 @@ class AttrValue < ActiveRecord::Base
   
   #attributes should always be ordered from least desirable to most in order of ids
   def least_desirable?
-    id == self.class.find(:first, :order=>'id ASC').id
+    id == self.class.least_desirable
   end
   
   def most_desirable?
-    id == self.class.find(:first, :order=>'id DESC').id
+    id == self.class.most_desirable
+  end
+  
+  def self.most_desirable
+    find(:first, :order=>'id DESC').id
+  end
+  
+  def self.least_desirable
+    find(:first, :order=>'id ASC').id
   end
   
 end

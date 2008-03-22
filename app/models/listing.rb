@@ -6,6 +6,7 @@ class Listing < ActiveRecord::Base
   has_many :broker_flags
   has_many :na_flags
   has_many :bogus_flags
+  has_many :listing_comments
   belongs_to :apt_type
   belongs_to :rent_range
   belongs_to :nhood
@@ -25,8 +26,7 @@ class Listing < ActiveRecord::Base
     :maintenance_q,
     :appliances_q,
     :bathroom_q,
-    :cellphone_q,
-    :pets]
+    :cellphone_q]
     
     has_many :comments, :class_name=>'ListingComment', :include=>:author
     
@@ -41,51 +41,62 @@ class Listing < ActiveRecord::Base
     !listing_info.nil?
   end
   
+  #if param operator is '=', no need to include them in SQL_OPERATORS as that is the default. to exlude params for special handling use operatlor '#'
   SQL_OPERATORS = 
   {
+  'avail_date'=>'<=',
+  'ac_type_id'=>'>=',
+  'bathroom_n_id'=>'>=',
   'no_of_balconies'=>'>=',
-  'no_of_patios'=>'>=',
+  'no_of_bathrooms'=>'>=',
   'sq_footage'=>'>=',
   'ceiling_height'=>'>=',
-  'appliance_q_id'=>'>=',
-  'bathroom_q_id'=>'>=',
-  'cellphone_q_id'=>'>=',
-  'street_noise_level_id'=>'>=',
-  'nbors_noise_level_id'=>'>=',
   'ubound'=>'<=',
+  'nhoods'=>'#',
   'comment'=>'LIKE'}
       
-  def self.do_search(params, limit, user_id)
+  def self.do_search(params, user_id, limit)
        #expects params hash
-       
-       #list all params that have operator other than "="
        
       conditions = []
       
-      # first add wildcard characters to LIKE parameter
-      params.each {|key,val| params[:listing_info][key] = "%#{val}%" if val != '' && SQL_OPERATORS[key] == 'LIKE'}
+      # add wildcard characters to LIKE parameter
       
-      #now join params with operators
-      params .each {|key, val| conditions << "#{key} #{SQL_OPERATORS[key]||'='} :#{key}"}
+      #process params
+      if params != []
+        
+        params["avail_date"] = Date.parse(params["avail_date"]).to_s(:db) unless params["avail_date"].nil?
+        
+        params.each {|key,val| params [key] = "%#{val}%" if val != '' && SQL_OPERATORS[key] == 'LIKE'}
+        
+        #now join params with operators. exclude IN
+        params.each {|key, val| conditions << "#{key} #{SQL_OPERATORS[key]||'='} :#{key}" unless SQL_OPERATORS[key]=='#'}
+       
+        #add parans for IN operator and join array
+        conditions << "nhood_id IN (#{params['nhoods'].join(',')})" unless params['nhoods'].nil? || params['nhoods'] == []
+      end
+        
       
       # set up associations
-      
+      has_one :read_by_current_user, :class_name=>'ReadListing', :conditions=>"read_listings.user_id=#{user_id}"
       has_one :flagged_na_by_current_user, :class_name=>'NaFlag', :conditions=>"flags.user_id=#{user_id}"
       has_one :flagged_bogus_by_current_user, :class_name=>'BogusFlag', :conditions=>"flags.user_id = #{user_id}"
       has_one :flagged_broker_by_current_user, :class_name=>'BrokerFlag', :conditions=>"flags.user_id = #{user_id}"
       has_one :current_user_favorite, :class_name=>'Favorite', :conditions=>"favorites.user_id = #{user_id}"
       
-      Listing.find(
+      self.find(
         :all,
         :include => [
           :listing_info, 
           :rent_range, 
-          :comments, 
-          :visuals,  
+        #  :listing_comments,  - these two associations cause include to silently fail for mysterious reasons
+        # :photos, 
+         :read_by_current_user,
           :flagged_na_by_current_user, 
           :flagged_bogus_by_current_user, 
-          :flagged_broker_by_current_user, :current_user_favorite],
-        :conditions=>[conditions_t.join(' AND '), params],
+          :flagged_broker_by_current_user, :current_user_favorite
+          ],
+        :conditions=>[conditions.join(' AND '), params],
         :limit=>limit)
 
  end
