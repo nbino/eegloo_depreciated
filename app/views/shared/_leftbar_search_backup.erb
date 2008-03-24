@@ -1,0 +1,262 @@
+
+
+<% form_for( :listing_info, :html => { :method => 'get' } ) do |f| %>
+<ul>
+   <li id="search">
+	<h2><b>Search</b></h2>
+		<ul>			
+			<li><div><ul>
+				
+				<li><%=f.text_field :comment, :size=>15, :value=>'Keywords', :style=>'width:145px'%></li>
+				
+		
+				<li><% content_tag 'div', :class => 'leftsearch_box', :style => 'cursor:pointer', :onclick => "Element.toggle('leftsearch_neighborhood')" do %>
+						<% content_tag 'div', :class => 'leftsearch_header' do -%><span style="float:left">Neighborhood(s)</span><span style="float:right">>&nbsp;</span><% end -%>&nbsp;
+					<% end -%>
+
+				</li>
+				<li>
+				<div style="position:relative"><div id="leftsearch_neighborhood" class="leftsearch_box" style="display:none; position:absolute; top:-27px; left:155px; opacity:0.9;width:140px">
+					
+					<% content_tag 'span', :style => 'font-weight:bold;position:absolute;top:5px;left:128px;cursor:pointer;', :onclick => "Element.toggle('leftsearch_neighborhood')" do %> [x] <% end -%>
+					<ul>
+						<li><%= f.check_box :pets%> [All]</li>
+						<% @nhoods.each do |n| %>
+						<li><%= f.check_box n %> <%= f.label n,n %></li>
+						<% end %>
+					</ul>
+				</div></div>
+
+				</li>
+				
+	
+				
+				<!-- <li><%= f.collection_select :nhood_id, @nhoods, :id, :name, {:include_blank=>'Neighborhood'} %> 
+				</li> -->
+				
+				<li>
+				</li>				
+				<!-- <li><select>
+					<option id='x_0' onmouseover="selectStrike(this)"> xxx </option> 
+					<option id='x_1' onmouseover="selectStrike(this)"> xxx </option>
+					<option id='x_2' onmouseover="selectStrike(this)"> xxx </option>
+					</select>
+				<li> -->
+				<script language="javascript">
+					function selectStrike(x) {
+						var s = x.id.substr(0,1);
+						var y = parseInt(x.id.substr(2,x.id.length-2));
+						var i = 0;
+						while ($(s+'_'+i) != null) {
+							(i<y) ? $(s+'_'+i).className = 'strike': $(s+'_'+i).className = 'none';
+							i++;
+						}
+					}
+					
+					function switchExpandCollapse(x) {
+						var l = x.innerHTML.length;
+						(x.innerHTML.charAt(l-2) == '-') ?
+							x.innerHTML = x.innerHTML.substr(0,l-2) + '+]':
+							x.innerHTML	= x.innerHTML.substr(0,l-2) + '-]';									
+						
+					}
+				</script>
+				<li style="text-align:center">Apartment Type ≥</li>
+				<li style="text-align:center">
+					<select>
+					<% @apt_types.each_with_index do |o,i| %>
+						<option id='a_<%= i %>' onmouseover="selectStrike(this)"><%= o %></option> 
+					<% end %>
+					</select>
+				</li>
+				<!-- <li>
+				<%= f.collection_select :apt_type_id, @apt_types, :id, :name, {:include_blank=>'Apartment Type'} %>
+				</li> -->
+				
+
+				
+				
+				<li style="padding-top:10px;text-align:center">Avail ≥ <%= f.calendar_date_select :avail_date, :size => 9, :value => 'mm/dd/yy'%>
+				</li>
+
+				<li style="padding-top:10px;"><b>Rent Range</b></li>
+				<li><span id="show_rent">$0 to $5000+</span>
+				</li>
+				<!-- Value of this goes in a hidden field -->
+				
+				
+				
+				<li><div id="track_rent" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
+					<span id="handle_rent_lbound" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
+						<img src="images/slider-images-handle.png;float:left" alt=""/>	
+					</span>
+					<span id="handle_rent_ubound" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
+						<img src="images/slider-images-handle.png;float:left" alt=""/>	
+					</span>
+					</div>
+			  	</li>
+				
+				<%=f.hidden_field :lbound %>
+				<%=f.hidden_field :ubound %>
+				
+				
+				<li><b>Square Footage</b></li>
+				<li><span id="show_sqft">0</span> ft<sup>2</sup></li>
+						
+				<li><div id="track_sqft" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
+					<span id="handle_sqft" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
+						<img src="images/slider-images-handle.png;float:left" alt=""/>	
+					</span>
+					</div>
+			  	</li>
+
+				<%=f.hidden_field :sq_footage %>
+				
+			  	<%= javascript_include_tag 'slider.js' %> 
+				<script type="text/javascript" language="javascript">
+				// <![CDATA[
+
+				var handles = [$('handle_rent_lbound'), $('handle_rent_ubound')];
+				
+				var slider = new Control.Slider(handles, 'track_rent', {
+					range:$R(0,5000,false),
+					values:[0,500,1000,1500,2000,2500,3000,3500,4000,4500,5000],
+					increment:500,
+					sliderValue:[0,5000],
+					handleLength:19,
+					restricted:true,
+					onSlide:function(v){
+						var s;
+						s ='$'+v[0]+' to $'+v[1];
+						if (v[1] == 5000) s=s+'+';
+						$('show_rent').innerHTML=s;
+					},
+			       	onChange:function(v){
+						$('listing_info_lbound').value=v[0];
+						$('listing_info_ubound').value=v[1];
+						new Effect.Highlight('show_rent')} 				
+					});
+				
+
+				new Control.Slider('handle_sqft','track_sqft',
+					{	range:$R(0,2500,false),
+				      		values:[0,500,750,1000,1250,1500,1750,2000,2250,2500],
+				       	onSlide:function(v){
+							var s = v;
+							if (v == 2500) s=s+'+';
+							$('show_sqft').innerHTML=s;
+						},
+				       	onChange:function(v){$('listing_info_sq_footage').value=v; new Effect.Highlight('show_sqft')} 								
+					});
+				
+				// ]]>
+				</script>
+				
+				
+					<!-- Ceil Ht ≥ <%=f.text_field :ceiling_height, :size=>2%> -->
+				
+			</ul></div></li>
+		
+			
+			<li>
+			<div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Key "Musts"<% end -%> 
+				
+				<div id="leftsearch_primary" class="leftsearch_items" style=""><ul>			
+				<!-- <li><%= f.collection_select  :maintenace_q_id, @maintenance_select, :id, :name, {:include_blank=>'[Maintenace]'}  %></li> -->
+				
+				<!-- <li>Maintenance ≥</li><li><select>
+				<% @maintenance_select.each_with_index do |o,i| %>
+					<option id='b_<%= i %>' onmouseover="selectStrike(this)"><%= o %></option> 
+				<% end %>
+				</select></li> -->
+				
+				<li><%= f.check_box :pets%> [Excellent Maintenance]</li>
+				<li><%= f.check_box :pets%> [Excellent Appliances]</li>
+				<li><%= f.check_box :pets%> [Excellent Bathroom]</li>
+				
+				<!-- <li><%= f.collection_select  :appliance_q_id, @appliances_select, :id, :name, {:include_blank=>'[Appliances Cond]'}  %></li> -->
+				<!-- <li>Appliances Cond ≥</li><li><select>
+				<% @appliances_select.each_with_index do |o,i| %>
+					<option id='c_<%= i %>' onmouseover="selectStrike(this)"><%= o %></option> 
+				<% end %>
+				</select></li> -->
+				
+				
+				
+				<!-- <li><%= f.collection_select  :bathroom_q_id, @bathroom_select, :id, :name, {:include_blank=>'[Bathroom Cond]'}  %> </li> -->
+				<!-- <li>Bathroom Cond ≥</li><li><select>
+				<% @bathroom_select.each_with_index do |o,i| %>
+					<option id='d_<%= i %>' onmouseover="selectStrike(this)"><%= o %></option> 
+				<% end %>
+				</select></li> -->
+
+				<li><%= f.check_box :elevator%> <%= f.label :elevator %></li>
+				<li><%= f.check_box :laundry%> <%= f.label :laundry %></li>
+				<li><%= f.check_box :gym%> <%= f.label :gym %></li>
+				<li><%= f.check_box :doorman%> <%= f.label :doorman %></li>
+				<li><%= f.check_box :pets%> <%= f.label :pets %></li>
+				
+				<!-- <li><%= f.collection_select :heat_q_id, @heat_select, :id, :name, {:include_blank=>'[Heat]'} %></li> -->
+				
+				
+				<li><%= f.check_box :pets%> [Good Heating]</li>
+				</select></li>
+				
+				
+				<!-- <li><%= f.collection_select  :ac_type_id, @ac_types, :id, :name, {:include_blank=>'[A/C Type]'}  %> </li> -->
+				
+				<li><%= f.check_box :pets%> [A/C] </li>
+			</ul></div>
+			</div>
+			</li>
+			
+			
+			<li>
+			<div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Other Stuff<% end -%> 
+				
+				<div id="leftsearch_secondary" class="leftsearch_items" style=""><ul>
+				<li><%= f.check_box :separate_kitchen%> <%= f.label :separate_kitchen %></li>
+				<li>[High Ceilings]</li>
+				<li>[Min # Bathrooms:] <select><option>1</option><option>2</option><option>3</option><option>4</option></select></li>
+				<!-- <li>Min # Bathrooms: <%= f.text_field :no_of_bathrooms, :size=>2%></li> -->
+				
+				<!-- <li><%= f.collection_select  :street_noise_level_id, @street_noise_levels, :id, :name, {:include_blank=>'[Street Noise]'} %> </li>
+								<li><%= f.collection_select  :nbors_noise_level_id, @nbors_noise_levels,:id, :name, {:include_blank=>'[Neighbor Noise]'}  %> </li> -->		
+				
+				<li><%= f.check_box :convertable%> [Quiet Street]</li>
+				<li><%= f.check_box :convertable%> [Quiet Neighbors]</li>
+				<li><%= f.check_box :convertable%> <%= f.label :convertable %></li>
+				<li><%= f.check_box :multi_level%> <%= f.label :multi_level %></li>
+				<li><%= f.check_box :penthouse%> <%= f.label :penthouse %></li>
+				<li><%= f.check_box :no_of_patios%> [Patio]</li>
+				<li><%= f.check_box :private_entrance%> <%= f.label :private_entrance %></li>
+				<li><%= f.check_box :balcony%> <%= f.label :balcony %></li>
+				
+				
+				<!-- <li><%= f.collection_select :back_yard_type_id, @back_yard_types, :id, :name, {:include_blank=>'[Backyard]'} %>  </li>
+								<li><%= f.collection_select :roof_access_type_id, @roof_access_types, :id, :name, {:include_blank=>'[Roof Access]'} %></li>
+								<li><%=f.collection_select :floor_type_id_id, @floor_types, :id, :name, {:include_blank=>'[Floor Type]'} %> </li> -->
+				
+				<li><%= f.check_box :convertable%> [Backyard]</li>
+				<li><%= f.check_box :convertable%> [Roof Access]</li>
+				<li><%= f.check_box :convertable%> [Floor - Carpet]</li>
+				<li><%= f.check_box :convertable%> [Floor - Hardwood]</li>
+				
+
+			
+				<!-- <li><%= f.collection_select  :cellphone_q_id, @cellphone_select, :id, :name, {:include_blank=>'[Cellphone]'} %> </li> -->
+				<li><%= f.check_box :broadband%> [Good cell coverage]</li>
+				<li><%= f.check_box :broadband%> <%= f.label :broadband, 'Broadband-ready'%></li>
+				<li><%= f.check_box :roach%> <%= f.label :roach, '[Pest-free]'%></li>
+			
+				<li><%= f.check_box :rent_controlled%> <%= f.label :rent_controlled %></li>
+				<li><%= f.check_box :rent_stabilized%> <%= f.label :rent_stabilized %></li>
+			</ul></div>
+			</div>
+			</li>
+					
+			<!-- Must Haves: Well Maintained, Nice Bathrooms, Nice Appliances, Well-heated, Elevator, Laundry, Gym, Doorman, Pets OK, Multi-level, Penthouse, Balcony, Backyard, Roach-free, Rodent-free, Broadband, Low Street Noise, Low Neighbor Noise, Good Cellphone Coverage, Convertible, Separate Kitchen, Rent Controlled, Rent Stabilized -->
+		</ul>
+	</li>
+</ul>
+<% end %>
