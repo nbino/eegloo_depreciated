@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   has_many :favorites 
   has_many :favorite_comments
   has_many :listing_comments
+  has_many :readings
   has_many :favorite_listings, :through => :favorites, :source=> :listing
+  has_many :read_listings, :through => :readings, :source=> :listing
   
  
  # Virtual attribute for the unencrypted password

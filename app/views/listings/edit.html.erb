@@ -1,11 +1,8 @@
-<div id="fullcontentcenter" align="center">
 	
-	<%= render :partial=>'shared/my_listing_navigation', :locals => {:active => 0}%>
+	<%= render :partial=>'shared/my_listing_navigation', :locals => {:active => 'Required Info'}%>
 	
-	<fieldset class="colored"><legend class="colored bigtext">Required Info</legend>
+	<fieldset class="colored">
 	
-	<div id="listview_m" style="margin-left:50px">
-		
 	<ul class="smalltext" style="padding-left:100px">
 		<%= error_messages_for :listing %>
 
@@ -29,9 +26,8 @@
 		<% end %>
 	</ul>
 	
-	</div>
 	</fieldset>
-</div>
+
 
 
 

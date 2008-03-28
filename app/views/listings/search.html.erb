@@ -1,5 +1,0 @@
-<%if @listings.size == 0%>
-  No listings found
-<%else%>
-  <%= render :partial => '/shared/listing', :collection => @listings[0...3] %>
-<%end%>

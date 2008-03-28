@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(:version => 14) do
   end
 
   create_table "favorites", :force => true do |t|
-    t.integer  "listing_id",              :null => false
-    t.integer  "user_id",                 :null => false
-    t.integer  "favorite_comments_count"
+    t.integer  "listing_id",                             :null => false
+    t.integer  "user_id",                                :null => false
+    t.integer  "favorite_comments_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 14) do
     t.integer  "user_id",    :null => false
     t.string   "type"
     t.string   "attr_name"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,7 +126,7 @@ ActiveRecord::Schema.define(:version => 14) do
     t.datetime "updated_at"
   end
 
-  create_table "read_listings", :force => true do |t|
+  create_table "readings", :force => true do |t|
     t.integer "user_id"
     t.integer "listing_id"
   end

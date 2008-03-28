@@ -6,4 +6,4 @@
 	<input type="submit" value="Flag It"></input>
   </p>
 </div>
-<%= javascript_tag "new Popup('listing_popup_#{listing.id}','listing_link_#{listing.id}',{trigger:'click',position:'240,-100'})" %>
+<%= javascript_tag "new Popup('listing_popup_#{listing.id}','flag_#{listing.id}', {trigger:'click',position:'240,-100'})" %>

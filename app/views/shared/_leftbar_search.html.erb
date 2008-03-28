@@ -1,7 +1,6 @@
 <!-- not sure why this is necessary, it should be part of default-->
 <%= javascript_include_tag 'slider.js' %> 
 
-
 <% remote_form_for(
         :listing_info,
         :url => search_listings_path,
@@ -18,36 +17,51 @@
           <div>
             <ul>
               <li>
-                <% content_tag 'div', :class => 'leftsearch_box', :style => 	'cursor:pointer', :onclick => "Element.toggle('leftsearch_neighborhood');" do %>
+                <% content_tag 'div', :class => 'leftsearch_box', :style =>'cursor:pointer', :onclick => "Element.toggle('leftsearch_neighborhood');" do %>
                     <% content_tag 'div', :class => 'leftsearch_header' do -%><span style="float:left">Neighborhood(s)</span><span style="float:right">>&nbsp;</span><% end -%>&nbsp;
                 <% end -%>
 
               </li>
             
               <li>
+              <div style="position:absolute; top:12px; left: 185px;">
+                <select  onchange="<%=auto_submit('search_form')%>" name="order_by">
+                  <option value='created_at'>Sort by</option>
+                  <option value='date_posted'>Date posted</option>
+                   <option value='lbound'>Price</option>
+                   <option value='favorites_count'>Popularity</option>
+                </select>
+              </div>
                 <div style="position:relative">
                   <div id="leftsearch_neighborhood" class="leftsearch_box" style="display:none; position:absolute; top:-27px; left:155px; opacity:0.9;width:140px">
                     <!--need to submit on close-->
-                    <% content_tag 'span', :style => 'font-weight:bold;position:absolute;top:5px;left:128px;cursor:pointer;', :onclick => "Element.toggle('leftsearch_neighborhood');" do %> [x] <% end -%>
+                    <%= image_tag 'cross.png', :style => 'font-weight:bold;position:absolute;top:5px;left:128px;cursor:pointer;', :onclick => "Element.toggle('leftsearch_neighborhood');"%>
                     <ul>
                       <!-- cannot get desired functionality using helper methods, resorting to plain html-->
+                      <!--listing_info[nhoods[]] doesn't work, need to copy it under listing_info later-->
                       <!-- need to disable all other choices when "All" is checked off"-->
-                      <li> <input type="checkbox" value="0"/>All</li>
+                      <script lang="javascript">
+                  function uncheckAllHoods(all_checkbox){
+                    $$("input[name='nhoods[]']").each(function(checkbox){checkbox.checked=all_checkbox.checked});
+                  }
+                  </script>
+                      <li> <input type="checkbox" checked="true" id="all_hoods" name="nhoods[]" value="all" onclick="uncheckAllHoods(this);" onchange="<%= auto_submit('search_form')%>">All</li>
+                      <!--"$$('#nhood').each(function(value){alert(checkbox.id)});checkbox.checked=!this.checked;}) "-->
                       <% @nhoods.each do |nhood| %>
-                      <li><input type="checkbox" name="nhoods[]" onchange="<%= auto_submit('search_form')%>" value="<%=nhood.id%>"/><%=nhood%></li>
+                      <li><input type="checkbox" checked="true" id="nhood_<%=nhood.id%>" name="nhoods[]" onchange="<%= auto_submit('search_form')%>" value="<%=nhood.id%>"/><%=nhood%></li>
                       <% end %>
                     </ul>
                  </div>
                 </div>
               </li>
 				
-              <li><%=f.text_field :comment, :size=>15, :value=>'Keywords', :style=>'width:145px'%>
+              <!--<li><%=f.text_field :comment, :size=>15, :value=>'Comment Keywords', :style=>'width:145px'%>-->
               </li>
           
-              <li style="text-align:center">Type ≥  
-                <!-- there seems to be no way to assign on event handler to option elements through Rails helpers. Resorting to HTML-->
-                <select name="listing_info[apt_type_id]" id="listing_info_apt_type" onchange="<%=auto_submit('search_form')%>" style="width:100px;font-size:11px">
-                  <!-- <option value="">Apt. Type...</option> -->
+              <li style="text-align:center">Apt. Type:
+              <!-- cannot assign event to options using helpers, resorting to plain html-->
+                <select name="listing_info[apt_type_id]" id="listing_info_apt_type" onchange="<%=auto_submit('search_form')%>" style="width:80px;font-size:11px">
+                  <option value="0">All</option>
                   <% @apt_types.each_with_index do |o,i| %>
                     <option id='a_<%= i %>' onmouseover="selectStrike(this)" value="<%=o.id%>"> <%= o %> </option> 
                   <% end %>
@@ -81,7 +95,7 @@
 				
 				
 				<li><b>Square Footage</b></li>
-				<li><span id="show_sqft">0</span> ft<sup>2</sup></li>
+				<li><span id="show_sqft">> 0</span> ft<sup>2</sup></li>
 						
 				<li>
             <div id="track_sqft" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
@@ -92,6 +106,19 @@
 		  	</li>
 
 				<%=f.hidden_field :sq_footage %>
+        
+          <li><b>Ceiling height</b></li>
+				<li><span id="show_c_height">> 0</span> ft</li>
+						
+				<li>
+            <div id="track_c_height" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
+              <span id="handle_c_height" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
+                <img src="images/slider-images-handle.png;float:left" alt=""/>	
+              </span>
+					</div>
+		  	</li>
+
+				<%=f.hidden_field :ceiling_height %>
          </ul>
        </div>
      </li>
@@ -125,11 +152,18 @@
 					{	range:$R(0,2500,false),
 				      		values:[0,200, 400, 600, 750, 1000,1250,1500,2000,2500],
 				       	onSlide:function(v){
-							var s = v;
-							if (v == 2500) s=s+'+';
-							$('show_sqft').innerHTML=s;
+							$('show_sqft').innerHTML='> '+v;
 						},
 				       	onChange:function(v){$('listing_info_sq_footage').value=v; new Effect.Highlight('show_sqft');<%=auto_submit('search_form')%>} 								
+					});
+          
+        new Control.Slider('handle_c_height','track_c_height',
+					{	range:$R(0,20,false),
+				      		values:[0, 10, 12, 14, 16, 18,20],
+				       	onSlide:function(v){
+							$('show_c_height').innerHTML='> '+v;
+						},
+				       	onChange:function(v){$('listing_info_ceiling_height').value=v; new Effect.Highlight('show_sqft');<%=auto_submit('search_form')%>} 								
 					});
           
           function selectStrike(x) {
@@ -149,34 +183,39 @@
           <div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Apartment Details<% end -%> 
             <ul>
            	<li>
-              Bathrooms ≥ <select name="listing_info[bathroom_n_id]" onchange="<%=auto_submit('search_form')%>" style="width:70px;font-size:11px">
-                <!-- <option id='n_bathrooms_default' value="0"># Bath</option> --> 
+              Bathroom(s) <select name="listing_info[bathroom_n_id]" onchange="<%=auto_submit('search_form')%>" style="width:70px;font-size:11px">
+                <option id='n_bathrooms_default' value="0">All</option>
                 <% @no_of_bathrooms_select.each_with_index do |o,i| %>
                   <option id='d_<%= i %>' onmouseover="selectStrike(this)" value="<%=o.id%>"><%= o %></option> 
                 <% end %>
               </select>
 			</li>
-			<li>[Ceiling Height]</li>
-			
-            <li><%= f.check_box :maintenance_q_id, { :onchange => "#{auto_submit('search_form')}" }, MaintenanceQ.most_desirable, 0  %> [Excellent Maintenance]</li>
+			<li><%= f.check_box :convertable, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :convertable %></li>
+      	<li><%= f.check_box :separate_kitchen, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :separate_kitchen %></li>
+      
+      
+            <li><%= f.check_box :maintenance_q_id, { :onchange => "#{auto_submit('search_form')}" }, MaintenanceQ.most_desirable, 0  %> Excellent Maintenance</li>
             
-			<li><%= f.check_box :appliances_q_id, {:onchange => "#{auto_submit('search_form')}"}, AppliancesQ.most_desirable, 0 %> [Excellent Appliances]</li>
+			<li><%= f.check_box :appliances_q_id, {:onchange => "#{auto_submit('search_form')}"}, AppliancesQ.most_desirable, 0 %> Excellent Appliances</li>
             
-			<li><%= f.check_box :bathroom_q_id, {:onchange => "#{auto_submit('search_form')}"}, BathroomQ.most_desirable, 0 %> [Excellent Bathroom]</li>
+			<li><%= f.check_box :bathroom_q_id, {:onchange => "#{auto_submit('search_form')}"}, BathroomQ.most_desirable, 0 %> Excellent Bathroom</li>
 			
-			<li><%= f.check_box :heat_q_id, {:onchange => "#{auto_submit('search_form')}"}, HeatQ.most_desirable, 0 %> [Good Heating]</li>
-            <li><%= f.check_box :ac_type_id, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> [A/C] </li>
+			<li><%= f.check_box :heat_q_id, {:onchange => "#{auto_submit('search_form')}"}, HeatQ.most_desirable, 0 %> Good Heating</li>
+            <li><%= f.check_box :ac_type_id, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> A/C </li>
 			
-			<li><%= f.check_box :floor_type_id, {:onchange => "#{auto_submit('search_form')}"}, FloorType.most_desirable, 0%> [Floor - Hardwood]</li>
+			<li><%= f.check_box :floor_type_id, {:onchange => "#{auto_submit('search_form')}"}, FloorType.most_desirable, 0%> Floor - Hardwood</li>
 			
-			<li><%= f.check_box :street_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, StreetNoiseLevel.most_desirable, 0%> [Quiet Street]</li>
-            <li><%= f.check_box :nbors_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, NborsNoiseLevel.most_desirable, 0%> [Quiet Neighbors]</li>
+			<li><%= f.check_box :street_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, StreetNoiseLevel.most_desirable, 0%> Quiet Street</li>
+            <li><%= f.check_box :nbors_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, NborsNoiseLevel.most_desirable, 0%> Quiet Neighbors</li>
 			
-			<li><%= f.check_box :pests_free, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :pests, '[Pest-free]'%></li>
+			<li><%= f.check_box :pests_free, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :pests, 'Pest-free'%></li>
 			
-			<li><%= f.check_box :cellphone_q_id, {:onchange => "#{auto_submit('search_form')}"}, CellphoneQ.most_desirable, 0%> [Good cell coverage]</li>
+			<li><%= f.check_box :cellphone_q_id, {:onchange => "#{auto_submit('search_form')}"}, CellphoneQ.most_desirable, 0%> Good cell coverage</li>
             
 			<li><%= f.check_box :broadband, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :broadband, 'Broadband-ready'%></li>
+      <li><%= f.check_box :rent_controlled, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_controlled %></li>
+                <li><%= f.check_box :rent_stabilized, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_stabilized %></li>
+				
 
             </ul>
           </div>
@@ -195,30 +234,27 @@
 	            <li><%= f.check_box :doorman, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :doorman %></li>
 	            <li><%= f.check_box :cats_allowed, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :cats_allowed %></li>
 	            <li><%= f.check_box :dogs_allowed, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :dogs_allowed %></li>
-				<li><%= f.check_box :rent_controlled, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_controlled %></li>
-                <li><%= f.check_box :rent_stabilized, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_stabilized %></li>
-				
+              
 
    
               </ul>
             </div>
           </div></li>
 		  <li>
-          <div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Building Details<% end -%> 
+          <div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Other<% end -%> 
             
             <div id="leftsearch_secondary" class="leftsearch_items" style="">
               <ul>
-				<li><%= f.check_box :convertable, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :convertable %></li>
-				<li><%= f.check_box :separate_kitchen, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :separate_kitchen %></li>
-                <li><%= f.check_box :multi_level, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :multi_level %></li>
+				
+		          <li><%= f.check_box :multi_level, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :multi_level %></li>
                 <li><%= f.check_box :penthouse, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :penthouse %></li>
                 <li><%= f.check_box :loft, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :loft %></li>
-                <li><%= f.check_box :patio, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> [Patio]</li>
+                <li><%= f.check_box :patio, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> Patio</li>
                 <li><%= f.check_box :private_entrance, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :private_entrance %></li>
                 <li><%= f.check_box :balcony, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :balcony %></li>
-                <li><%= f.check_box :back_yard_type_id, {:onchange => "#{auto_submit('search_form')}"}, BackYardType.most_desirable, 0%> [Private Backyard]</li>
+                <li><%= f.check_box :back_yard_type_id, {:onchange => "#{auto_submit('search_form')}"}, BackYardType.most_desirable, 0%> Private Backyard</li>
                 <!--operator for roof access should be >-->
-                <li><%= f.check_box :roof_access_type_id, {:onchange => "#{auto_submit('search_form')}"}, RoofAccessType.least_desirable, 0%> [Roof Access]</li>
+                <li><%= f.check_box :roof_access_type_id, {:onchange => "#{auto_submit('search_form')}"}, RoofAccessType.least_desirable, 0%> Roof Access</li>
                  <!-- took out floor carpet as it's hard to implement. may be one day. for now they'll have to check in listings-->			  
 			  </ul>
             </div>

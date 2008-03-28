@@ -29,9 +29,25 @@ class Listing < ActiveRecord::Base
     :cellphone_q]
     
     has_many :comments, :class_name=>'ListingComment', :include=>:author
-    
-    
-  # listings need to be versioned for auditing
+  
+  #is read by current user?
+  def read?
+    !(read_by_current_user.nil?)
+  rescue NameError
+    raise 'do_search must first be performed'
+  end
+  
+  #is current user favorite?
+  def favorite?
+    !(current_user_favorite.nil?)
+  rescue NameError
+    raise 'do_search must first be performed'
+  end
+  
+  #is not read by current_user?
+  def unread?
+    !read?
+  end
   
   def visuals?
     !(visuals.size == 0)
@@ -39,6 +55,22 @@ class Listing < ActiveRecord::Base
   
   def listing_info?
     !listing_info.nil?
+  end
+  
+  def flag_alert?
+    broker_alert? || na_alert? || bogus_alert?
+  end
+  
+  def broker_alert?
+    broker_flag_count == 5
+  end
+  
+  def na_alert?
+    na_flag_count == 5
+  end
+  
+  def bogus_alert?
+    bogus_flag_count == 5
   end
   
   #if param operator is '=', no need to include them in SQL_OPERATORS as that is the default. to exlude params for special handling use operatlor '#'
@@ -52,18 +84,35 @@ class Listing < ActiveRecord::Base
   'sq_footage'=>'>=',
   'ceiling_height'=>'>=',
   'ubound'=>'<=',
+  'lbound'=>'>=',
   'nhoods'=>'#',
   'comment'=>'LIKE'}
+  
+  SORT_ORDER =
+  {
+    'created_at' => 'listings.created_at DESC',
+    'favorites_count' => 'listings.favorites_count DESC',
+    'lbound' => 'rent_ranges.lbound ASC'
+  }
       
-  def self.do_search(params, user_id, limit)
+  def self.do_search(params, user_id, limit, order_by='created_at')
        #expects params hash
        
       conditions = []
       
-      # add wildcard characters to LIKE parameter
-      
       #process params
-      if params != []
+      
+      #emty nhoods are not ignored. 
+      if  params.nil? || params.empty? || params['nhoods'].nil? || params['nhoods'].empty?
+        conditions << 'nhood_id = 0' 
+      else
+        #add parans for IN operator and join array. "all" is a special value that means all
+        conditions << "nhood_id IN (#{params['nhoods'].join(',')})" unless params['nhoods'].include? 'all'
+      end
+        
+      
+      #empty evertying else is ignored
+      unless params.nil? || params.empty?
         
         params["avail_date"] = Date.parse(params["avail_date"]).to_s(:db) unless params["avail_date"].nil?
         
@@ -71,14 +120,10 @@ class Listing < ActiveRecord::Base
         
         #now join params with operators. exclude IN
         params.each {|key, val| conditions << "#{key} #{SQL_OPERATORS[key]||'='} :#{key}" unless SQL_OPERATORS[key]=='#'}
-       
-        #add parans for IN operator and join array
-        conditions << "nhood_id IN (#{params['nhoods'].join(',')})" unless params['nhoods'].nil? || params['nhoods'] == []
+          
       end
-        
-      
       # set up associations
-      has_one :read_by_current_user, :class_name=>'ReadListing', :conditions=>"read_listings.user_id=#{user_id}"
+      has_one :read_by_current_user, :class_name=>'Reading', :conditions=>"readings.user_id=#{user_id}"
       has_one :flagged_na_by_current_user, :class_name=>'NaFlag', :conditions=>"flags.user_id=#{user_id}"
       has_one :flagged_bogus_by_current_user, :class_name=>'BogusFlag', :conditions=>"flags.user_id = #{user_id}"
       has_one :flagged_broker_by_current_user, :class_name=>'BrokerFlag', :conditions=>"flags.user_id = #{user_id}"
@@ -91,13 +136,16 @@ class Listing < ActiveRecord::Base
           :rent_range, 
         #  :listing_comments,  - these two associations cause include to silently fail for mysterious reasons
         # :photos, 
-         :read_by_current_user,
+          :read_by_current_user,
           :flagged_na_by_current_user, 
           :flagged_bogus_by_current_user, 
-          :flagged_broker_by_current_user, :current_user_favorite
+          :flagged_broker_by_current_user, 
+          :current_user_favorite
           ],
         :conditions=>[conditions.join(' AND '), params],
-        :limit=>limit)
+        :limit=>limit,
+        :order=>SORT_ORDER[order_by])
+        
 
  end
   

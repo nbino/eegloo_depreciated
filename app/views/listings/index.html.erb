@@ -1,4 +1,7 @@
 <!-- start leftbar render :partial=>'search_form' -->
+
+<%update_page do |page|%>
+
 	<div id="leftbar">
 		<%=render :partial=>'/shared/leftbar_search'%>
 	</div>
@@ -6,7 +9,9 @@
 
 <!-- start content -->
 	<div id="content">
-		<%=render :partial=>'/shared/listing_list'%>
+    <div id="search_results" style="position:relative;top:28px">
+		<%= render :partial => '/shared/listing_list'%>
+    </div>
 	</div>
 
 <!-- end content -->
@@ -14,23 +19,25 @@
 <!-- start rightbar -->
 	<div id="rightbar">
 		
-		
 		<div id="mapouter">
 		<ul>
 		  <li id="search">
 		    <span style="font-size:16px;margin-right:20px"><b>map</b></span>
-		    <%= link_to_function("Toggle Map Size","toggleMapSize();moveDiv()")%>
+        
+            <span id="small_map" style="display:none"><%= link_to_function("Small map",["toggleMapSize(); moveDiv();", page.toggle("small_map", "large_map")])%></span> <span id="large_map"><%= link_to_function("Large map",["toggleMapSize(); moveDiv();", page.toggle("small_map", "large_map")])%></span>
+		    
 			<div id="map" class="map" style="text-align:right">		
 			
 			</div>
 		  </li>
 		</ul>
 		</div>
+    
 		
 	 </div>
 	
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAoTxjcscTPeNniIcHVHOnLRQB8YSA1xJSjpLwFJKRsAnUFEZj6xRq47GZaHePBFWEJb3_UcaQ5438FA"
-	     type="text/javascript"></script>
+	<!--<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAoTxjcscTPeNniIcHVHOnLRQB8YSA1xJSjpLwFJKRsAnUFEZj6xRq47GZaHePBFWEJb3_UcaQ5438FA"
+	     type="text/javascript"></script>-->
 	<%= javascript_include_tag 'gmap.js' %>
 	<% javascript_tag do -%>
 		
@@ -54,5 +61,7 @@
 	<%= javascript_include_tag 'nav.js' %>
 
 	
-	</div>
+	
+
+<%end%>
 <!-- end rightbar -->

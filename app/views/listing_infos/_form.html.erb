@@ -1,7 +1,7 @@
 
 	
 	<li><label for="listing_info_landlord_phone_number">Landlord #</label>
-	<%=f.text_field :landlord_phone_number, :size => 10 , :class=>'required text' %></li>
+	<%=f.text_field :landlord_phone_number, :size => 13 , :class=>'required text' %></li>
 	
 	<li><label for="listing_info_elevator">Broker Only</label><%= f.yes_no_radio :broker_only, :on_change=>'$("listing_info_landlord_phone_number").enabled = this.value' %></li>
 
@@ -95,7 +95,8 @@
   
   <% end %>
   <li class="whole">&nbsp;</li>
-  <li class="whole blackline">Overall experience<br/>
-  <%= f.text_area :comment%>
-  </li>
+  <li class="whole blackline">Overall experience</li><br/>
+  <li><%= f.text_area :comment, :colums=>30, :rows=>10%><br/><br/></li>
+  <li><%= f.submit 'Done', :style=>'text-align:center'%></li>
+ 
  

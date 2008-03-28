@@ -7,7 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   
-  map.resources :listings, :has_many => [:visuals, :favorites, :bogus_flags, :broker_flags, :na_flags, :listing_comments], :has_one => [:listing_info], :collection => { :search => :post}
+  #map.resources :listings, :has_many => [:visuals, :favorites, :bogus_flags, :broker_flags, :na_flags, :listing_comments, :readings], :has_one => [:listing_info], :collection => { :search => :post}
+  map.resources :listings, :has_many => [:visuals, :favorites, :flags, :listing_comments, :readings], :has_one => [:listing_info], :collection => { :search => :post}
   
   map.resources :users
   

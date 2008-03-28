@@ -1,24 +1,16 @@
-<div class="menu" style="position:relative"><ul class="whole" style="position:absolute;left:275px;top:-26px;">
-	
-	<% menu_items = [['Required Info','chart_bar.png',edit_listing_url(current_user.listing)],
-					 ['Detailed Info','pencil.png', new_listing_listing_info_path(current_user.listing)],  
-					 ['Images & Video','images.png', new_listing_visual_path(current_user.listing)]
-					] %>
+<div class="menu" style="position:relative; top:23px; left:-2px"><ul>
+<%menu_items = [{:title=>'Basics', :image=>'chart_bar.png', :url=>edit_listing_path(current_user.listing)},
+                        {:title=>'Details',:image=>'pencil.png', :url=>edit_listing_listing_info_path(current_user.listing)},  
+                        {:title=>'Images & Video',:image=>'images.png', :url=>new_listing_visual_path(current_user.listing)}] 
+        
+              menu_items.each do |menu|
+                  content_tag ('li', 
+                  :class => "tabs #{request.request_uri == menu[:url] ? 'active':''}",
+                  :onmouseover => "this.style.backgroundColor='FFF'", 
+                  :onmouseout => "this.style.backgroundColor='FOFOFO'",
+                  :onclick => "window.location='#{menu[:url]}'") do-%>
+                                    <%="#{image_tag(menu[:image])} #{menu[:title]}"-%>
 
-					<%  k = 0
-						menu_items.each do |m| 
-						 content_tag 'li', 
-						
-							:class => (k==active) ? 'tabs active' : 'tabs',
-							:onmouseover => "this.setStyle('background-color:#FFF')", 
-							:onmouseout => "this.setStyle('background-color:#F0F0F0')",
-							:onclick => ("window.location='"+m[2]+"'") do %>
-						 		<%= image_tag(m[1])+' '+m[0] %>
-							
-						<% 
-						   end
-						   k=k+1
-					end 
-	%>
-	
+                      <%end
+                end-%>
 </ul></div>

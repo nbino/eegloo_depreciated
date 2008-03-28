@@ -19,7 +19,6 @@ Yellow - #ffc
 body {
 	margin: 30px 0 0 0;
 	padding: 0;
-	background: #FFFFFF url(/images/img01.gif) repeat-x;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
@@ -51,7 +50,6 @@ p, ul, ol {
 
 .single {
 	line-height: 12px;
-	
 }
 
 a:link {
@@ -137,28 +135,6 @@ input.text {
 
 
 
-# input.optional {
-# 	background:#FFF;
-# }
-# 
-# input.required{
-# 	background:#FFEEEE;
-# }
-# 
-
-
-/* input.button {
-   background-color:#FFFFFF;
-   border-style:solid;
-   border-color:#b31b1b;
-   border-width:1px;
-   font-size: 12px;
-}
-
-input.buttongray {
-	
-   color: #F0F0F0;
-} */
 
 input.submit {
 	padding: 3px;
@@ -166,7 +142,6 @@ input.submit {
 	border: none;
 	text-transform: lowercase;
 	font-size: 11px;
-/*	color: #4F4F4F;*/
 }
 
 input.radio {
@@ -227,48 +202,16 @@ input.radio {
 
 #header {
 	width: 850px;
-	height: 82px;
-	margin: 0 auto 0px auto;
+	margin: 0px auto 0px auto; 
 /*	background: url(/images/img03.gif) repeat-x left bottom;*/
 }
 
-#logo {
-	float: left;
-}
-
-#logo h1 {
-	font-size: 38px;
-	color: #494949;
-}
-
-#logo h1 sup {
-	vertical-align: text-top;
-	font-size: 24px;
-}
-
-#logo h1 a {
-	color: #494949;
-}
-
-#logo h2 {
-	margin-top: 0px;
-	font-size: 12px;
-	color: #A0A0A0;
-}
-
-#logo a {
-	text-decoration: none;
-}
 
 /* Menu */
 
-#menu {
-	float: right;
-}
-
-ul {
+.menu ul {
 	/*margin: 2px;*/
-	padding: 15px 0 0 0;
+	padding: 0 0 0 0;
 	list-style: none;
 }
 
@@ -291,14 +234,6 @@ ul {
 	
 	text-decoration: none;
 	color: #000;
-/*	display: block;
-	float: left;
-	margin-left: 30px;
-	
-	
-	font-size: 13px;
-	color: #000000; */
-	
 }
 
 .menu a:hover {
@@ -307,12 +242,30 @@ ul {
 	text-decoration: underline;
 }
 
+.menu .tabs {
+	border: 1px solid #CFCFCF;
+}
+
+.menu .active {
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.menu .active_white
+{
+	border-bottom: 1px solid #FFFFFF;
+}
+
+.menu .white
+{
+	background:none;
+}
+
 
 /* Page */
 
 #page {
 	width: 850px;
-	margin: 0 auto;
+	margin: 0 auto 0 auto;
 }
 
 /* Content */
@@ -356,17 +309,9 @@ ul {
 	top: -40px;
 }
 
-/*#viewmap {
-	width: 225px; 
-	height: 225px; 
-	border: 1px solid #000;
-	position: relative;
-	top: -26px;
-}
-*/
 .businessinfo {
 	line-height: 12px;
-	
+	text-align:center;	
 }
 
 #listview img {
@@ -380,9 +325,6 @@ ul {
 	
 }
 
-.businessinfo {
-	text-align:center;
-}
 
 #marker {
 	width:210px;
@@ -554,7 +496,6 @@ form  li {
 .post .title {
 	margin-bottom: 20px;
 	padding-bottom: 5px;
-	background: url(/images/img03.gif) repeat-x left bottom;
 }
 
 /* For the listings index entries */
@@ -584,7 +525,7 @@ form  li {
 	padding:5px;
 /*	border:1px solid #850808;*/
 	background: #F0F0F0;
-	border: 1px solid #333333;
+	border: 1px solid #BBBBBB;
 	
 }
 
@@ -629,9 +570,8 @@ padding-top: 6px;
 }
 
 .blackline {
-	/* padding: 15px 0 10px 0;*/
-/*	background: url(/images/img03.gif) repeat-x;*/
-border-top: 1px solid #000;	
+	
+border-top: 1px solid #CFCFCF;	
 padding-top: 6px;
 }
 
@@ -737,7 +677,7 @@ border-top: 1px solid #F0F0F0;
 .leftsearch_box {
 		padding:4px;
 		background: #F0F0F0;
-		border: 1px solid #333333;		
+		border: 1px solid #BBBBBB;		
 }
 
 .leftsearch_items  {
@@ -829,7 +769,7 @@ border-top: 1px solid #F0F0F0;
 	height: 70px;
 	min-height: 70px;
 	padding: 65px 0 0 0;
-	background: #003448 url(/images/img09.gif) repeat-x;
+	
 }
 
 html>body #footer {
@@ -1119,7 +1059,7 @@ li.crossed_out {
 	float: right;
 	width:400px;
 	height:400px;
-	border: 1px solid #000;
+	border: 1px solid #BBBBBB;
 
 }
 
@@ -1127,7 +1067,7 @@ li.crossed_out {
 	float:right;
 	width:250px;
 	height:250px;
-	border: 1px solid #000;
+	border: 1px solid #BBBBBB;
 }
 
 .mapimgexpanded {
@@ -1135,14 +1075,14 @@ li.crossed_out {
 	float:right;
 	width:400px;
 	height:400px;
-	border: 1px solid #000;
+	border: 1px solid #BBBBBB;
 	z-index:99;
 }
 
 .mapimg {
 	width:250px;
 	height:250px;
-	border: 1px solid #000;
+	border: 1px solid #BBBBBB;
 	
 }
 
@@ -1175,10 +1115,3 @@ li.crossed_out {
 	background: transparent url(/images/slider-images-track-right.png) no-repeat top right;
 }
 
-.menu .tabs {
-	border: 1px solid #CFCFCF;
-}
-
-.menu .active {
-	border-bottom: 1px solid #F0F0F0;
-}

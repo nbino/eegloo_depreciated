@@ -32,8 +32,11 @@ class ListingsController < ApplicationController
   def index
     
     load_dropdown_values
-   
-    @listings = Listing.do_search [], current_user.id, 20
+    
+    #Need to specify all nhoods as default
+    all_nhoods = {'nhoods'=>['all']}
+    
+    @listings = Listing.do_search all_nhoods, current_user.id, 10
     
     respond_to do |format|
       format.html { render :layout => 'main' }
@@ -42,22 +45,25 @@ class ListingsController < ApplicationController
   end
 
   def search
-    #clean up params
+    #for all params 0 or blank value indicates ignore
     params[:listing_info].delete_if {|key, val| val=="0" || val=="" || val=='Comment keywords'}
     
     #handle nhoods speratly
+    #nhoods["all"] indicates all, so this should be ignored
+    #need to copy under listing info, could not get that to work in the form
     params[:listing_info][:nhoods] = params[:nhoods]
+    
+    params.delete :nhoods
     
     #convert pests into roaches ants and mice
     params[:listing_info][:roaches], params[:listing_info][:ants], params[:listing_info][:mice] = 0 unless params[:listing_info][:pests_free].nil?
-    
     params.delete :pest_free
     
     
-    @listings = Listing.do_search params[:listing_info], current_user.id, 20
-    @test='start'
+    @listings = Listing.do_search params[:listing_info], current_user.id, 20, params[:order_by]
+
     respond_to do |format|
-      format.html
+      format.html { render :partial => '/shared/listing_list'}
       format.xml  { render :xml => @listings }
     end
     

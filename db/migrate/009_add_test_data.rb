@@ -16,7 +16,6 @@ class AddTestData < ActiveRecord::Migration
         :listing_id=>i,
         :sq_footage=>(rand(10) + 5)  * 100,
         :ceiling_height=>rand(8)+10,
-        
         :bathroom_n_id=>BathroomN.find(:all)[rand(4)].id,
         :floor_type_id=>FloorType.find(:all)[rand(3)].id,
         :heat_q_id=>HeatQ.find(:all)[rand(3)].id,

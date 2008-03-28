@@ -1,17 +1,5 @@
-<div class="post">
-	<span style="float:right;">
-		<select>
-			<option>Sort...</option>
-			<option value="rent">Rent</option>
-			<option value="popularity">Popularity</option>
-			<!--<option value="rating">Rating</option>  I doubt users will review/rate appartments. Also creates spamming target. We can add that if we see that users are publishing reviews-->
-		</select>
-	</span>
-	<div style="clear:both"></div>
-</div>
-
-<!-- [EP] Limiting this number to make refreshes faster -->
-<div id="search_results">
-<%= render :partial => '/shared/listing', :collection => @listings[0...3] %>
-</div>
-
+<%unless @listings.size == 0%>
+  <%=render :partial => '/shared/listing', :collection => @listings[0...4]-%>
+<%else%>
+No listings found
+<%end%>

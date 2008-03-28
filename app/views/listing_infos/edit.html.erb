@@ -1,21 +1,14 @@
-<div id="fullcontentcenter" align="center">
+
+	<%=render :partial=>'shared/my_listing_navigation'%>
 	
-	<%=render :partial=>'shared/my_listing_navigation', :locals => {:active => 1}%>
+	<fieldset class="colored">
 	
-	<fieldset class="colored"><legend class="colored bigtext">Detailed Info</legend>
-	
-	<div id="listview_m" style="margin-left:50px">
 		
 	<ul class="smalltext">
 		<% form_for( @listing_info, :url=>listing_listing_info_url(@listing) ) do |f| %>
 		
 		<%= render :partial => 'form', :locals => {:f=>f}%>
-		<li class="whole">
-		<%= render :partial => '/shared/submit_button' %>
-		</li>
 		<% end %>
 	</ul>
 	
-	</div>
 	</fieldset>
-</div>

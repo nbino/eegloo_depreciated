@@ -1,0 +1,16 @@
+<div id="flag_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:180px;left:360px;z-index:1500;opacity:0.9;">
+  <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>page.hide("flag_popup_#{listing.id}")%>
+  <%remote_form_for Flag.new, :url=>listing_flags_url(listing) do |f|%>
+  
+    <b>Flag listing as:</b><br/>
+    <%=select :flag, :type, ['Bogus','Broker','Rented'], {:include_blank=>'Select'} %>
+    <br/>
+
+<b>Comment:</b><br/>
+    <%=f.text_area :comment, :cols => 18, :rows => 5%>
+    <%=f.submit "Flag it", :onclick=>page.hide("flag_popup_#{listing.id}")%>
+  
+  <%end%>
+	
+</div>
+
