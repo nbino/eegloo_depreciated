@@ -95,7 +95,7 @@ class Listing < ActiveRecord::Base
     'lbound' => 'rent_ranges.lbound ASC'
   }
       
-  def self.do_search(params, user_id, limit, order_by='created_at')
+  def self.do_search(params, user_id, order_by='created_at', current_page=1)
        #expects params hash
        
       conditions = []
@@ -124,9 +124,9 @@ class Listing < ActiveRecord::Base
       end
       # set up associations
       has_one :read_by_current_user, :class_name=>'Reading', :conditions=>"readings.user_id=#{user_id}"
-      has_one :flagged_na_by_current_user, :class_name=>'NaFlag', :conditions=>"flags.user_id=#{user_id}"
-      has_one :flagged_bogus_by_current_user, :class_name=>'BogusFlag', :conditions=>"flags.user_id = #{user_id}"
-      has_one :flagged_broker_by_current_user, :class_name=>'BrokerFlag', :conditions=>"flags.user_id = #{user_id}"
+      #has_one :flagged_na_by_current_user, :class_name=>'NaFlag', :conditions=>"flags.user_id=#{user_id}"
+      #has_one :flagged_bogus_by_current_user, :class_name=>'BogusFlag', :conditions=>"flags.user_id = #{user_id}"
+      #has_one :flagged_broker_by_current_user, :class_name=>'BrokerFlag', :conditions=>"flags.user_id = #{user_id}"
       has_one :current_user_favorite, :class_name=>'Favorite', :conditions=>"favorites.user_id = #{user_id}"
       
       self.find(
@@ -134,16 +134,16 @@ class Listing < ActiveRecord::Base
         :include => [
           :listing_info, 
           :rent_range, 
-        #  :listing_comments,  - these two associations cause include to silently fail for mysterious reasons
-        # :photos, 
+      #   :listing_comments,
+      #    :photos, 
           :read_by_current_user,
-          :flagged_na_by_current_user, 
-          :flagged_bogus_by_current_user, 
-          :flagged_broker_by_current_user, 
+      #    :flagged_na_by_current_user, 
+      #    :flagged_bogus_by_current_user, 
+      #    :flagged_broker_by_current_user, 
           :current_user_favorite
           ],
         :conditions=>[conditions.join(' AND '), params],
-        :limit=>limit,
+        :page => {:size => 20, :current => current_page},
         :order=>SORT_ORDER[order_by])
         
 

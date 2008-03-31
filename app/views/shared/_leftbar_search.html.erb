@@ -9,6 +9,19 @@
         :update => 'search_results',
         :html=>{:id => 'search_form'}) do |f|
 %>
+
+<%if !session[:no_more_popups] && !current_user.listing_info_access?%>
+<div id="form_locked_popup" class="leftsearch_box" style="vertical-align: bottom;position:absolute;left:160px;top:260px;width:220px;height:100px;z-index:1500;opacity:0.9;background: #CCFFCC;">
+<%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=> "Element.hide('form_locked_popup');"%>
+</br>
+<table>
+   <tr><td valign="center"><span style="font-size:48pt;"><b>&lt;</b></span></td>
+  <td><b>The search form is only partly enabled. To fully enable the form, help your fellow renters by adding details to your listings.</b> <br/><%=link_to 'Add detail', new_listing_listing_info_path(current_user.listing)%></td>
+  </tr>
+  </table>
+</div>
+<%end%>
+       
 <ul>
   <li id="search">
     <h2><b>Search</b>&nbsp;<%=image_tag "spinner.gif", :id=>"search_spinner", :style=>"display:none", :width => 15, :height => 15 %></h2>
@@ -22,10 +35,11 @@
                 <% end -%>
 
               </li>
+              
             
               <li>
-              <div style="position:absolute; top:12px; left: 185px;">
-                <select  onchange="<%=auto_submit('search_form')%>" name="order_by">
+              <div style="position:absolute; top:15px; left: 480px;">
+                <select onchange="<%=auto_submit('search_form')%>" name="order_by">
                   <option value='created_at'>Sort by</option>
                   <option value='date_posted'>Date posted</option>
                    <option value='lbound'>Price</option>
@@ -33,7 +47,7 @@
                 </select>
               </div>
                 <div style="position:relative">
-                  <div id="leftsearch_neighborhood" class="leftsearch_box" style="display:none; position:absolute; top:-27px; left:155px; opacity:0.9;width:140px">
+                  <div id="leftsearch_neighborhood" class="leftsearch_box" style="display:none; position:absolute; top:-27px; left:155px; opacity:0.9;width:140px;z-index:1500">
                     <!--need to submit on close-->
                     <%= image_tag 'cross.png', :style => 'font-weight:bold;position:absolute;top:5px;left:128px;cursor:pointer;', :onclick => "Element.toggle('leftsearch_neighborhood');"%>
                     <ul>
@@ -69,15 +83,15 @@
               </li>
 
               <% CalendarDateSelect.format = :american %>
-              <li style="text-align:center">Avail : <%= f.calendar_date_select :avail_date, :size => 9, :popup => "force" %>
+              <li style="text-align:center">Avail : <%= f.calendar_date_select :avail_date, :size => 9, :popup => "force", :onchange=> auto_submit('search_form')%>
               </li>
               
           <li style="padding-top:10px;"><b>Rent Range</b></li>
 				<li><span id="show_rent">$0 to $5000+</span>
 				</li>
 				<!-- Value of this goes in a hidden field -->
-				
-				
+				<!--paging field-->
+          <%=hidden_field :custom_options, :page, :value=>1%>
 				
 				<li>
             <div id="track_rent" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
@@ -85,7 +99,7 @@
                 <img src="images/slider-images-handle.png;float:left" alt=""/>	
               </span>
               <span id="handle_rent_ubound" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
-                <img src="images/slider-images-handle.png;float:left" alt=""/>	
+                <img src="images/slider-images-handle.png;float:left" <%=current_user.listing_info_access? ? '' : "title='Disabled'" %> alt=""/>	
               </span>
 					</div>
 		  	</li>
@@ -100,7 +114,7 @@
 				<li>
             <div id="track_sqft" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
               <span id="handle_sqft" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
-                <img src="images/slider-images-handle.png;float:left" alt=""/>	
+                <img src="images/slider-images-handle.png;float:left" <%=current_user.listing_info_access? ? '' : "title='Disabled'" %> alt=""/>	
               </span>
 					</div>
 		  	</li>
@@ -113,7 +127,7 @@
 				<li>
             <div id="track_c_height" class="track" style="position:relative; width :100%; height : 20px;"><div class="track-left"></div>
               <span id="handle_c_height" style="position:absolute;background:none;width:19px;height:20px;cursor:move;"> 
-                <img src="images/slider-images-handle.png;float:left" alt=""/>	
+                <img src="images/slider-images-handle.png;float:left" <%=current_user.listing_info_access? ? '' : "title='Disabled'" %> alt=""/>	
               </span>
 					</div>
 		  	</li>
@@ -147,7 +161,7 @@
             <%=auto_submit('search_form')%>} 				
 					});
 				
-
+<%if current_user.listing_info_access?%>
 				new Control.Slider('handle_sqft','track_sqft',
 					{	range:$R(0,2500,false),
 				      		values:[0,200, 400, 600, 750, 1000,1250,1500,2000,2500],
@@ -175,46 +189,49 @@
 							i++;
 						}
 					}
-				
+		<%end%>			
 				// ]]>
 </script>				
-			
+		
         <li>
-          <div class ='leftsearch_box'><% content_tag 'div', :class => 'leftsearch_header' do -%>Apartment Details<% end -%> 
+          
+          <div class ='leftsearch_box' style="position:relative"><% content_tag 'div', :class => 'leftsearch_header' do -%>Apartment Details<% end -%> 
+          
+  
             <ul>
            	<li>
-              Bathroom(s) <select name="listing_info[bathroom_n_id]" onchange="<%=auto_submit('search_form')%>" style="width:70px;font-size:11px">
+              Bathroom(s) <select <%=check_search_access%> name="listing_info[bathroom_n_id]" onchange="<%=auto_submit('search_form')%>" style="width:70px;font-size:11px">
                 <option id='n_bathrooms_default' value="0">All</option>
                 <% @no_of_bathrooms_select.each_with_index do |o,i| %>
                   <option id='d_<%= i %>' onmouseover="selectStrike(this)" value="<%=o.id%>"><%= o %></option> 
                 <% end %>
               </select>
 			</li>
-			<li><%= f.check_box :convertable, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :convertable %></li>
-      	<li><%= f.check_box :separate_kitchen, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :separate_kitchen %></li>
+			<li><%= f.check_box :convertable, {:onchange => "#{auto_submit('search_form')}", :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :convertable %></li>
+      	<li><%= f.check_box :separate_kitchen, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :separate_kitchen %></li>
       
       
-            <li><%= f.check_box :maintenance_q_id, { :onchange => "#{auto_submit('search_form')}" }, MaintenanceQ.most_desirable, 0  %> Excellent Maintenance</li>
+            <li><%= f.check_box :maintenance_q_id, { :onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access? }, MaintenanceQ.most_desirable, 0  %> Excellent Maintenance</li>
             
-			<li><%= f.check_box :appliances_q_id, {:onchange => "#{auto_submit('search_form')}"}, AppliancesQ.most_desirable, 0 %> Excellent Appliances</li>
+			<li><%= f.check_box :appliances_q_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, AppliancesQ.most_desirable, 0 %> Excellent Appliances</li>
             
-			<li><%= f.check_box :bathroom_q_id, {:onchange => "#{auto_submit('search_form')}"}, BathroomQ.most_desirable, 0 %> Excellent Bathroom</li>
+			<li><%= f.check_box :bathroom_q_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, BathroomQ.most_desirable, 0 %> Excellent Bathroom</li>
 			
-			<li><%= f.check_box :heat_q_id, {:onchange => "#{auto_submit('search_form')}"}, HeatQ.most_desirable, 0 %> Good Heating</li>
-            <li><%= f.check_box :ac_type_id, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> A/C </li>
+			<li><%= f.check_box :heat_q_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, HeatQ.most_desirable, 0 %> Good Heating</li>
+            <li><%= f.check_box :ac_type_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> A/C </li>
 			
-			<li><%= f.check_box :floor_type_id, {:onchange => "#{auto_submit('search_form')}"}, FloorType.most_desirable, 0%> Floor - Hardwood</li>
+			<li><%= f.check_box :floor_type_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, FloorType.most_desirable, 0%> Floor - Hardwood</li>
 			
-			<li><%= f.check_box :street_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, StreetNoiseLevel.most_desirable, 0%> Quiet Street</li>
-            <li><%= f.check_box :nbors_noise_level_id, {:onchange => "#{auto_submit('search_form')}"}, NborsNoiseLevel.most_desirable, 0%> Quiet Neighbors</li>
+			<li><%= f.check_box :street_noise_level_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, StreetNoiseLevel.most_desirable, 0%> Quiet Street</li>
+            <li><%= f.check_box :nbors_noise_level_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, NborsNoiseLevel.most_desirable, 0%> Quiet Neighbors</li>
 			
-			<li><%= f.check_box :pests_free, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :pests, 'Pest-free'%></li>
+			<li><%= f.check_box :pests_free, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :pests, 'Pest-free'%></li>
 			
-			<li><%= f.check_box :cellphone_q_id, {:onchange => "#{auto_submit('search_form')}"}, CellphoneQ.most_desirable, 0%> Good cell coverage</li>
+			<li><%= f.check_box :cellphone_q_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, CellphoneQ.most_desirable, 0%> Good cell coverage</li>
             
-			<li><%= f.check_box :broadband, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :broadband, 'Broadband-ready'%></li>
-      <li><%= f.check_box :rent_controlled, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_controlled %></li>
-                <li><%= f.check_box :rent_stabilized, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :rent_stabilized %></li>
+			<li><%= f.check_box :broadband, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :broadband, 'Broadband-ready'%></li>
+      <li><%= f.check_box :rent_controlled, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :rent_controlled %></li>
+                <li><%= f.check_box :rent_stabilized, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :rent_stabilized %></li>
 				
 
             </ul>
@@ -228,12 +245,12 @@
               <ul>
           		
 
-				<li><%= f.check_box :elevator, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :elevator %></li>
-	            <li><%= f.check_box :laundry, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :laundry %></li>
-	            <li><%= f.check_box :gym, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :gym %></li>
-	            <li><%= f.check_box :doorman, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :doorman %></li>
-	            <li><%= f.check_box :cats_allowed, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :cats_allowed %></li>
-	            <li><%= f.check_box :dogs_allowed, {:onchange => "#{auto_submit('search_form')}"}, 1, 0 %> <%= f.label :dogs_allowed %></li>
+				<li><%= f.check_box :elevator, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :elevator %></li>
+	            <li><%= f.check_box :laundry, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :laundry %></li>
+	            <li><%= f.check_box :gym, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :gym %></li>
+	            <li><%= f.check_box :doorman, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :doorman %></li>
+	            <li><%= f.check_box :cats_allowed, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :cats_allowed %></li>
+	            <li><%= f.check_box :dogs_allowed, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0 %> <%= f.label :dogs_allowed %></li>
               
 
    
@@ -246,15 +263,15 @@
             <div id="leftsearch_secondary" class="leftsearch_items" style="">
               <ul>
 				
-		          <li><%= f.check_box :multi_level, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :multi_level %></li>
-                <li><%= f.check_box :penthouse, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :penthouse %></li>
-                <li><%= f.check_box :loft, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :loft %></li>
-                <li><%= f.check_box :patio, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> Patio</li>
-                <li><%= f.check_box :private_entrance, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :private_entrance %></li>
-                <li><%= f.check_box :balcony, {:onchange => "#{auto_submit('search_form')}"}, 1, 0%> <%= f.label :balcony %></li>
-                <li><%= f.check_box :back_yard_type_id, {:onchange => "#{auto_submit('search_form')}"}, BackYardType.most_desirable, 0%> Private Backyard</li>
+		          <li><%= f.check_box :multi_level, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :multi_level %></li>
+                <li><%= f.check_box :penthouse, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :penthouse %></li>
+                <li><%= f.check_box :loft, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :loft %></li>
+                <li><%= f.check_box :patio, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> Patio</li>
+                <li><%= f.check_box :private_entrance, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :private_entrance %></li>
+                <li><%= f.check_box :balcony, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, 1, 0%> <%= f.label :balcony %></li>
+                <li><%= f.check_box :back_yard_type_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, BackYardType.most_desirable, 0%> Private Backyard</li>
                 <!--operator for roof access should be >-->
-                <li><%= f.check_box :roof_access_type_id, {:onchange => "#{auto_submit('search_form')}"}, RoofAccessType.least_desirable, 0%> Roof Access</li>
+                <li><%= f.check_box :roof_access_type_id, {:onchange => "#{auto_submit('search_form')}" , :disabled=>!current_user.listing_info_access?}, RoofAccessType.least_desirable, 0%> Roof Access</li>
                  <!-- took out floor carpet as it's hard to implement. may be one day. for now they'll have to check in listings-->			  
 			  </ul>
             </div>

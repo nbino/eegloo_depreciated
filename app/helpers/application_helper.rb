@@ -2,7 +2,9 @@
 module ApplicationHelper
   
   
-  
+  def is_this_favorites?
+    params[:controller] == 'favorites'
+  end
   
   class ActionView::Helpers::FormBuilder
     def collection_radio(method, collection, options={})
@@ -53,7 +55,8 @@ module ApplicationHelper
       'No'
     end
   end
-  
+
+
   
   
 end

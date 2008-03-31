@@ -1,4 +1,4 @@
-class CreateReads < ActiveRecord::Migration
+class CreateReadings < ActiveRecord::Migration
   def self.up
     create_table :readings do |t|
       t.references :user, :listing

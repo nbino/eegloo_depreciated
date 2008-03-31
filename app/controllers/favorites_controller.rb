@@ -5,16 +5,27 @@ class FavoritesController < ApplicationController
   layout 'main'
   
   def index
-    @listings =current_user.favorite_listings
     
-    #ugly
-    #since listing lists are shared, identifies the list as favorites list as opposed to listing list, to gain additional functionality
-    @this_is_favorites = true
-
+    @listings =current_user.favorite_listings.with_options
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @listings }
     end
+  end
+  
+  def search
+    
+    page = (params[:custom_options] && params[:custom_options][:page]) || 1
+    note_substring = (params[:favorite] && params[:favorite][:note]) || ''
+    order_by = params[:order_by] || 'created_at'
+    @listings =current_user.favorite_listings.with_options note_substring, page, order_by
+    
+    respond_to do |format|
+      format.html {render :partial => 'shared/listing_list'}
+      format.xml  { render :xml => @listings }
+    end
+  
   end
 
   # GET /favorites/1
@@ -35,8 +46,8 @@ class FavoritesController < ApplicationController
     
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @favorite }
     end
+      format.xml  { render :xml => @favorite }
   end
 
   # POST /favorites
@@ -53,6 +64,22 @@ class FavoritesController < ApplicationController
     
   end
 
+  # POST /favorites
+  # POST /favorites.xml
+  def update
+    #hack need to redo favorites list in terms of favorites, not listings
+    @favorite = current_user.favorites.find(:first, :conditions=>['listing_id = ?', params[:listing_id]])
+    @favorite.note = params[:favorites][:note]
+    @favorite.save
+    
+    respond_to do |format|
+      #need to call create on a listing to increment counter
+        format.html { render :partial=>'show_note', :locals=>{:favorite=>@favorite} }
+        format.xml  { render :xml => @favorite.errors, :status => :unprocessable_entity }
+    end
+  end
+    
+  
   # DELETE /favorites/1
   # DELETE /favorites/1.xml
   def destroy

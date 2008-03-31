@@ -1,10 +1,40 @@
 <% l = listing %>
-
-
 <%update_page do |page|%>
 
+
+
+<div style="position:relative">
+
 <%=render :partial=>"shared/flag_popup", :locals=>{:listing=>l, :page=>page}%>
-<div class="post" style="z-index:0">
+<%if is_this_favorites?%>
+  <%=render :partial=>"note_popup", :locals=>{:listing=>l, :page=>page}%>
+<%end%>
+ 
+
+  <div id="details_locked_popup_<%= listing.id %>" class="leftsearch_box" style="top:230px;display:none;position:absolute;width:260px;height:90px;left:370px;z-index:1500;opacity:0.9;background: #CCFFCC;">
+    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("details_locked_popup_#{listing.id}"), 'detailMessageShown=true']%>
+    <table>
+    <tr><td valign="center"><span style="font-size:48pt;"><b>&lt;</b></span></td>
+      <td><b>This is just an example of detailed information. FreshPaint is about getting as much detail as possible and this detail comes from users. 
+      To get real details please add details to your listing.</b> <%=link_to 'Add detail', new_listing_listing_info_path(current_user.listing)%></td>
+      </tr>
+      </table>
+  </div>
+
+  <div id="images_locked_popup_<%= listing.id %>" class="leftsearch_box" style="top:100px;display:none;position:absolute;width:220px;height:90px;left:370px;z-index:1500;opacity:0.9;background: #CCFFCC;">
+    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("images_locked_popup_#{listing.id}"), 'photoMessageShown=true']%>
+    
+    <table>
+      <tr><td valign="center"><span style="font-size:48pt;"><b>&lt;</b></span></td>
+      <td><b>FreshPaint is like potluck dinner: everyone contributes for all to share. To veiw photos please add photos to your listing.</b> <%=link_to 'Add photos', new_listing_visual_path(current_user.listing)%></td>
+      </tr>
+    </table>  
+    
+  </div>
+
+            	
+
+<div class="post" style="z-index:0" id="listing_<%=l.id%>">
 	<div class="entry" style="z-index:0">
       <div class="header" style="z-index:0">
     
@@ -16,15 +46,15 @@
                       'grey_star.png', 
                       :id=>"off_star_#{listing_counter}", 
                       :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), remote_function(:url=>listing_favorites_url(listing), :method=>:post)], 
-                      :style=>"cursor:pointer;#{l.favorite? ? 'display:none;' : ''}", 
+                      :style=>"cursor:pointer;#{is_this_favorites? || l.favorite? ? 'display:none;' : ''}", 
                       :title=>'Add to favorites') 
 			         %>
                   
                   <%=image_tag(
                       'yellow_star.png', 
                       :id=>"on_star_#{listing_counter}", 
-                      :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), remote_function(:url=>listing_favorite_url(listing, 0), :method=>:delete)], 
-                      :style=>"cursor:pointer;#{l.favorite? ? '' : 'display:none;'}", 
+                      :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), (page.hide("listing_#{l.id}") if is_this_favorites?), remote_function(:url=>listing_favorite_url(listing, 0), :method=>:delete) ], 
+                      :style=>"cursor:pointer;#{is_this_favorites? || l.favorite? ? '' : 'display:none;'}", 
                       :title=>'Remove from favorites') 
 			         %>
                   
@@ -38,6 +68,8 @@
                             visual_effect(:toggle_slide, "listingshow_#{listing_counter}", :duration => 0.4 ), 
                             page.hide("unread_#{listing_counter}"),
                             page.show("read_#{listing_counter}"),
+                            'if(!photoMessageShown){ ' + page.toggle("images_locked_popup_#{listing.id}") + '; photoMessageShown=true;} ;',
+                            'if(!detailsMessageShown){ ' + page.toggle("details_locked_popup_#{listing.id}") + '; detailsMessageShown=true;} ;',
                             remote_function(:url=>listing_readings_url(listing), :method=>:post)],
               :class=>'floatleft',
               :style => "cursor:pointer;background:#F0F0F0;") do %>
@@ -46,7 +78,7 @@
                 <%=content_tag( 
                 :h2,
                 "#{l.apt_type} | #{l.nhood} | #{l.rent_range}",      
-                :style=>"#{l.unread? ? 'font-weight:bold;':'font-weight:normal;'}", 
+                :style=>"#{!is_this_favorites? && l.unread? ? 'font-weight:bold;':'font-weight:normal;'}", 
                 :id=>"header_#{listing_counter}") %>
                   
                 
@@ -65,7 +97,7 @@
                       'unchecked.gif', 
                       :id=>"unread_#{listing_counter}", 
                       :onclick=>["$('header_#{listing_counter}').style.fontWeight='normal';", page.toggle("read_#{listing_counter}", "unread_#{listing_counter}"), remote_function(:url=>listing_readings_url(listing), :method=>:post)], 
-                      :style=>"cursor:pointer;#{l.read? ? 'display:none;' : ''}", 
+                      :style=>"cursor:pointer;#{is_this_favorites? || l.read? ? 'display:none;' : ''}", 
                       :title=>'Mark as read') 
 			         %>
                   
@@ -73,12 +105,25 @@
                       'checked.gif', 
                       :id=>"read_#{listing_counter}", 
                       :onclick=>["$('header_#{listing_counter}').style.fontWeight='bold';",page.toggle("read_#{listing_counter}", "unread_#{listing_counter}"), remote_function(:url=>listing_reading_url(listing, 0), :method=>:delete)], 
-                      :style=>"cursor:pointer;#{l.read? ? '' : 'display:none;'}", 
+                      :style=>"cursor:pointer;#{is_this_favorites? || l.read? ? '' : 'display:none;'}", 
                       :title=>'Mark as unread') 
 			         %>
                </span>
                <div style="clear: both;"></div>	
 						<%=l.address%> | Available: <%= l.avail_date.strftime("%b %d, '%y") %> | Posted: <%=l.created_at.strftime("%b %d, '%y")%>
+               <!--Very gross hack, need to redo this in terms of favorites-->
+               <div>
+               
+               <%if is_this_favorites?%>
+               
+                  <%favorite = current_user.favorites.find(:first, :conditions=>['listing_id = ?', listing.id])%>
+                  <%if favorite.note.nil?%>        
+                    <%=render :partial=>'add_note', :locals=>{:page=>page, :listing=>listing}%>
+               <%else%>
+                    <%=render :partial=>'show_note', :locals=>{:favorite=>favorite}%>
+               <%end%>
+            <%end%>
+            </div>
 				</li>
     		</ul>
       </div>
@@ -101,18 +146,19 @@
           <%end%>
 				<li>
             <%if !current_user.photo_access?%>
-	        		<div class="lockedheader">
-							<%=image_tag 'images.png', :title => 'Images'%> <a href=""><%= image_tag 'lock.png', :onmouseover => "this.src='/images/lock_open.png'", :onmouseout => "this.src='/images/lock.png'", :title => 'Unlock Images' %></a>
-							<br><span style="font-size:10px">Images are currently <b>locked</b>.<br/>Upload images of your own listing to view images.</span>
+	        		
+              <div>
+							<%=link_to_function image_tag('images_locked.jpg', :width=>370, :height=>91, :title=>'Photos are locked'), page.show("images_locked_popup_#{l.id}")%>
 						</div>
+              
 	         	<%else%>
 	          	<%if l.photos.size == 0 %>
-	          		No Photos Submitted&nbsp;&nbsp;<a href="">Request photos</a>
+	          		Photos were not provided <a href="#">Request photos</a>
 	          	<%else%>
 	          		<table width=100%>
                     <tr>
                       <% l.photos.each do |visual|  %>
-                          <td><%= image_tag(visual.public_filename(:thumb), :height=>50, :width=>60) %> <br/> <%=visual.comment %></td>
+                          <td><%= image_tag(visual.public_filename(:thumb), :height=>75, :width=>100) %> <br/> <%=visual.comment %></td>
                       <%end%>
 	            		</tr>
                   </table>
@@ -120,30 +166,25 @@
 					<%end%>
 				<!-- end image -->
 				</li>
+          <%=render :partial=>"shared/comment_popup", :locals=>{:listing=>l, :page=>page}%> 
+
             <%if current_user.listing_info_access?%>
                 <%if l.listing_info?%> 
                     <%=render :partial => 'shared/listing_info', :locals => {:li=>l.listing_info}%>
                 <%else%>
-                  No detailed info is available <a href="">Request detailed info</a>
+                   Detailed info was not provided. <a href="#">Request detailed info</a>
                 <%end%>
             <%else%>
-              <%=render :partial=>'shared/locked_listing_info'%>
+              <%=render :partial=>'shared/locked_listing_info', :locals=>{:page=>page, :listing=>listing}%>
             <%end%>
    
 	        <li><b>Posted By:</b> <%= l.user.username %></li>
-	 			 <li>
-              <b>Comments</b>&nbsp;
-              <%=image_tag( 'plus.jpg', 
-                  :id=>"show_comments_#{l.id}", 
-                  :onclick =>[visual_effect(:toggle_slide, "comments_block_#{l.id}", :duration => 0.4 ),
-                              page.toggle("show_comments_#{l.id}", "hide_comments_#{l.id}")],
-                  :style=>'cursor:pointer')%>
-                  
-              <%=image_tag('minus.jpg',
-                  :id=>"hide_comments_#{l.id}",
-                  :onclick =>[visual_effect(:toggle_slide, "comments_block_#{l.id}", :duration => 0.4 ),
-                              page.toggle("show_comments_#{l.id}", "hide_comments_#{l.id}")],
-                  :style=>'display:none;cursor:pointer')%>
+	 			
+          <li>
+               
+              <%=link_to_function 'Show comments', [visual_effect(:toggle_slide, "comments_block_#{l.id}", :duration => 0.4 ), page.toggle("show_comments_#{l.id}", "hide_comments_#{l.id}")], :id=>"show_comments_#{l.id}"%>
+              <%=link_to_function 'Hide comments', [visual_effect(:toggle_slide, "comments_block_#{l.id}", :duration => 0.4 ), page.toggle("show_comments_#{l.id}", "hide_comments_#{l.id}")], :id=>"hide_comments_#{l.id}", :style=>'display:none'%> |
+              <%=link_to_function 'Add comment', [page.toggle("comment_popup_#{l.id}")] %>
               
            </li>
 				
@@ -152,7 +193,6 @@
 						
 			        <%=render :partial=>'shared/comment_list', :locals=>{:comments=>l.comments}%>
 
-                <!--<%= render :partial=>'/shared/create_comment', :locals=>{:listing=>l, :comment=>ListingComment.new}%>--> 			
             </div>
 					
 			  	
@@ -162,4 +202,5 @@
 			 </div>
       </div>
   </div>
+</div><!--positioning div-->  
 <% end %>

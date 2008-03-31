@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 14) do
+ActiveRecord::Schema.define(:version => 15) do
 
   create_table "apt_types", :force => true do |t|
     t.string   "name"
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(:version => 14) do
   end
 
   create_table "favorites", :force => true do |t|
-    t.integer  "listing_id",                             :null => false
-    t.integer  "user_id",                                :null => false
-    t.integer  "favorite_comments_count", :default => 0
+    t.integer  "listing_id", :null => false
+    t.integer  "user_id",    :null => false
+    t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,17 +1,16 @@
 <%= error_messages_for :user %>
 
 <!-- start content -->
-<div id="fullcontentcenter">
+<div id="page">
 
-	<div style="clear: both;">&nbsp;</div>
 	
-	<ul><li><div align="center"><b>Freshpaint</b> is a place for NYC renters to exchange <b>exclusive</b> information about apartments.</div></li></ul>
+	<fieldset class="colored">
 	
-	<fieldset class="colored"><legend class="colored bigtext">Login</legend>
-
-	<ul><%=render :partial=>'shared/login_form'%>	
-	    <li><label>&nbsp;</label>Not yet a member?  <%=link_to('Click here', new_user_url)%> to sign up.</li>
-	</ul>
+    <ul class="smalltext">
+      <li><div align="center"><b>Freshpaint</b> is a place for NYC renters to exchange <b>exclusive</b> information about apartments.</div></li>
+      <%=render :partial=>'shared/login_form'%>	
+      <li><label>&nbsp;</label>Not yet a member?  <%=link_to('Click here', new_user_url)%> to sign up.</li>
+    </ul>
 	
 	</fieldset>
 

@@ -58,9 +58,10 @@ class ListingsController < ApplicationController
     #convert pests into roaches ants and mice
     params[:listing_info][:roaches], params[:listing_info][:ants], params[:listing_info][:mice] = 0 unless params[:listing_info][:pests_free].nil?
     params.delete :pest_free
+        
+    page = params[:custom_options][:page] || 1
     
-    
-    @listings = Listing.do_search params[:listing_info], current_user.id, 20, params[:order_by]
+    @listings = Listing.do_search params[:listing_info], current_user.id, params[:order_by], page
 
     respond_to do |format|
       format.html { render :partial => '/shared/listing_list'}
@@ -106,16 +107,6 @@ class ListingsController < ApplicationController
   # POST /listings
   # POST /listings.xml
   def create
-    #~ @listing = Listing.new(params[:listing])
-    #~ @room1 = Room.new(params[:room1])
-    #~ @room2 = Room.new(params[:room2])
-    #~ @room3 = Room.new(params[:room3])
-    #~ @room4 = Room.new(params[:room4])
-    #~ @living_room = Room.new(params[:living_room])
-
-    #~ @room1.listing = @room2.listing = @room3.listing = @room4.listing = @living_room.listing = @listing
-    
-    #~ @listing.save!
     
     respond_to do |format|
       format.html { render :patial => 'shared/listing_list'}

@@ -1,18 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :comments
-
   
+  map.resource :user
   map.resource :session
   map.resource :password
-  
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   
   #map.resources :listings, :has_many => [:visuals, :favorites, :bogus_flags, :broker_flags, :na_flags, :listing_comments, :readings], :has_one => [:listing_info], :collection => { :search => :post}
   map.resources :listings, :has_many => [:visuals, :favorites, :flags, :listing_comments, :readings], :has_one => [:listing_info], :collection => { :search => :post}
   
-  map.resources :users
   
-  map.resources :favorites, :has_many => [:favorite_comments]
+  
+  map.resources :favorites, :has_many => [:favorite_comments], :collection=> {:search=>:post}
   
   
 

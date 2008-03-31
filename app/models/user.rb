@@ -5,7 +5,12 @@ class User < ActiveRecord::Base
   has_many :favorite_comments
   has_many :listing_comments
   has_many :readings
-  has_many :favorite_listings, :through => :favorites, :source=> :listing
+  has_many :favorite_listings, :through => :favorites, :source=> :listing do
+    def with_options(note_substring = '', current_page=1, order_by = 'created_at')
+      find :all, :page => {:size => 20, :current => current_page}, :order=>Favorite::SORT_ORDER[order_by], :conditions=>note_substring.empty? ? '1=1' : "note LIKE '%#{note_substring}%'", :include => :rent_range
+    end
+  end
+  
   has_many :read_listings, :through => :readings, :source=> :listing
   
  

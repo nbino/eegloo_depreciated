@@ -64,36 +64,34 @@ class AddTestData < ActiveRecord::Migration
     )
     
     u.listing.apt_type.bedrooms.times do |i|
-    u.listing.listing_info.bedrooms[i] = Bedroom.new(
-      :light_level_id=>LightLevel.find(:all)[rand(3)].id,
-      :window_direction_id=>WindowDirection.find(:all)[rand(3)].id, 
-      :length=>rand(12) + 6, 
-      :width=>(rand(12) + 6)
+      u.listing.listing_info.bedrooms[i] = Bedroom.new(
+        :light_level_id=>LightLevel.find(:all)[rand(3)].id,
+        :window_direction_id=>WindowDirection.find(:all)[rand(3)].id, 
+        :length=>rand(12) + 6, 
+        :width=>(rand(12) + 6)
     )
     end
     
-    3.times do |i|
-        v = Visual.new(
+    1..3.times do |i|
+      
+        #~ v = Photo.create(
+          #~ :listing_id=>i,
+          #~ :comment=>"bedroom #{i+1}",
+          #~ :uploaded_data => ActionController::TestUploadedFile.new("public/images/photo#{i}.jpg", 'image/jpg', :binary))
+      
+        
+       u.listing.comments << ListingComment.new(
           :listing_id=>i,
-          :size=>22324,
-          :width=>150,
-          :height=>200,
-          :content_type=>'image/gif',
-          :filename=>'12-25-07_1536.jpg',
-          :thumbnail=>'thumb',
-          :comment=>"bedroom #{i}")
+          :user_id => rand (20) + 1,
+          :content=>["Kinda far from the subway", "Beautiful place but overpriced", "Loud construction on the block"][i]
+          )
+          
+        
       
-        u.listing.photos[i] = v
       
-        Visual.create(
-          :parent_id=>v.id,
-          :size=>22324,
-          :width=>75,
-          :height=>100,
-          :content_type=>'image/gif',
-          :filename=>'12-25-07_1536_thumb.jpg',
-          :comment=>"bedroom #{i}")
-    end
+      
+      end
+        
    
    u.save
    

@@ -1,10 +1,24 @@
 class Favorite < ActiveRecord::Base
   belongs_to :listing, :counter_cache=>true
   belongs_to :user
-  has_many :favorite_comments,  :foreign_key=>'listing_id'
   validates_uniqueness_of :listing_id, :scope => [:user_id]
   
   
+  SORT_ORDER =
+  {
+    'created_at' => 'listings.created_at DESC',
+    'favorites_count' => 'listings.favorites_count DESC',
+    'lbound' => 'rent_ranges.lbound ASC'
+  }
+  
+  def favorite?
+    true
+  end
+  
+  #this is a hack for the demo
+  def read?
+    true
+  end
   
   # Decided not to cache favorites count for users, not very useful
   

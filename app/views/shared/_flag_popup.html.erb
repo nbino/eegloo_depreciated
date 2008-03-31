@@ -1,4 +1,4 @@
-<div id="flag_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:180px;left:360px;z-index:1500;opacity:0.9;">
+<div id="flag_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:180px;left:385px;z-index:1500;opacity:0.9;">
   <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>page.hide("flag_popup_#{listing.id}")%>
   <%remote_form_for Flag.new, :url=>listing_flags_url(listing) do |f|%>
   
