@@ -49,17 +49,18 @@ class SessionsController < ApplicationController
   end
 
   def successful_login
+    session[:no_more_popups]=false;
     if params[:remember_me] == "1"
       self.current_user.remember_me
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
     end
     flash[:notice] = "Logged in successfully"
     return_to = session[:return_to]
-    if return_to.nil?
+    #if return_to.nil?
       redirect_to listings_path
       #redirect_to user_path(self.current_user)
-    else
-      redirect_to return_to
-    end
+    #else
+    #  redirect_to return_to
+    #end
   end
 end
