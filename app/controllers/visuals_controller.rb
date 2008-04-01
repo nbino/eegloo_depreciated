@@ -26,9 +26,9 @@ class VisualsController < ApplicationController
   # GET /visuals/new
   # GET /visuals/new.xml
   def new
-    @visual = Visual.new
+    @photo = Photo.new
     
-    @visuals = Listing.find(params[:listing_id]).photos
+    @photos = Listing.find(params[:listing_id]).photos
     
     respond_to do |format|
       format.html { render :layout => "main" }

@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
  
  
   def photo_access?
-    listing.photos.size == 3
+    listing.photos.size > 3
   end
   
   def video_access?
