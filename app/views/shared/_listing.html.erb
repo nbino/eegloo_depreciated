@@ -6,8 +6,14 @@
 <div style="position:relative">
 
 <%=render :partial=>"shared/flag_popup", :locals=>{:listing=>l, :page=>page}%>
+
 <%if is_this_favorites?%>
   <%=render :partial=>"note_popup", :locals=>{:listing=>l, :page=>page}%>
+  <div id="sms_note_popup_<%= listing.id %>" class="leftsearch_box" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:160px;left:100px;z-index:1500;opacity:0.9;background: #CCFFCC;">
+    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("sms_note_popup_#{listing.id}"), 'detailMessageShown=true']%>
+        Sending notes, photos or videos from your phone is a great way to keep track of places you've seen. Wouldn't be nice if this was implemented? Coming soon.
+  </div>
+
 <%end%>
  
 
@@ -46,15 +52,15 @@
                       'grey_star.png', 
                       :id=>"off_star_#{listing_counter}", 
                       :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), remote_function(:url=>listing_favorites_url(listing), :method=>:post)], 
-                      :style=>"cursor:pointer;#{is_this_favorites? || l.favorite? ? 'display:none;' : ''}", 
+                      :style=>"cursor:pointer;#{is_this_friends? || is_this_favorites? || l.favorite? ? 'display:none;' : ''}", 
                       :title=>'Add to favorites') 
 			         %>
                   
                   <%=image_tag(
                       'yellow_star.png', 
                       :id=>"on_star_#{listing_counter}", 
-                      :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), (page.hide("listing_#{l.id}") if is_this_favorites?), remote_function(:url=>listing_favorite_url(listing, 0), :method=>:delete) ], 
-                      :style=>"cursor:pointer;#{is_this_favorites? || l.favorite? ? '' : 'display:none;'}", 
+                      :onclick=>[page.toggle("off_star_#{listing_counter}", "on_star_#{listing_counter}"), (page.hide("listing_#{l.id}") if is_this_favorites?  || is_this_friends?), remote_function(:url=>listing_favorite_url(listing, 0), :method=>:delete) ], 
+                      :style=>"cursor:pointer;#{is_this_friends? ||is_this_favorites? || l.favorite? ? '' : 'display:none;'}", 
                       :title=>'Remove from favorites') 
 			         %>
                   
@@ -78,7 +84,7 @@
                 <%=content_tag( 
                 :h2,
                 "#{l.apt_type} | #{l.nhood} | #{l.rent_range}",      
-                :style=>"#{!is_this_favorites? && l.unread? ? 'font-weight:bold;':'font-weight:normal;'}", 
+                :style=>"#{ !is_this_friends? && !is_this_favorites? && l.unread? ? 'font-weight:bold;':'font-weight:normal;'}", 
                 :id=>"header_#{listing_counter}") %>
                   
                 
@@ -97,7 +103,7 @@
                       'unchecked.gif', 
                       :id=>"unread_#{listing_counter}", 
                       :onclick=>["$('header_#{listing_counter}').style.fontWeight='normal';", page.toggle("read_#{listing_counter}", "unread_#{listing_counter}"), remote_function(:url=>listing_readings_url(listing), :method=>:post)], 
-                      :style=>"cursor:pointer;#{is_this_favorites? || l.read? ? 'display:none;' : ''}", 
+                      :style=>"cursor:pointer;#{is_this_friends? || is_this_favorites? || l.read? ? 'display:none;' : ''}", 
                       :title=>'Mark as read') 
 			         %>
                   
@@ -105,7 +111,7 @@
                       'checked.gif', 
                       :id=>"read_#{listing_counter}", 
                       :onclick=>["$('header_#{listing_counter}').style.fontWeight='bold';",page.toggle("read_#{listing_counter}", "unread_#{listing_counter}"), remote_function(:url=>listing_reading_url(listing, 0), :method=>:delete)], 
-                      :style=>"cursor:pointer;#{is_this_favorites? || l.read? ? '' : 'display:none;'}", 
+                      :style=>"cursor:pointer;#{is_this_friends? || is_this_favorites? || l.read? ? '' : 'display:none;'}", 
                       :title=>'Mark as unread') 
 			         %>
                </span>
@@ -115,13 +121,14 @@
                <div>
                
                <%if is_this_favorites?%>
-               
+                  <a href="#" title="Under construction">Send to phone</a>
                   <%favorite = current_user.favorites.find(:first, :conditions=>['listing_id = ?', listing.id])%>
                   <%if favorite.note.nil?%>        
                     <%=render :partial=>'add_note', :locals=>{:page=>page, :listing=>listing}%>
                <%else%>
-                    <%=render :partial=>'show_note', :locals=>{:favorite=>favorite}%>
+                    <br/><%=render :partial=>'show_note', :locals=>{:favorite=>favorite}%><br/>
                <%end%>
+                <%=link_to_function 'Send note/photo/video from your phone', page.show("sms_note_popup_#{listing.id}") %>
             <%end%>
             </div>
 				</li>
