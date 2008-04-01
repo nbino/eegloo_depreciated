@@ -10,7 +10,7 @@
 <%if is_this_favorites?%>
   <%=render :partial=>"note_popup", :locals=>{:listing=>l, :page=>page}%>
   <div id="sms_note_popup_<%= listing.id %>" class="leftsearch_box" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:160px;left:100px;z-index:1500;opacity:0.9;background: #CCFFCC;">
-    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("sms_note_popup_#{listing.id}"), 'detailMessageShown=true']%>
+    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("sms_note_popup_#{listing.id}")]%>
         Sending notes, photos or videos from your phone is a great way to keep track of places you've seen. Wouldn't be nice if this was implemented? Coming soon.
   </div>
 
@@ -37,7 +37,14 @@
     </table>  
     
   </div>
-
+  <div id="email_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:60px;left:375px;z-index:1500;opacity:0.9;background:#BBBBBB">
+    <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>[page.hide("email_popup_#{listing.id}")]%>
+    
+    Email:<br/>
+    <input type="text"/><br/>
+    <%=submit_tag 'Send', :onclick=>page.hide("email_popup_#{listing.id}")%>
+    
+  </div>
             	
 
 <div class="post" style="z-index:0" id="listing_<%=l.id%>">
@@ -90,6 +97,8 @@
                 
               <%end%>
               <span style="float:right;">
+               <%= image_tag 'envelope.gif', :onclick=>page.toggle("email_popup_#{listing.id}"), :title=>'Send to a friend', :style=>"cursor:pointer;position:relative;top:3px"%>
+                  
                <%=image_tag(
                       'flag.gif', 
                       :id=>"flag_#{listing_counter}", 
