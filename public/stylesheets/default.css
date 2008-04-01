@@ -629,6 +629,17 @@ border-top: 1px solid #F0F0F0;
 	width: 150px;
 }
 
+#leftbar_2 {
+	float: left;
+	width: 150px;
+}
+
+#content_2 {
+	float: left;
+	width: 150px;
+}
+
+
 #leftbar ul {
 	margin: 0;
 	padding: 0;

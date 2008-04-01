@@ -11,6 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :favorites, :has_many => [:favorite_comments], :collection=> {:search=>:post}
   
+  map.resources :friends
+  
   
 
   # The priority is based upon order of creation: first created -> highest priority.
