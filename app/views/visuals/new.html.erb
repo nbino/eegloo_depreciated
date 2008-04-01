@@ -5,8 +5,7 @@
 
 	<ul class="smalltext">
 		
-		<li><%= error_messages_for :photo %></li>
-
+		
 		<% form_for([@listing, @photo], :html => { :multipart => true, :target=>'visuals_list' } ) do |f| %>
       <li class="whole"><label>Picture / Video:</label> <%= f.file_field :uploaded_data %></li>
       <li class="whole"><label>Description:</label> <%= f.text_field :comment %></li>
@@ -14,13 +13,15 @@
       <li class="whole" style="text-align:center"><%= f.submit "Upload File" %></li>
 
 		<% end %> 
-		<li class="whole">&nbsp;</li>
-		<li class="whole" style="text-align:center">Uploaded photos and videos</li>
-		<li class="whole">
-		  <iframe name="visuals_list" frameborder="0" width="100%" height="300" src="<%=listing_visuals_url current_user.listing%>"></iframe>
-		</li>
+  </ul>
+		
+		<p><h2>Uploaded photos and videos</h2>
+    </br>
+		
+	 <iframe name="visuals_list" frameborder="0" width="100%" height="300" src="<%=listing_photos_url current_user.listing%>"></iframe>
+		</p>
 
-	</ul>
+	
 
 	</fieldset>
 
