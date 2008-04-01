@@ -6,6 +6,10 @@ module ApplicationHelper
     params[:controller] == 'favorites'
   end
   
+  def is_this_friends?
+    params[:controller] == 'friends'
+  end
+  
   class ActionView::Helpers::FormBuilder
     def collection_radio(method, collection, options={})
       output = ''
