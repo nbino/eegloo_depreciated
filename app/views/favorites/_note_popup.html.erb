@@ -1,4 +1,4 @@
-<div id="note_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:160px;left:200px;z-index:1500;opacity:0.9;">
+<div id="note_popup_<%= listing.id %>" class="leftsearch_box" style="display:none;position:absolute;width:180px;height:160px;left:200px;z-index:1500;opacity:0.9;background: #CCFFCC;">
 <%=image_tag 'cross.png', :style=>"float:right;cursor:pointer;", :onclick=>page.hide("note_popup_#{listing.id}")%>
 <%remote_form_for :favorites, :url=>listing_favorite_url(listing, 0), :method=>:put, :update=>"add_note_#{listing.id}" do |f|%>
     <b>Add a note</b><br/>
