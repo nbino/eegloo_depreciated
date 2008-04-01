@@ -2,6 +2,14 @@
 	<%=render :partial=>'shared/my_listing_navigation'%>
 
 	<fieldset class="colored">
+  
+  
+  <span style="font-size:14px;text-align:left;color: #3E3E3E">Why add photos or videos to your listing? Because it helps you and your fellow apartment hunters to explore spaces without running around and looking. This makes apartment hunting easier and more fun. And that's a good thing. <br/><br/>To see other user's photos add three or more of your own. </br></br>You can also send photos from your phone. <a href="#" title="Under construction"> How?</a> </span>
+  <br/><br/>
+	
+  
+  <br/><br/>
+	
 
 	<ul class="smalltext">
 		
@@ -15,13 +23,14 @@
 		<% end %> 
   </ul>
 		
-		<p><h2>Uploaded photos and videos</h2>
+     <b>Uploaded photos and videos</b>
+		<div style="border:1px solid #BBBBBB">
     </br>
 		
 	 <iframe name="visuals_list" frameborder="0" width="100%" height="300" src="<%=listing_photos_url current_user.listing%>"></iframe>
-		</p>
+		
 
-	
+    </div>
 
 	</fieldset>
 
