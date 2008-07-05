@@ -260,6 +260,12 @@ input.radio {
 	background:none;
 }
 
+li.blank
+{
+	border:none;
+	background:none;
+}
+
 
 /* Page */
 

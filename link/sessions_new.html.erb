@@ -1,0 +1,17 @@
+<%= error_messages_for :user %>
+
+<!-- start content -->
+<div id="page">
+
+	
+	<fieldset class="colored">
+	
+    <ul class="smalltext">
+      <li><div align="center"><b>Freshpaint</b> is a place for NYC renters to exchange <b>exclusive</b> information about apartments.</div></li>
+      <%=render :partial=>'shared/login_form'%>	
+      <li><label>&nbsp;</label>Not yet a member?  <%=link_to('Click here', new_user_url)%> to sign up.</li>
+    </ul>
+	
+	</fieldset>
+
+</div>
